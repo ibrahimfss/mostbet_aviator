@@ -225,7 +225,7 @@ bot.action(/^set_lang_(.+)$/, async (ctx) => {
       reply_markup: {
         inline_keyboard: [
           [
-            { text: langData.join.buttonJoin, url: 'https://t.me/hack_zone_ai' },
+            { text: langData.join.buttonJoin, url: 'https://t.me/Mostbet_Hacks' },
             { text: langData.join.buttonCheck, callback_data: 'check_join' }
           ]
         ]
