@@ -275,8 +275,12 @@ bot.action('check_join', async (ctx) => {
         reply_markup: {
           inline_keyboard: [
             [
-              { text: langData.registration.buttonRegister, url: 'https://1win.com' },
-              { text: langData.registration.buttonChange, callback_data: 'change_language' },
+              { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+            ],
+            [
+              { text: langData.registration.buttonChange, callback_data: 'change_language' }
+            ],
+            [
               { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
             ]
           ]
