@@ -5,7 +5,8 @@ import { currencyData } from './currencies.js';
 // ==================== ENVIRONMENT VARIABLES ====================
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const ADMIN_ID = Number(process.env.ADMIN_ID);
-const CHANNEL_USERNAME = '@hack_zone_ai';
+const CHANNEL_USERNAME = process.env.CHANNEL_USERNAME || '@Mostbet_Hacks';
+const CHANNEL_ID = process.env.CHANNEL_ID || -3645928410; // Agar channel ID pata hai to daalein
 
 if (!BOT_TOKEN || !ADMIN_ID) {
   console.error('Missing BOT_TOKEN or ADMIN_ID');
