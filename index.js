@@ -493,7 +493,7 @@ bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
     buttons.push(pagination);
   }
   
-  buttons.push([{ text: '🔙 Back to Panel', callback_data: 'admin_back' }]);
+  buttons.push([{ text: '🔙 Back to Admin Panel', callback_data: 'admin_back' }]);
   
   await ctx.editMessageMedia(
     {
