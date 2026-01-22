@@ -337,8 +337,6 @@ bot.action('change_language', async (ctx) => {
 bot.action('ADMIN_PANEL', async (ctx) => {
   const userId = ctx.from.id;
   
-  console.log(`🔍 ADMIN_PANEL clicked by User ID: ${userId}, ADMIN_ID: ${ADMIN_ID}, Is Admin: ${userId === ADMIN_ID}`);
-  
   // Strict admin check
   if (userId !== ADMIN_ID) {
     await ctx.answerCbQuery('❌ Admin access only!');
@@ -348,12 +346,16 @@ bot.action('ADMIN_PANEL', async (ctx) => {
   const stats = getUserStats();
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n👥 Total Users: ${stats.total}\n✅ Active Users: ${stats.active}\n❌ Inactive Users: ${stats.inactive}`;
   
-  // Check if we're editing an existing message or sending new
   try {
-    await ctx.editMessageText(
-      caption,
+    // Yahan hum editMessageMedia use karenge taki Photo aur Text dono update ho
+    await ctx.editMessageMedia(
       {
-        parse_mode: 'Markdown',
+        type: 'photo',
+        media: IMAGES.ADMIN_PANEL, // Ye image load hogi
+        caption: caption,
+        parse_mode: 'Markdown'
+      },
+      {
         reply_markup: {
           inline_keyboard: [
             [
@@ -372,28 +374,8 @@ bot.action('ADMIN_PANEL', async (ctx) => {
       }
     );
   } catch (error) {
-    // If editing fails, send a new message
-    await ctx.reply(
-      caption,
-      {
-        parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: '👥 User List', callback_data: 'admin_user_list_1' },
-              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
-            ],
-            [
-              { text: '📊 Stats', callback_data: 'admin_stats' },
-              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
-            ],
-            [
-              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
-            ]
-          ]
-        }
-      }
-    );
+    console.error('Error opening Admin Panel:', error);
+    await ctx.answerCbQuery('❌ Error opening panel');
   }
   
   await ctx.answerCbQuery('✅ Admin Panel Opened');
