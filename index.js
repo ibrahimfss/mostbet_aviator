@@ -385,15 +385,15 @@ bot.action('ADMIN_PANEL', async (ctx) => {
 bot.action('admin_back_to_registration', async (ctx) => {
   const userId = ctx.from.id;
   const user = getUserData(userId);
-  const langCode = user.lang;
+  const langCode = user.lang || 'en'; // Fallback to 'en'
   const langData = languageTexts[langCode] || languageTexts['en'];
   const currency = currencyData[langCode] || currencyData['en'];
   
-  // Prepare registration message with currency conversion
+  // Prepare registration message
   const registrationText = langData.registration.success
     .replace('₹1000', `${currency.symbol}${currency.amount}`);
   
-  // Create registration buttons array
+  // Buttons recreate karna zaroori hai
   const registrationButtons = [
     [
       { text: langData.registration.buttonRegister, url: 'https://1win.com' }
@@ -406,13 +406,13 @@ bot.action('admin_back_to_registration', async (ctx) => {
     ]
   ];
 
-  // ✅ Add ADMIN PANEL button ONLY for admin
   if (userId === ADMIN_ID) {
     registrationButtons.push([
       { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
     ]);
   }
   
+  // Photo wapas Registration wali set karein
   await ctx.editMessageMedia(
     {
       type: 'photo',
@@ -424,6 +424,7 @@ bot.action('admin_back_to_registration', async (ctx) => {
       reply_markup: { inline_keyboard: registrationButtons }
     }
   );
+  await ctx.answerCbQuery('🔙 Back to User View');
 });
 
 // User list with pagination
