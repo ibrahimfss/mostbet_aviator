@@ -272,19 +272,32 @@ bot.action('check_join', async (ctx) => {
         parse_mode: 'Markdown'
       },
       {
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-            ],
-            [
-              { text: langData.registration.buttonChange, callback_data: 'change_language' }
-            ],
-            [
-              { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-            ]
-          ]
-        }
+        // Create registration buttons array
+const registrationButtons = [
+  // First row - REGISTER button
+  [
+    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+  ],
+  // Second row - CHANGE LANGUAGE button
+  [
+    { text: langData.registration.buttonChange, callback_data: 'change_language' }
+  ],
+  // Third row - GET SIGNAL button
+  [
+    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+  ]
+];
+
+// ✅ Add ADMIN PANEL button ONLY for admin (Fourth row)
+if (userId === ADMIN_ID) {
+  registrationButtons.push([
+    { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
+  ]);
+}
+
+reply_markup: {
+  inline_keyboard: registrationButtons
+}
       }
     );
     
