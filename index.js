@@ -297,7 +297,7 @@ if (userId === ADMIN_ID) {
 
 reply_markup: {
   inline_keyboard: registrationButtons
-}
+        }
       }
     );
     
