@@ -540,17 +540,20 @@ bot.action(/^admin_user_detail_(\d+)_(\d+)$/, async (ctx) => {
     },
     {
       reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '📨 Message', callback_data: `admin_msg_user_${targetUserId}_${page}` },
-            { text: '👁️ View Profile', url: `tg://user?id=${targetUserId}` }
-          ],
-          [
-            { text: user.active ? '❌ Deactivate' : '✅ Activate', 
-              callback_data: `admin_toggle_user_${targetUserId}_${page}` }
-          ],
-          [
-            { text: '🔙 Back to List', callback_data: `admin_user_list_${page}` }
+  inline_keyboard: [
+    [
+      { text: '📨 Message', callback_data: `admin_msg_user_${targetUserId}_${page}` },
+      { text: '👁️ View Profile', url: `tg://user?id=${targetUserId}` }
+    ],
+    [
+      { text: user.active ? '❌ Deactivate' : '✅ Activate', 
+        callback_data: `admin_toggle_user_${targetUserId}_${page}` }
+    ],
+    [
+      { text: '🔙 Back to List', callback_data: `admin_user_list_${page}` }
+    ],
+    [
+      { text: '🏠 Back to Admin Panel', callback_data: 'admin_back' }
           ]
         ]
       }
