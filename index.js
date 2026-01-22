@@ -264,6 +264,33 @@ bot.action('check_join', async (ctx) => {
     const registrationText = langData.registration.success
       .replace('₹1000', `${currency.symbol}${currency.amount}`);
     
+    // ==================== FIX STARTS HERE ====================
+    // Logic ko function call se BAHAR nikal diya gaya hai
+    
+    // Create registration buttons array
+    const registrationButtons = [
+      // First row - REGISTER button
+      [
+        { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+      ],
+      // Second row - CHANGE LANGUAGE button
+      [
+        { text: langData.registration.buttonChange, callback_data: 'change_language' }
+      ],
+      // Third row - GET SIGNAL button
+      [
+        { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+      ]
+    ];
+
+    // ✅ Add ADMIN PANEL button ONLY for admin (Fourth row)
+    if (userId === ADMIN_ID) {
+      registrationButtons.push([
+        { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
+      ]);
+    }
+
+    // Ab hum editMessageMedia call karenge aur upar banaya hua variable use karenge
     await ctx.editMessageMedia(
       {
         type: 'photo',
@@ -272,34 +299,12 @@ bot.action('check_join', async (ctx) => {
         parse_mode: 'Markdown'
       },
       {
-        // Create registration buttons array
-const registrationButtons = [
-  // First row - REGISTER button
-  [
-    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-  ],
-  // Second row - CHANGE LANGUAGE button
-  [
-    { text: langData.registration.buttonChange, callback_data: 'change_language' }
-  ],
-  // Third row - GET SIGNAL button
-  [
-    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-  ]
-];
-
-// ✅ Add ADMIN PANEL button ONLY for admin (Fourth row)
-if (userId === ADMIN_ID) {
-  registrationButtons.push([
-    { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
-  ]);
-}
-
-reply_markup: {
-  inline_keyboard: registrationButtons
+        reply_markup: {
+          inline_keyboard: registrationButtons
         }
       }
     );
+    // ==================== FIX ENDS HERE ====================
     
     // Send instruction video after 2 seconds
     setTimeout(async () => {
