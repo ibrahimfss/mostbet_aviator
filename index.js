@@ -587,10 +587,15 @@ bot.action('admin_back', async (ctx) => {
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n👥 Total Users: ${stats.total}\n✅ Active Users: ${stats.active}\n❌ Inactive Users: ${stats.inactive}`;
   
   try {
-    await ctx.editMessageText(
-      caption,
+    // FIX: editMessageText ki jagah editMessageMedia
+    await ctx.editMessageMedia(
       {
-        parse_mode: 'Markdown',
+        type: 'photo',
+        media: IMAGES.ADMIN_PANEL, // Wapas Admin Panel ki image
+        caption: caption,
+        parse_mode: 'Markdown'
+      },
+      {
         reply_markup: {
           inline_keyboard: [
             [
@@ -610,27 +615,7 @@ bot.action('admin_back', async (ctx) => {
     );
   } catch (error) {
     console.error('Error in admin_back:', error);
-    await ctx.reply(
-      caption,
-      {
-        parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: '👥 User List', callback_data: 'admin_user_list_1' },
-              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
-            ],
-            [
-              { text: '📊 Stats', callback_data: 'admin_stats' },
-              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
-            ],
-            [
-              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
-            ]
-          ]
-        }
-      }
-    );
+    await ctx.answerCbQuery('❌ Error going back');
   }
 });
 
