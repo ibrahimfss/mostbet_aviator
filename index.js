@@ -333,37 +333,113 @@ bot.action('change_language', async (ctx) => {
   await ctx.answerCbQuery();
 });
 
-// ==================== ADMIN PANEL FEATURES ====================
-
-// Admin command
-bot.command('admin', async (ctx) => {
+// ==================== ADMIN PANEL ACTION ====================
+bot.action('ADMIN_PANEL', async (ctx) => {
   const userId = ctx.from.id;
   
+  console.log(`🔍 ADMIN_PANEL clicked by User ID: ${userId}, ADMIN_ID: ${ADMIN_ID}, Is Admin: ${userId === ADMIN_ID}`);
+  
+  // Strict admin check
   if (userId !== ADMIN_ID) {
-    await ctx.reply('❌ Access denied');
+    await ctx.answerCbQuery('❌ Admin access only!');
     return;
   }
   
   const stats = getUserStats();
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n👥 Total Users: ${stats.total}\n✅ Active Users: ${stats.active}\n❌ Inactive Users: ${stats.inactive}`;
   
-  await ctx.replyWithPhoto(
-    IMAGES.ADMIN_PANEL,
-    {
-      caption: caption,
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '👥 User List', callback_data: 'admin_user_list_1' },
-            { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
-          ],
-          [
-            { text: '📊 Stats', callback_data: 'admin_stats' },
-            { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+  // Check if we're editing an existing message or sending new
+  try {
+    await ctx.editMessageText(
+      caption,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '👥 User List', callback_data: 'admin_user_list_1' },
+              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
+            ],
+            [
+              { text: '📊 Stats', callback_data: 'admin_stats' },
+              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+            ],
+            [
+              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
+            ]
           ]
-        ]
+        }
       }
+    );
+  } catch (error) {
+    // If editing fails, send a new message
+    await ctx.reply(
+      caption,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '👥 User List', callback_data: 'admin_user_list_1' },
+              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
+            ],
+            [
+              { text: '📊 Stats', callback_data: 'admin_stats' },
+              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+            ],
+            [
+              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
+            ]
+          ]
+        }
+      }
+    );
+  }
+  
+  await ctx.answerCbQuery('✅ Admin Panel Opened');
+});
+
+// ==================== BACK TO REGISTRATION ACTION ====================
+bot.action('admin_back_to_registration', async (ctx) => {
+  const userId = ctx.from.id;
+  const user = getUserData(userId);
+  const langCode = user.lang;
+  const langData = languageTexts[langCode] || languageTexts['en'];
+  const currency = currencyData[langCode] || currencyData['en'];
+  
+  // Prepare registration message with currency conversion
+  const registrationText = langData.registration.success
+    .replace('₹1000', `${currency.symbol}${currency.amount}`);
+  
+  // Create registration buttons array
+  const registrationButtons = [
+    [
+      { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+    ],
+    [
+      { text: langData.registration.buttonChange, callback_data: 'change_language' }
+    ],
+    [
+      { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+    ]
+  ];
+
+  // ✅ Add ADMIN PANEL button ONLY for admin
+  if (userId === ADMIN_ID) {
+    registrationButtons.push([
+      { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
+    ]);
+  }
+  
+  await ctx.editMessageMedia(
+    {
+      type: 'photo',
+      media: IMAGES.REGISTRATION,
+      caption: registrationText,
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: { inline_keyboard: registrationButtons }
     }
   );
 });
