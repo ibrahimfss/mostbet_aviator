@@ -601,28 +601,52 @@ bot.action('admin_back', async (ctx) => {
   const stats = getUserStats();
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n👥 Total Users: ${stats.total}\n✅ Active Users: ${stats.active}\n❌ Inactive Users: ${stats.inactive}`;
   
-  await ctx.editMessageMedia(
-    {
-      type: 'photo',
-      media: IMAGES.ADMIN_PANEL,
-      caption: caption,
-      parse_mode: 'Markdown'
-    },
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '👥 User List', callback_data: 'admin_user_list_1' },
-            { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
-          ],
-          [
-            { text: '📊 Stats', callback_data: 'admin_stats' },
-            { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+  try {
+    await ctx.editMessageText(
+      caption,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '👥 User List', callback_data: 'admin_user_list_1' },
+              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
+            ],
+            [
+              { text: '📊 Stats', callback_data: 'admin_stats' },
+              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+            ],
+            [
+              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
+            ]
           ]
-        ]
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    console.error('Error in admin_back:', error);
+    await ctx.reply(
+      caption,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '👥 User List', callback_data: 'admin_user_list_1' },
+              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
+            ],
+            [
+              { text: '📊 Stats', callback_data: 'admin_stats' },
+              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+            ],
+            [
+              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
+            ]
+          ]
+        }
+      }
+    );
+  }
 });
 
 // Refresh admin panel
