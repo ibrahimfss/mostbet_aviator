@@ -268,23 +268,24 @@ bot.action('check_join', async (ctx) => {
     // Logic ko function call se BAHAR nikal diya gaya hai
     
     // Create registration buttons array
-    const registrationButtons = [
-      // First row - REGISTER button
-      [
-        { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-      ],
-      // Second row - CHANGE LANGUAGE button
-      [
-        { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-      ],
-      // Fourth row - NEW INSTRUCTIONS BUTTON
-      [
-        { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
-      // Third row - GET SIGNAL button
-      [
-        { text: langData.registration.buttonChange, callback_data: 'change_language' }
-      ]
-    ];
+const registrationButtons = [
+  // First row - REGISTER button
+  [
+    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+  ],
+  // Second row - GET SIGNAL button
+  [
+    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+  ],
+  // Third row - CHANGE LANGUAGE button
+  [
+    { text: langData.registration.buttonChange, callback_data: 'change_language' }
+  ],
+  // Fourth row - NEW INSTRUCTIONS BUTTON
+  [
+    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
+  ]
+];
 
     // ✅ Add ADMIN PANEL button ONLY for admin (Fourth row)
     if (userId === ADMIN_ID) {
@@ -307,6 +308,14 @@ bot.action('check_join', async (ctx) => {
         }
       }
     );
+
+    await ctx.answerCbQuery('✅ Channel joined successfully!');
+    
+  } catch (error) {
+    console.error('Error checking channel membership:', error);
+    await ctx.answerCbQuery('❌ Error checking membership. Try again.');
+  }
+});
 
 // Change language
 bot.action('change_language', async (ctx) => {
