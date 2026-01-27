@@ -277,6 +277,9 @@ bot.action('check_join', async (ctx) => {
       [
         { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
       ],
+      // Fourth row - NEW INSTRUCTIONS BUTTON
+      [
+        { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
       // Third row - GET SIGNAL button
       [
         { text: langData.registration.buttonChange, callback_data: 'change_language' }
