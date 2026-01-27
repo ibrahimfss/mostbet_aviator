@@ -416,23 +416,85 @@ const registrationButtons = [
   await ctx.answerCbQuery();
 });
 
-// Live Support Handler
+// Live Support Handler - REPLACE THIS SECTION
 bot.action('live_support', async (ctx) => {
   const userId = ctx.from.id;
+  const user = getUserData(userId);
+  const langCode = user.lang || 'en';
+  const langData = languageTexts[langCode] || languageTexts['en'];
+  
   supportTickets.set(userId, true);
   
-  await ctx.editMessageText(
-    "🆘 *LIVE SUPPORT*\n\nPlease type your message for our support team. We will respond as soon as possible.\n\nYou can type /cancel to cancel.",
+  // Professional support image - aap koi image URL yahan daalein
+  const supportImage = 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png';
+  
+  await ctx.editMessageMedia(
     {
-      parse_mode: 'Markdown',
+      type: 'photo',
+      media: supportImage,
+      caption: langData.liveSupport.open,
+      parse_mode: 'Markdown'
+    },
+    {
       reply_markup: {
         inline_keyboard: [
-          [{ text: "🔙 Back to Instructions", callback_data: 'show_instructions' }]
+          [{ text: "❌ CLOSE TICKET", callback_data: 'close_ticket_user' }],
+          [{ text: "🔙 Back", callback_data: 'back_to_registration' }]
         ]
       }
     }
   );
   await ctx.answerCbQuery();
+});
+
+// User ne ticket close karne ka button
+bot.action('close_ticket_user', async (ctx) => {
+  const userId = ctx.from.id;
+  supportTickets.delete(userId);
+  
+  await ctx.answerCbQuery('✅ Ticket closed');
+  
+  // Wapas registration page pe le jayein
+  const user = getUserData(userId);
+  const langCode = user.lang || 'en';
+  const langData = languageTexts[langCode] || languageTexts['en'];
+  const currency = currencyData[langCode] || currencyData['en'];
+  
+  const registrationText = langData.registration.success
+    .replace('₹1000', `${currency.symbol}${currency.amount}`);
+  
+  const registrationButtons = [
+    [
+      { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+    ],
+    [
+      { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+      { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+    ],
+    [
+      { text: langData.registration.buttonChange, callback_data: 'change_language' }
+    ]
+  ];
+  
+  if (userId === ADMIN_ID) {
+    registrationButtons.push([
+      { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
+    ]);
+  }
+  
+  await ctx.editMessageMedia(
+    {
+      type: 'photo',
+      media: IMAGES.REGISTRATION,
+      caption: registrationText,
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: {
+        inline_keyboard: registrationButtons
+      }
+    }
+  );
 });
 
 /* =====================
