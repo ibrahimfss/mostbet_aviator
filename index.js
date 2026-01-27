@@ -273,17 +273,14 @@ const registrationButtons = [
   [
     { text: langData.registration.buttonRegister, url: 'https://1win.com' }
   ],
-  // Second row - GET SIGNAL button
+  // Second row - INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
   [
+    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
     { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
   ],
   // Third row - CHANGE LANGUAGE button
   [
     { text: langData.registration.buttonChange, callback_data: 'change_language' }
-  ],
-  // Fourth row - NEW INSTRUCTIONS BUTTON
-  [
-    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
   ]
 ];
 
@@ -369,20 +366,19 @@ bot.action('back_to_registration', async (ctx) => {
     .replace('₹1000', `${currency.symbol}${currency.amount}`);
   
   // Buttons recreate karna zaroori hai
-  const registrationButtons = [
-    [
-      { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-    ],
-    [
-      { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-    ],
-    [
-      { text: langData.registration.buttonChange, callback_data: 'change_language' }
-    ],
-    [
-      { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
-    ]
-  ];
+const registrationButtons = [
+  [
+    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+  ],
+  // INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
+  [
+    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+  ],
+  [
+    { text: langData.registration.buttonChange, callback_data: 'change_language' }
+  ]
+];
 
   if (userId === ADMIN_ID) {
     registrationButtons.push([
@@ -485,17 +481,19 @@ bot.action('admin_back_to_registration', async (ctx) => {
     .replace('₹1000', `${currency.symbol}${currency.amount}`);
   
   // Buttons recreate karna zaroori hai
-  const registrationButtons = [
-    [
-      { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-    ],
-    [
-      { text: langData.registration.buttonChange, callback_data: 'change_language' }
-    ],
-    [
-      { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-    ]
-  ];
+const registrationButtons = [
+  [
+    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+  ],
+  // INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
+  [
+    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+  ],
+  [
+    { text: langData.registration.buttonChange, callback_data: 'change_language' }
+  ]
+];
 
   if (userId === ADMIN_ID) {
     registrationButtons.push([
