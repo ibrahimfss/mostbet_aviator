@@ -1,17 +1,32 @@
 import { Telegraf, Markup } from 'telegraf';
 import { languageTexts } from './languages.js';
 import { currencyData } from './currencies.js';
+import admin from "firebase-admin";
 
-// ==================== ENVIRONMENT VARIABLES ====================
+/* =====================
+ENV & FIREBASE CONFIGURATION
+===================== */
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const ADMIN_ID = Number(process.env.ADMIN_ID);
 const CHANNEL_USERNAME = process.env.CHANNEL_USERNAME || '@Mostbet_Hacks';
 const CHANNEL_ID = process.env.CHANNEL_ID || -3645928410; // Agar channel ID pata hai to daalein
+const ADMIN_ID = Number(process.env.ADMIN_ID);
 
-if (!BOT_TOKEN || !ADMIN_ID) {
-  console.error('Missing BOT_TOKEN or ADMIN_ID');
-  process.exit(1);
+// Firebase Initialization
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined,
+        }),
+        // FIX: Added backticks around the URL
+        databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com`
+    });
 }
+
+const db = admin.database();
+
+if (!BOT_TOKEN || !ADMIN_ID) throw new Error("BOT_TOKEN or ADMIN_ID missing");
 
 const bot = new Telegraf(BOT_TOKEN);
 
