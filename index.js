@@ -328,13 +328,13 @@ bot.action('show_instructions', async (ctx) => {
   const langData = languageTexts[langCode] || languageTexts['en'];
   
   // Send instructions video with caption and buttons
-  await ctx.editMessageMedia(
-    {
-      type: 'video',
-      media: VIDEOS.INSTRUCTION,
-      caption: "📲 INSTRUCTIONS How to Register & Get Signals – Watch Carefully",
-      parse_mode: 'Markdown'
-    },
+await ctx.editMessageMedia(
+  {
+    type: 'video',
+    media: VIDEOS.INSTRUCTION,
+    caption: langData.instruction.caption,
+    parse_mode: 'Markdown'
+  },
     {
       reply_markup: {
         inline_keyboard: [
