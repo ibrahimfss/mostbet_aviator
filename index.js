@@ -501,25 +501,44 @@ bot.action('close_ticket_user', async (ctx) => {
 ADMIN PANEL & LOGIC - ENHANCED WITH TICKET SUPPORT
 ===================== */
 bot.action("ADMIN_PANEL", async (ctx) => {
-    if (ctx.from.id !== ADMIN_ID) return;
-    const users = await getAllUsers();
-    const tickets = await getAllTickets();
-
-    // FIX: Added backticks
-    await ctx.editMessageMedia({
-        type: "photo",
-        media: IMAGES.ADMIN_PANEL,
-        caption: `🛡️ *ADMIN CONTROL PANEL*\n\n👥 *Total Users:* ${users.length}\n📞 *Active Tickets:* ${tickets.length}`,
-        parse_mode: "Markdown"
-    }, {
-        reply_markup: {
-            inline_keyboard: [
-                [{ text: "📞 View Tickets", callback_data: "ADMIN_VIEW_TICKETS" }, { text: "👥 User List", callback_data: "ADMIN_GET_USERS_0" }],
-                [{ text: "📢 Broadcast", callback_data: "ADMIN_BROADCAST" }, { text: "🔍 Search User", callback_data: "ADMIN_SEARCH_USER" }],
-                [{ text: "⬅️ Back", callback_data: "MENU" }]
-            ]
-        }
-    });
+  if (ctx.from.id !== ADMIN_ID) return;
+  
+  const users = Array.from(userStorage.values());
+  const activeTickets = Array.from(supportTickets.keys()).length;
+  
+  const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
+    `👥 Total Users: ${users.length}\n` +
+    `📞 Active Tickets: ${activeTickets}\n` +
+    `🌐 Languages: ${new Set(users.map(u => u.lang)).size}`;
+  
+  await ctx.editMessageMedia(
+    {
+      type: 'photo',
+      media: IMAGES.ADMIN_PANEL,
+      caption: caption,
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '📞 View Tickets', callback_data: 'admin_view_tickets' },
+            { text: '👥 User List', callback_data: 'admin_user_list_1' }
+          ],
+          [
+            { text: '📢 Broadcast', callback_data: 'admin_broadcast' },
+            { text: '🔍 Search User', callback_data: 'admin_search_user' }
+          ],
+          [
+            { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+          ],
+          [
+            { text: '🔙 Back', callback_data: 'admin_back_to_registration' }
+          ]
+        ]
+      }
+    }
+  );
 });
 
 // View Active Tickets
