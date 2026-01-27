@@ -275,11 +275,11 @@ bot.action('check_join', async (ctx) => {
       ],
       // Second row - CHANGE LANGUAGE button
       [
-        { text: langData.registration.buttonChange, callback_data: 'change_language' }
+        { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
       ],
       // Third row - GET SIGNAL button
       [
-        { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+        { text: langData.registration.buttonChange, callback_data: 'change_language' }
       ]
     ];
 
