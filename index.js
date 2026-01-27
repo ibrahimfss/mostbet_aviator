@@ -435,128 +435,326 @@ bot.action('live_support', async (ctx) => {
   await ctx.answerCbQuery();
 });
 
-// ==================== ADMIN PANEL ACTION ====================
-bot.action('ADMIN_PANEL', async (ctx) => {
-  const userId = ctx.from.id;
-  
-  // Strict admin check
-  if (userId !== ADMIN_ID) {
-    await ctx.answerCbQuery('❌ Admin access only!');
-    return;
-  }
-  
-  const stats = getUserStats();
-  const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n👥 Total Users: ${stats.total}\n✅ Active Users: ${stats.active}\n❌ Inactive Users: ${stats.inactive}`;
-  
-  try {
-    // Yahan hum editMessageMedia use karenge taki Photo aur Text dono update ho
-    await ctx.editMessageMedia(
-      {
-        type: 'photo',
-        media: IMAGES.ADMIN_PANEL, // Ye image load hogi
-        caption: caption,
-        parse_mode: 'Markdown'
-      },
-      {
+/* =====================
+ADMIN PANEL & LOGIC - ENHANCED WITH TICKET SUPPORT
+===================== */
+bot.action("ADMIN_PANEL", async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const users = await getAllUsers();
+    const tickets = await getAllTickets();
+
+    // FIX: Added backticks
+    await ctx.editMessageMedia({
+        type: "photo",
+        media: IMAGES.ADMIN_PANEL,
+        caption: `🛡️ *ADMIN CONTROL PANEL*\n\n👥 *Total Users:* ${users.length}\n📞 *Active Tickets:* ${tickets.length}`,
+        parse_mode: "Markdown"
+    }, {
         reply_markup: {
-          inline_keyboard: [
-            [
-              { text: '👥 User List', callback_data: 'admin_user_list_1' },
-              { text: '📢 Broadcast', callback_data: 'admin_broadcast' }
-            ],
-            [
-              { text: '📊 Stats', callback_data: 'admin_stats' },
-              { text: '🔄 Refresh', callback_data: 'admin_refresh' }
-            ],
-            [
-              { text: '🔙 Back to Registration', callback_data: 'admin_back_to_registration' }
+            inline_keyboard: [
+                [{ text: "📞 View Tickets", callback_data: "ADMIN_VIEW_TICKETS" }, { text: "👥 User List", callback_data: "ADMIN_GET_USERS_0" }],
+                [{ text: "📢 Broadcast", callback_data: "ADMIN_BROADCAST" }, { text: "🔍 Search User", callback_data: "ADMIN_SEARCH_USER" }],
+                [{ text: "⬅️ Back", callback_data: "MENU" }]
             ]
-          ]
         }
-      }
-    );
-  } catch (error) {
-    console.error('Error opening Admin Panel:', error);
-    await ctx.answerCbQuery('❌ Error opening panel');
-  }
-  
-  await ctx.answerCbQuery('✅ Admin Panel Opened');
+    });
 });
 
-// ==================== BACK TO REGISTRATION ACTION ====================
-bot.action('admin_back_to_registration', async (ctx) => {
-  const userId = ctx.from.id;
-  const user = getUserData(userId);
-  const langCode = user.lang || 'en'; // Fallback to 'en'
-  const langData = languageTexts[langCode] || languageTexts['en'];
-  const currency = currencyData[langCode] || currencyData['en'];
-  
-  // Prepare registration message
-  const registrationText = langData.registration.success
-    .replace('₹1000', `${currency.symbol}${currency.amount}`);
-  
-  // Buttons recreate karna zaroori hai
-const registrationButtons = [
-  [
-    { text: langData.registration.buttonRegister, url: 'https://1win.com' }
-  ],
-  // INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
-  [
-    { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
-    { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
-  ],
-  [
-    { text: langData.registration.buttonChange, callback_data: 'change_language' }
-  ]
-];
+// View Active Tickets
+bot.action("ADMIN_VIEW_TICKETS", async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const tickets = await getAllTickets();
 
-  if (userId === ADMIN_ID) {
-    registrationButtons.push([
-      { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
-    ]);
-  }
-  
-  // Photo wapas Registration wali set karein
-  await ctx.editMessageMedia(
-    {
-      type: 'photo',
-      media: IMAGES.REGISTRATION,
-      caption: registrationText,
-      parse_mode: 'Markdown'
-    },
-    {
-      reply_markup: { inline_keyboard: registrationButtons }
+    if (tickets.length === 0) {
+        return ctx.editMessageCaption("✅ *NO ACTIVE TICKETS*\n\nThere are no active support tickets.", {
+            parse_mode: "Markdown",
+            reply_markup: { inline_keyboard: [[{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]] }
+        });
     }
-  );
-  await ctx.answerCbQuery('🔙 Back to User View');
+
+    let caption = `📞 *ACTIVE SUPPORT TICKETS*\n\n*Total Active Tickets: ${tickets.length}*\n\n`;
+    const buttons = [];
+
+    for (const ticket of tickets.slice(0, 10)) {
+        const user = await getUser(ticket.userId);
+        if (user) {
+            const name = `${user.firstName} ${user.lastName || ''}`.trim();
+            const truncatedMessage = ticket.lastMessage ?
+                (ticket.lastMessage.length > 15 ?
+                    ticket.lastMessage.substring(0, 15) + '...' :
+                    ticket.lastMessage) :
+                "No message yet";
+
+            buttons.push([{
+                text: `${user.isBanned ? "🚫 " : ""}${name} - "${truncatedMessage}"`,
+                callback_data: `ADMIN_VIEW_TICKET_${ticket.userId}`
+            }]);
+        }
+    }
+
+    buttons.push([{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]);
+
+    await ctx.editMessageCaption(caption, {
+        parse_mode: "Markdown",
+        reply_markup: { inline_keyboard: buttons }
+    });
 });
 
-// User list with pagination
-bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
-  const userId = ctx.from.id;
-  if (userId !== ADMIN_ID) return;
-  
-  const page = parseInt(ctx.match[1]);
-  const usersPerPage = 10;
-  const allUsers = Array.from(userStorage.values());
-  const totalPages = Math.ceil(allUsers.length / usersPerPage);
-  const startIdx = (page - 1) * usersPerPage;
-  const endIdx = startIdx + usersPerPage;
-  const pageUsers = allUsers.slice(startIdx, endIdx);
-  
-  let caption = `👥 *USER LIST - Page ${page}/${totalPages}*\n`;
-  caption += `📊 Total: ${allUsers.length} users\n\n`;
-  
-  pageUsers.forEach((user, index) => {
-    const status = user.active ? '✅' : '❌';
-    const name = user.firstName || `User${user.id}`;
-    const lang = user.langName || 'Unknown';
-    caption += `${status} *${startIdx + index + 1}.* ${name} (ID: ${user.id})\n`;
-    caption += `   Language: ${lang} | Joined: ${new Date(user.joinedAt).toLocaleDateString()}\n\n`;
-  });
-  
-  const buttons = [];
-  
+// View Specific Ticket
+bot.action(/^ADMIN_VIEW_TICKET_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const userId = ctx.match[1];
+    const user = await getUser(userId);
+    const ticket = await getTicket(userId);
+
+    if (!user || !ticket) {
+        return ctx.answerCbQuery("Ticket not found", { show_alert: true });
+    }
+
+    const name = `${user.firstName} ${user.lastName || ''}`.trim();
+    const username = user.username || "N/A";
+
+    // Format time nicely  
+    const lastMsgTime = ticket.lastMessageTime ?
+        new Date(ticket.lastMessageTime).toLocaleString('en-IN', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            day: 'numeric',
+            month: 'short'
+        }) :
+        "No messages yet";
+
+    // Escape the message for Markdown  
+    const escapedMessage = escapeMarkdown(ticket.lastMessage || "No message yet");
+
+    const caption = `📩 *SUPPORT TICKET*\n\n` +
+        `👤 *User:* ${name}\n` +
+        `🆔 *ID:* ${userId}\n` +
+        `👤 *Username:* ${formatUsername(username)}\n` +
+        `🗨️ *Last Message:* ${escapedMessage}\n` +
+        `⏰ *Time:* ${lastMsgTime}`;
+
+    await ctx.editMessageCaption(caption, {
+        parse_mode: "Markdown",
+        repy_markup: {
+            inline_keyboard: [
+                [
+                    { text: "✏️ Message Reply", callback_data: `ADMIN_REPLY_TICKET_${userId}` }
+                ],
+                [
+                    { text: "❌ Close Ticket", callback_data: `ADMIN_CLOSE_TICKET_${userId}` }
+                ],
+                [
+                    { text: "⬅️ Back", callback_data: "ADMIN_VIEW_TICKETS" }
+                ]
+            ]
+        }
+    });
+
+});
+
+// --- USER LIST (PAGINATION FIX) ---
+bot.action(/^ADMIN_GET_USERS_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const page = Number(ctx.match[1]);
+    const users = await getAllUsers();
+
+    if (users.length === 0) return ctx.editMessageCaption("👥 No users found.", { reply_markup: { inline_keyboard: [[{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]] } });
+
+    const start = page * USERS_PER_PAGE;
+    const end = start + USERS_PER_PAGE;
+    const pageUsers = users.slice(start, end);
+    const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
+
+    let caption = `📋 *USER LIST*\n\n`;
+    caption += `📄 *Page ${page + 1} of ${totalPages}*\n`;
+    caption += `📊 *Total Users:* ${users.length}\n\n`;
+
+    // Add user list with proper numbering  
+    pageUsers.forEach((u, index) => {
+        const userNumber = start + index + 1;
+        caption += `${userNumber}. ${u.isBanned ? "🚫" : "✅"} ${u.firstName} \`${u.id}\`\n`;
+    });
+
+    const buttons = pageUsers.map(u => [{
+        text: `${u.firstName} (${u.isBanned ? "🚫" : "✅"})`,
+        callback_data: `ADMIN_VIEW_USER_${u.id}`
+    }]);
+
+    const nav = [];
+    if (page > 0) nav.push({ text: "⬅️ Prev", callback_data: `ADMIN_GET_USERS_${page - 1}` });
+    if (end < users.length) nav.push({ text: "Next ➡️", callback_data: `ADMIN_GET_USERS_${page + 1}` });
+    if (nav.length) buttons.push(nav);
+    buttons.push([{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]);
+
+    await ctx.editMessageCaption(caption, { parse_mode: "Markdown", reply_markup: { inline_keyboard: buttons } });
+
+});
+
+bot.action(/^ADMIN_VIEW_USER_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const userId = ctx.match[1];
+    const user = await getUser(userId);
+    if (!user) return ctx.answerCbQuery("User not found");
+
+    const status = user.isBanned ? "✅ ACTIVE";
+    const fullName = `${user.firstName} ${user.lastName || ''}`.trim();
+
+    // VIEW बटन को टेलीग्राम प्रोफाइल लिंक में बदलें  
+    let viewButton;
+    if (user.username && user.username !== "N/A") {
+        const cleanUsername = user.username.startsWith('@') ? user.username.substring(1) : user.username;
+        viewButton = { text: "👁️ VIEW", url: `https://t.me/${cleanUsername}` };
+    } else {
+        viewButton = { text: "👁️ VIEW", url: `tg://user?id=${userId}` };
+    }
+
+    const btns = [
+        { text: "✏️ MSG", callback_data: `ADMIN_REPLY_${userId}` },
+        user.isBanned ?
+            { text: "✅ UNBAN", callback_data: `ADMIN_UNBAN_EXECUTE_${userId}` } :
+            { text: "🚫 BAN", callback_data: `ADMIN_BAN_VIEW_${userId}` },
+        viewButton
+    ];
+
+    try {
+        // Get user profile photos  
+        const photos = await bot.telegram.getUserProfilePhotos(userId, { limit: 1 });
+
+        if (photos.total_count > 0) {
+            // Get the biggest photo size  
+            const photo = photos.photos[0];
+            const biggestPhoto = photo[photo.length - 1];
+            const photoFileId = biggestPhoto.file_id;
+
+            // Edit message with user's profile photo  
+            await ctx.editMessageMedia({
+                type: "photo",
+                media: photoFileId,
+                caption: `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: ${formatUsername(user.username)}\n*Status*: ${status}\n${user.isBanned ? `*Reason*: ${user.bannedReason}` : ""}`,
+                parse_mode: "Markdown"
+            }, {
+                reply_markup: {
+                    inline_keyboard: [
+                        btns,
+                        [{ text: "⬅️ Back", callback_data: "ADMIN_GET_USERS_0" }]
+                    ]
+                }
+            });
+        } else {
+            // If no profile photo, use default menu image  
+            await ctx.editMessageMedia({
+                type: "photo",
+                media: IMAGES.USER_LIST,
+                caption: `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: ${formatUsername(user.username)}\n*Status*: ${status}\n${user.isBanned ? `*Reason*: ${user.bannedReason}` : ""}`,
+                parse_mode: "Markdown"
+            }, {
+                reply_markup: {
+                    inline_keyboard: [
+                        btns,
+                        [{ text: "⬅️ Back", callback_data: "ADMIN_GET_USERS_0" }]
+                    ]
+                }
+            });
+        }
+    } catch (error) {
+        console.error("Error fetching profile photo:", error);
+        // Fallback to text message if photo fails  
+        await ctx.editMessageCaption(
+            `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: ${formatUsername(user.username)}\n*Status*: ${status}\n${user.isBanned ? `*Reason*: ${user.bannedReason}` : ""}`,
+            {
+                parse_mode: "Markdown",
+                reply_markup: {
+                    inline_keyboard: [
+                        btns,
+                        [{ text: "⬅️ Back", callback_data: "ADMIN_GET_USERS_0" }]
+                    ]
+                }
+            }
+        );
+    }
+
+});
+
+// ENHANCED: Ticket Reply Action
+bot.action(/^ADMIN_REPLY_TICKET_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const uid = ctx.match[1];
+    await setAdminState({
+        action: 'message_user_ticket',
+        target: uid
+    });
+    // FIX: Added backticks
+    await ctx.reply(`✍️ TYPE YOUR REPLY FOR USER ID: ${uid}`, {
+        parse_mode: "Markdown",
+        reply_markup: { force_reply: true }
+    });
+});
+
+// ENHANCED: General Message Reply
+bot.action(/^ADMIN_REPLY_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    const uid = ctx.match[1];
+    await setAdminState({
+        action: 'message_user',
+        target: uid
+    });
+    // FIX: Added backticks
+    await ctx.reply(`✍️ TYPE YOUR REPLY FOR USER ID: ${uid}`, {
+        parse_mode: "Markdown",
+        reply_markup: { force_reply: true }
+    });
+});
+
+// ENHANCED: Close Ticket Action
+bot.action(/^ADMIN_CLOSE_TICKET_(\d+)$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+
+    const uid = ctx.match[1];
+
+    // Delete Ticket from DB  
+    await closeTicket(uid);
+
+    // 1. Notify User (Professional Message)  
+    await bot.telegram.sendMessage(
+        uid,
+        "🚫 *Your Ticket Close By Support Team*\n\nIf you have more queries, you can open a new ticket from the menu.",
+        { parse_mode: "Markdown" }
+    ).catch(() => { });
+
+    // 2. Notify Admin (Confirmation)  
+    await ctx.answerCbQuery("✅ Ticket Closed");
+
+    // Send Success Message  
+    await ctx.reply(
+        `✅ *TICKET CLOSED SUCCESSFULLY*\n\nUser ID: ${uid}`,
+        { parse_mode: "Markdown" }
+    );
+
+});
+
+bot.action("ADMIN_BROADCAST", async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    await setAdminState({ action: 'broadcast' });
+    await ctx.editMessageCaption("📢 BROADCAST\n\nSend message to broadcast to ALL users.", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "ADMIN_PANEL" }]] } });
+});
+
+bot.action("ADMIN_SEARCH_USER", async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    await setAdminState({ action: 'search' });
+    await ctx.editMessageCaption("🔍 SEARCH USER\n\nSend:\n• User ID\n• OR Username",
+        {
+            parse_mode: "Markdown",
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: "❌ Cancel", callback_data: "ADMIN_PANEL" }]
+                ]
+            }
+        }
+    );
+});
+
   // User buttons
   pageUsers.forEach((user, index) => {
     buttons.push([
