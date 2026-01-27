@@ -308,27 +308,6 @@ bot.action('check_join', async (ctx) => {
       }
     );
     // ==================== FIX ENDS HERE ====================
-    
-    // Send instruction video after 2 seconds
-    setTimeout(async () => {
-      try {
-        await ctx.replyWithVideo(
-          VIDEOS.INSTRUCTION,
-          {
-            caption: langData.instruction.caption,
-            parse_mode: 'Markdown'
-          }
-        );
-      } catch (error) {
-        console.error('Error sending video:', error);
-      }
-    }, 2000);
-    
-  } catch (error) {
-    console.error('Error checking channel membership:', error);
-    await ctx.answerCbQuery('❌ Error checking membership. Try again.');
-  }
-});
 
 // Change language
 bot.action('change_language', async (ctx) => {
