@@ -307,11 +307,111 @@ bot.action('check_join', async (ctx) => {
         }
       }
     );
-    // ==================== FIX ENDS HERE ====================
 
 // Change language
 bot.action('change_language', async (ctx) => {
   await showLanguageSelection(ctx);
+  await ctx.answerCbQuery();
+});
+
+// Show Instructions Video Handler
+bot.action('show_instructions', async (ctx) => {
+  const userId = ctx.from.id;
+  const user = getUserData(userId);
+  const langCode = user.lang || 'en';
+  const langData = languageTexts[langCode] || languageTexts['en'];
+  
+  // Send instructions video with caption and buttons
+  await ctx.editMessageMedia(
+    {
+      type: 'video',
+      media: VIDEOS.INSTRUCTION,
+      caption: "📲 INSTRUCTIONS How to Register & Get Signals – Watch Carefully",
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: langData.registration.buttonSignal || "📡 GET SIGNAL", url: 'https://nexusplay.shop' },
+            { text: "🆘 Live Support", callback_data: 'live_support' }
+          ],
+          [
+            { text: "🔙 Back", callback_data: 'back_to_registration' }
+          ]
+        ]
+      }
+    }
+  );
+  
+  await ctx.answerCbQuery();
+});
+
+// Back to Registration from Instructions
+bot.action('back_to_registration', async (ctx) => {
+  const userId = ctx.from.id;
+  const user = getUserData(userId);
+  const langCode = user.lang || 'en';
+  const langData = languageTexts[langCode] || languageTexts['en'];
+  const currency = currencyData[langCode] || currencyData['en'];
+  
+  // Prepare registration message
+  const registrationText = langData.registration.success
+    .replace('₹1000', `${currency.symbol}${currency.amount}`);
+  
+  // Buttons recreate karna zaroori hai
+  const registrationButtons = [
+    [
+      { text: langData.registration.buttonRegister, url: 'https://1win.com' }
+    ],
+    [
+      { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
+    ],
+    [
+      { text: langData.registration.buttonChange, callback_data: 'change_language' }
+    ],
+    [
+      { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' }
+    ]
+  ];
+
+  if (userId === ADMIN_ID) {
+    registrationButtons.push([
+      { text: "🛡️ ADMIN PANEL", callback_data: "ADMIN_PANEL" }
+    ]);
+  }
+  
+  // Photo wapas Registration wali set karein
+  await ctx.editMessageMedia(
+    {
+      type: 'photo',
+      media: IMAGES.REGISTRATION,
+      caption: registrationText,
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: { inline_keyboard: registrationButtons }
+    }
+  );
+  await ctx.answerCbQuery();
+});
+
+// Live Support Handler
+bot.action('live_support', async (ctx) => {
+  const userId = ctx.from.id;
+  supportTickets.set(userId, true);
+  
+  await ctx.editMessageText(
+    "🆘 *LIVE SUPPORT*\n\nPlease type your message for our support team. We will respond as soon as possible.\n\nYou can type /cancel to cancel.",
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "🔙 Back to Instructions", callback_data: 'show_instructions' }]
+        ]
+      }
+    }
+  );
   await ctx.answerCbQuery();
 });
 
