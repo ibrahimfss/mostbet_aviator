@@ -468,7 +468,7 @@ bot.action('close_ticket_user', async (ctx) => {
       { text: langData.registration.buttonRegister, url: 'https://1win.com' }
     ],
     [
-      { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+      { text: langData.instruction.button || "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
       { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
     ],
     [
@@ -927,7 +927,7 @@ bot.action('admin_back_to_registration', async (ctx) => {
       { text: langData.registration.buttonRegister, url: 'https://1win.com' }
     ],
     [
-      { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+      { text: langData.instruction.button || "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
       { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
     ],
     [
