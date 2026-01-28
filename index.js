@@ -352,7 +352,9 @@ bot.action('show_instructions', async (ctx) => {
       reply_markup: {
         inline_keyboard: [
           [
-            { text: langData.registration.buttonSignal || "📡 GET SIGNAL", url: 'https://nexusplay.shop' },
+            { text: langData.registration.buttonSignal || "📡 GET SIGNAL", url: 'https://nexusplay.shop' }
+          ],
+          [
             { text: "🆘 Live Support", callback_data: 'live_support' }
           ],
           [
