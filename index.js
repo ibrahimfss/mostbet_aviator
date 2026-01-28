@@ -589,15 +589,20 @@ ADMIN PANEL & LOGIC - ENHANCED WITH TICKET SUPPORT
 ===================== */
 bot.action("ADMIN_PANEL", async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
-  
-  const users = Array.from(userStorage.values());
-  const activeTickets = Array.from(supportTickets.keys()).length;
+
+  const stats = await getUserStatsFromFirebase();
+  const allTickets = await getAllTicketsFromFirebase();
+  const activeTickets = Object.keys(allTickets).length;
+
+  // Get unique languages from Firebase
+  const allUsers = await getAllUsersFromFirebase();
+  const uniqueLangs = new Set(Object.values(allUsers).map(u => u.langName || u.lang));
   
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
-    `👥 Total Users: ${users.length}\n` +
-    `📞 Active Tickets: ${activeTickets}\n` +
-    `🌐 Languages: ${new Set(users.map(u => u.lang)).size}`;
-  
+                 `👥 Total Users: ${stats.total}\n` +
+                 `📞 Active Tickets: ${activeTickets}\n` +
+                 `🌐 Languages: ${uniqueLangs.size}`;
+
   await ctx.editMessageMedia(
     {
       type: 'photo',
