@@ -1264,6 +1264,28 @@ export default async function handler(req, res) {
   }
 }
 
+// ==================== LOAD DATA ON STARTUP ====================
+
+async function initializeBotData() {
+  try {
+    // Load all users from Firebase to memory
+    const allUsers = await getAllUsersFromFirebase();
+    Object.entries(allUsers).forEach(([userId, userData]) => {
+      userStorage.set(parseInt(userId), userData);
+    });
+    console.log(`📥 Loaded ${Object.keys(allUsers).length} users from Firebase`);
+    
+    // Load tickets from Firebase
+    await loadTicketsFromFirebase();
+    
+  } catch (error) {
+    console.error('Error initializing bot data:', error);
+  }
+}
+
+// Call this function when bot starts
+initializeBotData();
+
 // Development mode
 if (process.env.NODE_ENV !== 'production') {
   bot.launch();
