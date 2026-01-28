@@ -53,9 +53,9 @@ bot.on("animation", async (ctx) => {
 const IMAGES = {
   LANGUAGE_SELECTION: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   REGISTRATION: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
-  ADMIN_PANEL: 'https://via.placeholder.com/600x400/1a1a2e/ffffff?text=Admin+Panel',
-  USER_LIST: 'https://via.placeholder.com/600x400/16213e/ffffff?text=User+List',
-  BROADCAST: 'https://via.placeholder.com/600x400/0f3460/ffffff?text=Broadcast'
+  ADMIN_PANEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  USER_LIST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  BROADCAST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png'
 };
 
 const VIDEOS = {
