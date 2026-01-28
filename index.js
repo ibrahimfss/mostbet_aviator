@@ -288,7 +288,7 @@ bot.action('check_join', async (ctx) => {
       ],
       // Second row - INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
       [
-        { text: "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
+        { text: langData.instruction.button || "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
         { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
       ],
       // Third row - CHANGE LANGUAGE button
