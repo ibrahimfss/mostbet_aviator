@@ -607,7 +607,9 @@ bot.action('close_ticket_user', async (ctx) => {
   await ctx.answerCbQuery('✅ Ticket closed');
   
   // Wapas registration page pe le jayein
-  const user = getUserData(userId);
+  // FIX: Added 'await' here
+  const user = await getUserData(userId);
+  
   const langCode = user.lang || 'en';
   const langData = languageTexts[langCode] || languageTexts['en'];
   const currency = currencyData[langCode] || currencyData['en'];
