@@ -1298,6 +1298,10 @@ async function initializeBotData() {
 // Call this function when bot starts
 initializeBotData();
 
+// Initialize data before starting
+initializeBotData().then(() => {
+  console.log('✅ Bot data initialized from Firebase');
+
 // Development mode
 if (process.env.NODE_ENV !== 'production') {
   bot.launch();
