@@ -355,10 +355,10 @@ bot.action('show_instructions', async (ctx) => {
             { text: langData.registration.buttonSignal || "📡 GET SIGNAL", url: 'https://nexusplay.shop' }
           ],
           [
-            { text: "🆘 Live Support", callback_data: 'live_support' }
+            { text: langData.liveSupport.button || "🆘 Live Support", callback_data: 'live_support' }
           ],
           [
-            { text: "🔙 Back", callback_data: 'back_to_registration' }
+            { text: langData.buttons?.back || "🔙 Back", callback_data: 'back_to_registration' }
           ]
         ]
       }
