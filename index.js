@@ -776,28 +776,32 @@ const USERS_PER_PAGE = 10;
 bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   const page = parseInt(ctx.match[1]) - 1;
-  const users = Array.from(userStorage.values());
   
+  // Get users from Firebase
+  const allUsers = await getAllUsersFromFirebase();
+  const users = Object.values(allUsers);
+
   if (users.length === 0) {
-    await ctx.editMessageCaption("👥 No users found.", { 
-      reply_markup: { 
-        inline_keyboard: [[{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]] 
-      } 
+    await ctx.editMessageCaption("👥 No users found.", {
+      reply_markup: {
+        inline_keyboard: [[{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]]
+      }
     });
     return;
   }
-  
+
+  const USERS_PER_PAGE = 10;
   const start = page * USERS_PER_PAGE;
   const end = start + USERS_PER_PAGE;
   const pageUsers = users.slice(start, end);
   const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
-  
+
   let caption = `📋 *USER LIST*\n\n`;
   caption += `📄 *Page ${page + 1} of ${totalPages}*\n`;
   caption += `📊 *Total Users:* ${users.length}\n\n`;
-  
+
   const buttons = [];
-  
+
   // Add user list with proper numbering
   pageUsers.forEach((u, index) => {
     const userNumber = start + index + 1;
@@ -808,7 +812,7 @@ bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
       }
     ]);
   });
-  
+
   // Navigation buttons
   const nav = [];
   if (page > 0) {
@@ -817,16 +821,16 @@ bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
   if (end < users.length) {
     nav.push({ text: "Next ➡️", callback_data: `admin_user_list_${page + 2}` });
   }
-  
+
   if (nav.length > 0) {
     buttons.push(nav);
   }
-  
+
   buttons.push([{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]);
-  
-  await ctx.editMessageCaption(caption, { 
-    parse_mode: "Markdown", 
-    reply_markup: { inline_keyboard: buttons } 
+
+  await ctx.editMessageCaption(caption, {
+    parse_mode: "Markdown",
+    reply_markup: { inline_keyboard: buttons }
   });
 });
 
