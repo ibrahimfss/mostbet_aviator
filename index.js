@@ -402,8 +402,11 @@ bot.action(/^set_lang_(.+)$/, async (ctx) => {
 // Check channel membership
 bot.action('check_join', async (ctx) => {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
-  const langCode = user.lang;
+  
+  // FIX: Added 'await' here
+  const user = await getUserData(userId); 
+  
+  const langCode = user.lang || 'en';
   const langData = languageTexts[langCode] || languageTexts['en'];
   const currency = currencyData[langCode] || currencyData['en'];
   
@@ -430,7 +433,7 @@ bot.action('check_join', async (ctx) => {
       [
         { text: langData.registration.buttonRegister, url: 'https://1win.com' }
       ],
-      // Second row - INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
+      // Second row - INSTRUCTIONS and GET SIGNAL in same row
       [
         { text: langData.instruction.button || "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
         { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
@@ -448,7 +451,6 @@ bot.action('check_join', async (ctx) => {
       ]);
     }
 
-    // Ab hum editMessageMedia call karenge aur upar banaya hua variable use karenge
     await ctx.editMessageMedia(
       {
         type: 'photo',
