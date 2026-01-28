@@ -154,10 +154,52 @@ const adminBroadcastMode = new Map(); // Track broadcast mode
 const adminReplyTarget = new Map(); // Track admin reply target
 const supportTickets = new Map(); // Support tickets
 
-// User data structure
-function getUserData(userId) {
+// Load tickets from Firebase on startup
+async function loadTicketsFromFirebase() {
+  try {
+    const tickets = await getAllTicketsFromFirebase();
+    Object.keys(tickets).forEach(userId => {
+      supportTickets.set(parseInt(userId), true);
+    });
+    console.log(`📥 Loaded ${Object.keys(tickets).length} tickets from Firebase`);
+  } catch (error) {
+    console.error('Error loading tickets:', error);
+  }
+}
+
+// Add ticket - UPDATED
+async function addTicket(userId) {
+  supportTickets.set(userId, true);
+  await saveTicketToFirebase(userId);
+}
+
+// Remove ticket - UPDATED
+async function removeTicket(userId) {
+  supportTickets.delete(userId);
+  await removeTicketFromFirebase(userId);
+}
+
+// Get active tickets - UPDATED
+async function getActiveTickets() {
+  // Get from memory (fast) and verify with Firebase
+  const memoryTickets = Array.from(supportTickets.keys());
+  return memoryTickets;
+}
+
+// User data structure - UPDATED VERSION
+async function getUserData(userId) {
+  // First try to get from Firebase
+  const firebaseUser = await getUserFromFirebase(userId);
+  
+  if (firebaseUser) {
+    // Update memory storage with Firebase data
+    userStorage.set(userId, firebaseUser);
+    return firebaseUser;
+  }
+  
+  // If not in Firebase, create new user
   if (!userStorage.has(userId)) {
-    userStorage.set(userId, {
+    const newUser = {
       id: userId,
       lang: 'en',
       langName: 'English',
@@ -170,23 +212,38 @@ function getUserData(userId) {
       firstName: '',
       lastName: '',
       profilePhotoId: null
-    });
+    };
+    userStorage.set(userId, newUser);
+    
+    // Save to Firebase
+    await saveUserToFirebase(userId, newUser);
   }
   return userStorage.get(userId);
 }
 
-// Update user data
-function updateUserData(userId, data) {
-  const user = getUserData(userId);
-  userStorage.set(userId, { ...user, ...data, lastSeen: new Date().toISOString() });
+// Update user data - UPDATED VERSION
+async function updateUserData(userId, data) {
+  const user = await getUserData(userId);
+  const updatedUser = { 
+    ...user, 
+    ...data, 
+    lastSeen: new Date().toISOString() 
+  };
+  
+  // Update memory
+  userStorage.set(userId, updatedUser);
+  
+  // Update Firebase
+  await saveUserToFirebase(userId, updatedUser);
+  
+  return updatedUser;
 }
 
-// Get user count
-function getUserStats() {
-  const total = userStorage.size;
-  const active = Array.from(userStorage.values()).filter(u => u.active).length;
-  const inactive = total - active;
-  return { total, active, inactive };
+// Get user stats - UPDATED VERSION
+async function getUserStats() {
+  // Get from Firebase for accurate data
+  const stats = await getUserStatsFromFirebase();
+  return stats;
 }
 
 // ==================== LANGUAGE SELECTION ====================
