@@ -26,6 +26,91 @@ if (!admin.apps.length) {
 
 const db = admin.database();
 
+// ==================== FIREBASE DATABASE FUNCTIONS ====================
+
+// Save user to Firebase
+async function saveUserToFirebase(userId, userData) {
+  try {
+    await db.ref('users/' + userId).set(userData);
+    console.log(`✅ User ${userId} saved to Firebase`);
+  } catch (error) {
+    console.error('Error saving user to Firebase:', error);
+  }
+}
+
+// Get user from Firebase
+async function getUserFromFirebase(userId) {
+  try {
+    const snapshot = await db.ref('users/' + userId).once('value');
+    return snapshot.val();
+  } catch (error) {
+    console.error('Error getting user from Firebase:', error);
+    return null;
+  }
+}
+
+// Get all users from Firebase
+async function getAllUsersFromFirebase() {
+  try {
+    const snapshot = await db.ref('users').once('value');
+    return snapshot.val() || {};
+  } catch (error) {
+    console.error('Error getting all users:', error);
+    return {};
+  }
+}
+
+// Save support ticket to Firebase
+async function saveTicketToFirebase(userId) {
+  try {
+    await db.ref('tickets/' + userId).set({
+      userId: userId,
+      openedAt: new Date().toISOString(),
+      status: 'open'
+    });
+  } catch (error) {
+    console.error('Error saving ticket:', error);
+  }
+}
+
+// Remove ticket from Firebase
+async function removeTicketFromFirebase(userId) {
+  try {
+    await db.ref('tickets/' + userId).remove();
+  } catch (error) {
+    console.error('Error removing ticket:', error);
+  }
+}
+
+// Get all tickets from Firebase
+async function getAllTicketsFromFirebase() {
+  try {
+    const snapshot = await db.ref('tickets').once('value');
+    return snapshot.val() || {};
+  } catch (error) {
+    console.error('Error getting tickets:', error);
+    return {};
+  }
+}
+
+// Get user stats from Firebase
+async function getUserStatsFromFirebase() {
+  try {
+    const snapshot = await db.ref('users').once('value');
+    const users = snapshot.val() || {};
+    const userArray = Object.values(users);
+    
+    const total = userArray.length;
+    const active = userArray.filter(u => u.active).length;
+    const inactive = total - active;
+    
+    return { total, active, inactive };
+  } catch (error) {
+    console.error('Error getting stats:', error);
+    return { total: 0, active: 0, inactive: 0 };
+  }
+}
+
 if (!BOT_TOKEN || !ADMIN_ID) throw new Error("BOT_TOKEN or ADMIN_ID missing");
 
 const bot = new Telegraf(BOT_TOKEN);
