@@ -636,15 +636,16 @@ bot.action("ADMIN_PANEL", async (ctx) => {
 // View Active Tickets
 bot.action("admin_view_tickets", async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
-  
-  const activeTickets = Array.from(supportTickets.keys());
-  
+
+  const allTickets = await getAllTicketsFromFirebase();
+  const activeTickets = Object.keys(allTickets);
+
   if (activeTickets.length === 0) {
     await ctx.editMessageCaption(
-      "✅ *NO ACTIVE TICKETS*\n\nThere are no active support tickets.",
+      "✅ NO ACTIVE TICKETS\n\nThere are no active support tickets.",
       {
         parse_mode: "Markdown",
-        reply_markup: { 
+        reply_markup: {
           inline_keyboard: [
             [{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]
           ]
@@ -653,12 +654,12 @@ bot.action("admin_view_tickets", async (ctx) => {
     );
     return;
   }
-  
+
   let caption = `📞 *ACTIVE SUPPORT TICKETS*\n\n*Total Active Tickets: ${activeTickets.length}*\n\n`;
   const buttons = [];
-  
+
   for (const userId of activeTickets.slice(0, 10)) {
-    const user = getUserData(userId);
+    const user = await getUserData(parseInt(userId));
     if (user) {
       const name = `${user.firstName} ${user.lastName || ''}`.trim() || `User ${userId}`;
       buttons.push([{
@@ -667,9 +668,9 @@ bot.action("admin_view_tickets", async (ctx) => {
       }]);
     }
   }
-  
+
   buttons.push([{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]);
-  
+
   await ctx.editMessageCaption(caption, {
     parse_mode: "Markdown",
     reply_markup: { inline_keyboard: buttons }
