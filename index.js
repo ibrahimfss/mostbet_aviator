@@ -503,18 +503,19 @@ bot.action('back_to_registration', async (ctx) => {
   await ctx.answerCbQuery();
 });
 
-// Live Support Handler - REPLACE THIS SECTION
+// Live Support Handler - UPDATED
 bot.action('live_support', async (ctx) => {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
+  const user = await getUserData(userId);
   const langCode = user.lang || 'en';
   const langData = languageTexts[langCode] || languageTexts['en'];
-  
-  supportTickets.set(userId, true);
-  
-  // Professional support image - aap koi image URL yahan daalein
+
+  // Add ticket to Firebase
+  await addTicket(userId);
+
+  // Professional support image
   const supportImage = 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png';
-  
+
   await ctx.editMessageMedia(
     {
       type: 'photo',
@@ -534,12 +535,17 @@ bot.action('live_support', async (ctx) => {
   await ctx.answerCbQuery();
 });
 
-// User ne ticket close karne ka button
+// User ne ticket close karne ka button - UPDATED
 bot.action('close_ticket_user', async (ctx) => {
   const userId = ctx.from.id;
-  supportTickets.delete(userId);
   
+  // Remove from Firebase
+  await removeTicket(userId);
+
   await ctx.answerCbQuery('✅ Ticket closed');
+
+  // Rest of the code...
+});
   
   // Wapas registration page pe le jayein
   const user = getUserData(userId);
