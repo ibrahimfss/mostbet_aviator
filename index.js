@@ -192,26 +192,28 @@ function getUserStats() {
 // ==================== LANGUAGE SELECTION ====================
 bot.start(async (ctx) => {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
   
+  // Load user from Firebase
+  const user = await getUserData(userId);
+
   // Update user info
-  updateUserData(userId, {
+  await updateUserData(userId, {
     username: ctx.from.username || '',
     firstName: ctx.from.first_name || '',
     lastName: ctx.from.last_name || ''
   });
-  
+
   // Try to get profile photo
   try {
     const profilePhotos = await ctx.telegram.getUserProfilePhotos(userId, 0, 1);
     if (profilePhotos.total_count > 0) {
       const photo = profilePhotos.photos[0][0];
-      user.profilePhotoId = photo.file_id;
+      await updateUserData(userId, { profilePhotoId: photo.file_id });
     }
   } catch (error) {
     console.error('Error getting profile photo:', error);
   }
-  
+
   // Show language selection
   await showLanguageSelection(ctx);
 });
