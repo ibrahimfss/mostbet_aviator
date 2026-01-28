@@ -600,9 +600,6 @@ bot.action('close_ticket_user', async (ctx) => {
   await removeTicket(userId);
 
   await ctx.answerCbQuery('✅ Ticket closed');
-
-  // Rest of the code...
-});
   
   // Wapas registration page pe le jayein
   const user = getUserData(userId);
