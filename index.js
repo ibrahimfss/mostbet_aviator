@@ -517,7 +517,10 @@ bot.action('show_instructions', async (ctx) => {
 // Back to Registration from Instructions
 bot.action('back_to_registration', async (ctx) => {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
+  
+  // FIX: Added 'await' here
+  const user = await getUserData(userId);
+  
   const langCode = user.lang || 'en';
   const langData = languageTexts[langCode] || languageTexts['en'];
   const currency = currencyData[langCode] || currencyData['en'];
@@ -531,7 +534,7 @@ bot.action('back_to_registration', async (ctx) => {
     [
       { text: langData.registration.buttonRegister, url: 'https://1win.com' }
     ],
-    // INSTRUCTIONS and GET SIGNAL in same row (INSTRUCTIONS first)
+    // INSTRUCTIONS and GET SIGNAL in same row
     [
       { text: langData.instruction.button || "📲 INSTRUCTIONS", callback_data: 'show_instructions' },
       { text: langData.registration.buttonSignal, url: 'https://nexusplay.shop' }
