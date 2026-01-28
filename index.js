@@ -744,23 +744,25 @@ bot.action(/^admin_reply_(\d+)$/, async (ctx) => {
   });
 });
 
-// Close Ticket Action
+// Close Ticket Action - UPDATED
 bot.action(/^admin_close_ticket_(\d+)$/, async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   const uid = ctx.match[1];
-  supportTickets.delete(parseInt(uid));
   
+  // Remove from Firebase
+  await removeTicket(parseInt(uid));
+
   // Notify User
   try {
     await ctx.telegram.sendMessage(
       uid,
-      "🚫 *Your Ticket Closed By Support Team*\n\nIf you have more queries, you can open a new ticket from the menu.",
+      "🚫 Your Ticket Closed By Support Team\n\nIf you have more queries, you can open a new ticket from the menu.",
       { parse_mode: "Markdown" }
     );
   } catch (error) {
     console.log("User notification failed:", error);
   }
-  
+
   await ctx.answerCbQuery("✅ Ticket Closed");
   await ctx.reply(
     `✅ *TICKET CLOSED SUCCESSFULLY*\n\nUser ID: ${uid}`,
