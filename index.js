@@ -438,8 +438,8 @@ bot.action('live_support', async (ctx) => {
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: "❌ CLOSE TICKET", callback_data: 'close_ticket_user' }],
-          [{ text: "🔙 Back", callback_data: 'back_to_registration' }]
+          [{ text: langData.liveSupport.closeButton || "❌ CLOSE TICKET", callback_data: 'close_ticket_user' }],
+          [{ text: langData.buttons?.back || "🔙 Back", callback_data: 'back_to_registration' }]
         ]
       }
     }
