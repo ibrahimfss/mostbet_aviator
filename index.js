@@ -817,7 +817,7 @@ bot.action(/^admin_close_ticket_(\d+)$/, async (ctx) => {
   try {
     await ctx.telegram.sendMessage(
       uid,
-      "🚫 Your Ticket Closed By Support Team\n\nIf you have more queries, you can open a new ticket from the menu.",
+      "🚫 *Your Ticket Closed By Support Team*\n\n_If you have more queries, you can open a new ticket from the menu._",
       { parse_mode: "Markdown" }
     );
   } catch (error) {
