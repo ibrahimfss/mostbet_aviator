@@ -836,42 +836,6 @@ bot.action("ADMIN_SEARCH_USER", async (ctx) => {
     );
 });
 
-  // User buttons
-  pageUsers.forEach((user, index) => {
-    buttons.push([
-      {
-        text: `${user.active ? '✅' : '❌'} ${user.firstName || 'User'} (${user.id})`,
-        callback_data: `admin_user_detail_${user.id}_${page}`
-      }
-    ]);
-  });
-  
-  // Pagination buttons
-  const pagination = [];
-  if (page > 1) {
-    pagination.push({ text: '◀️ Previous', callback_data: `admin_user_list_${page - 1}` });
-  }
-  if (page < totalPages) {
-    pagination.push({ text: 'Next ▶️', callback_data: `admin_user_list_${page + 1}` });
-  }
-  
-  if (pagination.length > 0) {
-    buttons.push(pagination);
-  }
-  
-  buttons.push([{ text: '🔙 Back to Admin Panel', callback_data: 'admin_back' }]);
-  
-  await ctx.editMessageMedia(
-    {
-      type: 'photo',
-      media: IMAGES.USER_LIST,
-      caption: caption,
-      parse_mode: 'Markdown'
-    },
-    { reply_markup: { inline_keyboard: buttons } }
-  );
-});
-
 // User details
 bot.action(/^admin_user_detail_(\d+)_(\d+)$/, async (ctx) => {
   const userId = ctx.from.id;
