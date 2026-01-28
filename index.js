@@ -1352,15 +1352,15 @@ async function initializeBotData() {
   }
 }
 
-// Call this function when bot starts
-initializeBotData();
-
-// Initialize data before starting
+// Initialize data before starting bot
 initializeBotData().then(() => {
   console.log('✅ Bot data initialized from Firebase');
-
-// Development mode
-if (process.env.NODE_ENV !== 'production') {
-  bot.launch();
-  console.log('🤖 Bot is running in development mode');
-}
+  
+  // Development mode - only launch in non-production
+  if (process.env.NODE_ENV !== 'production') {
+    bot.launch();
+    console.log('🤖 Bot is running in development mode');
+  }
+}).catch(error => {
+  console.error('❌ Failed to initialize bot data:', error);
+});
