@@ -482,31 +482,47 @@ bot.action('change_language', async (ctx) => {
 // Show Instructions Video Handler
 bot.action('show_instructions', async (ctx) => {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
-  const langCode = user.lang || 'en';
+  const user = await getUserData(userId); // ✅ Await added
+  const langCode = user?.lang || 'en';
   const langData = languageTexts[langCode] || languageTexts['en'];
+  const currency = currencyData[langCode] || currencyData['en'];
   
-  // Send instructions video with caption and buttons
+  // Use correct instruction caption from language file
+  const instructionCaption = langData.instruction?.caption || 
+                           "📲 *INSTRUCTIONS How to Register & Get Signals – Watch Carefully*";
+  
+  // Create buttons using user's language
+  const instructionButtons = [
+    [
+      { 
+        text: langData.registration?.buttonSignal || "📡 GET SIGNAL", 
+        url: 'https://nexusplay.shop' 
+      }
+    ],
+    [
+      { 
+        text: langData.liveSupport?.button || "🆘 Live Support", 
+        callback_data: 'live_support' 
+      }
+    ],
+    [
+      { 
+        text: langData.buttons?.back || "🔙 Back", 
+        callback_data: 'back_to_registration' 
+      }
+    ]
+  ];
+  
   await ctx.editMessageMedia(
     {
       type: 'video',
       media: VIDEOS.INSTRUCTION,
-      caption: langData.instruction.caption,
+      caption: instructionCaption,
       parse_mode: 'Markdown'
     },
     {
       reply_markup: {
-        inline_keyboard: [
-          [
-            { text: langData.registration.buttonSignal || "📡 GET SIGNAL", url: 'https://nexusplay.shop' }
-          ],
-          [
-            { text: langData.liveSupport.button || "🆘 Live Support", callback_data: 'live_support' }
-          ],
-          [
-            { text: langData.buttons?.back || "🔙 Back", callback_data: 'back_to_registration' }
-          ]
-        ]
+        inline_keyboard: instructionButtons
       }
     }
   );
