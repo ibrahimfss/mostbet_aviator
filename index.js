@@ -988,12 +988,26 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
                       `📊 *Messages: ${totalMessages}*\n` +
                       `-----------------------------\n`;
 
-        if (currentMsg) {
+            if (currentMsg) {
             const msgContent = currentMsg.text || currentMsg.caption;
             const safeContent = cleanText(msgContent);
             
+            // FIX: Correct time formatting without backslashes
+            const msgTime = currentMsg.timestamp || currentMsg.date;
+            const formattedTime = msgTime ? 
+                new Date(msgTime).toLocaleString('en-IN', { 
+                    timeZone: 'Asia/Kolkata',
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                }) : 'N/A';
+            
             caption += `🔢 *Message*: ${msgIndex + 1}/${totalMessages}\n` +
-                       `⏰ *Time*: ${cleanText(new Date(currentMsg.timestamp || currentMsg.date).toLocaleString())}\n` +
+                       `⏰ *Time*: ${formattedTime}\n` +
                        `🗨️ *Content*: ${safeContent}`;
         } else {
             caption += `⚠️ No messages in this ticket.\n\nTap "✏️ Reply" to start conversation.`;
