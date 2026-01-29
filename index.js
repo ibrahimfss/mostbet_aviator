@@ -1290,44 +1290,49 @@ bot.on('message', async (ctx) => {
     return;
   }
   
-  // Admin reply to user
-  if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
-    const targetUserId = adminReplyTarget.get(userId);
-    
-    try {
-      // Check if target user exists
-      const targetUser = getUserData(targetUserId);
-      if (!targetUser) {
-        await ctx.reply(`❌ User ${targetUserId} not found in database.`);
-        adminReplyTarget.delete(userId);
-        return;
-      }
-      
-      // Send message to user
-      if (message.text) {
-        await ctx.telegram.sendMessage(targetUserId, `📨 *Message from Support:*\n\n${message.text}`, {
-          parse_mode: 'Markdown'
-        });
-      } else if (message.photo) {
-        const photo = message.photo[message.photo.length - 1];
-        await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
-          caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
-          parse_mode: 'Markdown'
-        });
-      } else if (message.video) {
-        await ctx.telegram.sendVideo(targetUserId, message.video.file_id, {
-          caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
-          parse_mode: 'Markdown'
-        });
-      }
-      
-      await ctx.reply(`✅ Message sent to user ${targetUserId}`);
+  // Admin reply to user - FIXED WITH AWAIT
+if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
+  const targetUserId = adminReplyTarget.get(userId);
+  
+  try {
+    // Check if target user exists - ✅ AWAIT ADDED
+    const targetUser = await getUserData(targetUserId);
+    if (!targetUser) {
+      await ctx.reply(`❌ User ${targetUserId} not found in database.`);
       adminReplyTarget.delete(userId);
-    } catch (error) {
-      await ctx.reply(`❌ Failed to send message: ${error.message}`);
+      return;
     }
-    return;
+    
+    // Send message to user
+    if (message.text) {
+      await ctx.telegram.sendMessage(targetUserId, `📨 *Message from Support:*\n\n${message.text}`, {
+        parse_mode: 'Markdown'
+      });
+    } else if (message.photo) {
+      const photo = message.photo[message.photo.length - 1];
+      await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
+        caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
+        parse_mode: 'Markdown'
+      });
+    } else if (message.video) {
+      await ctx.telegram.sendVideo(targetUserId, message.video.file_id, {
+        caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
+        parse_mode: 'Markdown'
+      });
+    } else if (message.document) {
+      await ctx.telegram.sendDocument(targetUserId, message.document.file_id, {
+        caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
+        parse_mode: 'Markdown'
+      });
+    }
+    
+    await ctx.reply(`✅ Message sent to user ${targetUserId}`);
+    adminReplyTarget.delete(userId);
+  } catch (error) {
+    await ctx.reply(`❌ Failed to send message: ${error.message}`);
   }
+  return;
+}
   
   // User support message - ENHANCED MEDIA HANDLING
 if (supportTickets.has(userId)) {
