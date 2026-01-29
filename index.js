@@ -829,11 +829,17 @@ bot.action(/^admin_close_ticket_(\d+)$/, async (ctx) => {
   // Remove from Firebase
   await removeTicket(parseInt(uid));
 
-  // Notify User
+  // Notify User in their language
   try {
+    const targetUser = await getUserData(parseInt(uid));  // ✅ Await added
+    const langCode = targetUser?.lang || 'en';
+    const langData = languageTexts[langCode] || languageTexts['en'];
+    const closeMessage = langData.ticketClosedByAdmin || 
+      "🚫 *Your Ticket Closed By Support Team*\n\n_If you have more queries, you can open a new ticket from the menu._";
+    
     await ctx.telegram.sendMessage(
       uid,
-      "🚫 *Your Ticket Closed By Support Team*\n\n_If you have more queries, you can open a new ticket from the menu._",
+      closeMessage,
       { parse_mode: "Markdown" }
     );
   } catch (error) {
