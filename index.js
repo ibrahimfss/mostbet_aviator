@@ -407,10 +407,10 @@ bot.action(/^set_lang_(.+)$/, async (ctx) => {
   const currency = currencyData[langCode] || currencyData['en'];
   
   // Update user language
-  updateUserData(userId, {
-    lang: langCode,
-    langName: langData.name
-  });
+await updateUserData(userId, {
+  lang: langCode,
+  langName: langData.name
+});
   
   // Show join channel message
   const joinCaption = langData.join.text;
