@@ -987,14 +987,34 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
             parse_mode: 'Markdown'
         };
 
-        if (currentMsg && currentMsg.fileId) {
+            if (currentMsg && currentMsg.fileId) {
+            // Use HTML parse mode to avoid markdown issues
             if (currentMsg.type === 'photo') {
-                mediaObj = { type: 'photo', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+                mediaObj = { 
+                    type: 'photo', 
+                    media: currentMsg.fileId, 
+                    caption: caption.replace(/\*/g, ''), // Remove asterisks for safety
+                    parse_mode: 'HTML'  // Changed to HTML
+                };
             } else if (currentMsg.type === 'video') {
-                mediaObj = { type: 'video', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+                mediaObj = { 
+                    type: 'video', 
+                    media: currentMsg.fileId, 
+                    caption: caption.replace(/\*/g, ''), // Remove asterisks
+                    parse_mode: 'HTML'  // Changed to HTML
+                };
             } else if (currentMsg.type === 'document') {
-                mediaObj = { type: 'document', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+                mediaObj = { 
+                    type: 'document', 
+                    media: currentMsg.fileId, 
+                    caption: caption.replace(/\*/g, ''), // Remove asterisks
+                    parse_mode: 'HTML'  // Changed to HTML
+                };
             }
+        } else {
+            // For default image, also use HTML to be safe
+            mediaObj.parse_mode = 'HTML';
+            mediaObj.caption = caption.replace(/\*/g, '<b>').replace(/\*/g, '</b>');
         }
 
         // Navigation Buttons
