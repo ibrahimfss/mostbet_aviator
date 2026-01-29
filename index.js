@@ -370,7 +370,7 @@ async function showLanguageSelection(ctx, page = 0) {
     buttons.push(navRow);
   }
   
-   // Get user's language data for caption
+  // Get user's language data for caption
   const user = await getUserData(userId);
   const userLangCode = user?.lang || 'en';
   const userLangData = languageTexts[userLangCode] || languageTexts['en'];
