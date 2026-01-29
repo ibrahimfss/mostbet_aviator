@@ -947,20 +947,34 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         const activeSince = user.joinedAt ? new Date(user.joinedAt).toLocaleString() : 'N/A';
         const lang = user.langName || 'English';
 
-        // Prepare Caption
+                // FIX: Prepare SAFE Caption without Markdown issues
+        // First, clean the message content to prevent Markdown errors
+        const cleanText = (text) => {
+            if (!text) return '📎 Media File';
+            // Remove markdown special characters that cause parsing errors
+            return text
+                .replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&') // Escape markdown chars
+                .replace(/❤️/g, '❤') // Fix heart emoji issue
+                .substring(0, 1000); // Limit length
+        };
+        
+        // Build caption with proper escaping
         let caption = `📩 *SUPPORT TICKET*\n\n` +
-                      `👤 *User:* ${name}\n` +
+                      `👤 *User:* ${cleanText(name)}\n` +
                       `🆔 *ID:* \`${userId}\`\n` +
-                      `👤 *Username:* ${username}\n` +
-                      `🌐 *Language:* ${lang}\n` +
-                      `⏰ *Active since:* ${activeSince}\n` +
+                      `👤 *Username:* ${cleanText(username)}\n` +
+                      `🌐 *Language:* ${cleanText(lang)}\n` +
+                      `⏰ *Active since:* ${cleanText(activeSince)}\n` +
                       `📊 *Messages:* ${totalMessages}\n` +
                       `-----------------------------\n`;
 
         if (currentMsg) {
+            const msgContent = currentMsg.text || currentMsg.caption;
+            const safeContent = cleanText(msgContent);
+            
             caption += `🔢 *Message:* ${msgIndex + 1}/${totalMessages}\n` +
-                       `⏰ *Time:* ${new Date(currentMsg.timestamp || currentMsg.date).toLocaleString()}\n` +
-                       `🗨️ *Content:* ${currentMsg.text || currentMsg.caption || '📎 Media File'}`;
+                       `⏰ *Time:* ${cleanText(new Date(currentMsg.timestamp || currentMsg.date).toLocaleString())}\n` +
+                       `🗨️ *Content:* ${safeContent}`;
         } else {
             caption += `⚠️ *No messages in this ticket.*\n\nTap "✏️ Reply" to start conversation.`;
         }
