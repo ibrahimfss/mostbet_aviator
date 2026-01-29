@@ -370,7 +370,13 @@ async function showLanguageSelection(ctx, page = 0) {
     buttons.push(navRow);
   }
   
- const caption = `🌐 *Please select your preferred language*\n\n👇 Tap on your language below`;
+   // Get user's language data for caption
+  const user = await getUserData(userId);
+  const userLangCode = user?.lang || 'en';
+  const userLangData = languageTexts[userLangCode] || languageTexts['en'];
+  
+  // Use user's language for the caption
+  const caption = `🌐 *${userLangData.select}*\n\n👇 Tap on your language below`;
   
   // If it's a callback query (editing message)
   if (ctx.callbackQuery) {
