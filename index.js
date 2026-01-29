@@ -1291,7 +1291,13 @@ bot.on('message', async (ctx) => {
         }
       );
       
-      await ctx.reply('✅ Your message has been sent to support team.');
+      // Get user's language and send confirmation in their language
+      const user = await getUserData(userId);  // ✅ Await added
+      const langCode = user?.lang || 'en';
+      const langData = languageTexts[langCode] || languageTexts['en'];
+      const confirmationMsg = langData.supportConfirmation || "✅ Your message has been sent to support team.";
+      
+      await ctx.reply(confirmationMsg);
     } catch (error) {
       console.error('Error forwarding message:', error);
     }
