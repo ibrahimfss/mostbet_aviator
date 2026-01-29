@@ -1003,7 +1003,7 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         let caption = `📩 *SUPPORT TICKET*\n\n` +
                       `👤 *User*: ${cleanText(name)}\n` +
                       `🆔 *ID*: ${userId}\n` +
-                      `👤 *Username*: ${cleanText(username)}\n` +
+                      `👤 *Username*: ${username}\n` +  // Don't clean username, already formatted
                       `🌐 *Language*: ${cleanText(lang)}\n` +
                       `⏰ *Active since*: ${cleanText(activeSince)}\n` +
                       `📊 *Messages: ${totalMessages}*\n` +
