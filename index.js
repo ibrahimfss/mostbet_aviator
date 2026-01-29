@@ -368,7 +368,7 @@ async function showLanguageSelection(ctx, page = 0) {
     buttons.push(navRow);
   }
   
-  const caption = `🌐 *Please select your preferred language*\n\n📄 Page ${page + 1} of ${TOTAL_PAGES}\n👇 Tap on your language below`;
+ const caption = `🌐 *Please select your preferred language*\n\n👇 Tap on your language below`;
   
   // If it's a callback query (editing message)
   if (ctx.callbackQuery) {
