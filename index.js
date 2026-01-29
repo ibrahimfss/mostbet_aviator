@@ -275,87 +275,127 @@ bot.start(async (ctx) => {
   await showLanguageSelection(ctx);
 });
 
-// Show language selection
-async function showLanguageSelection(ctx) {
+// ==================== LANGUAGE SELECTION WITH PAGINATION ====================
+const languages = [
+  { code: 'en', flag: '🇺🇸', name: 'English' },
+  { code: 'hi', flag: '🇮🇳', name: 'हिंदी' },
+  { code: 'bn', flag: '🇧🇩', name: 'বাংলা' },
+  { code: 'ur', flag: '🇵🇰', name: 'اردو' },
+  { code: 'ru', flag: '🇷🇺', name: 'Русский' },
+  { code: 'pt', flag: '🇧🇷', name: 'Português' },
+  { code: 'es', flag: '🇪🇸', name: 'Español' },
+  { code: 'fr', flag: '🇫🇷', name: 'Français' },
+  { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
+  { code: 'it', flag: '🇮🇹', name: 'Italiano' },
+  { code: 'ph', flag: '🇵🇭', name: 'Filipino' },
+  { code: 'vi', flag: '🇻🇳', name: 'Tiếng Việt' },
+  { code: 'tr', flag: '🇹🇷', name: 'Türkçe' },
+  { code: 'ar', flag: '🇸🇦', name: 'العربية' },
+  { code: 'fa', flag: '🇮🇷', name: 'فارسی' },
+  { code: 'zh', flag: '🇨🇳', name: '中文' },
+  { code: 'ja', flag: '🇯🇵', name: '日本語' },
+  { code: 'ko', flag: '🇰🇷', name: '한국어' },
+  { code: 'uk', flag: '🇺🇦', name: 'Українська' },
+  { code: 'pt-pt', flag: '🇵🇹', name: 'Português (Portugal)' },
+  { code: 'en-ng', flag: '🇳🇬', name: 'English (Africa)' },
+  { code: 'ms', flag: '🇲🇾', name: 'Melayu' },
+  { code: 'he', flag: '🇮🇱', name: 'עברית' },
+  { code: 'th', flag: '🇹🇭', name: 'ไทย' },
+  { code: 'id', flag: '🇮🇩', name: 'Bahasa Indonesia' },
+  { code: 'si', flag: '🇱🇰', name: 'සිංහල' },
+  { code: 'ne', flag: '🇳🇵', name: 'नेपाली' },
+  { code: 'ps', flag: '🇦🇫', name: 'پښتو' },
+  { code: 'uz', flag: '🇺🇿', name: 'Oʻzbekcha' },
+  { code: 'kk', flag: '🇰🇿', name: 'Қазақша' },
+  { code: 'tg', flag: '🇹🇯', name: 'Тоҷикӣ' },
+  { code: 'el', flag: '🇬🇷', name: 'Ελληνικά' },
+  { code: 'pl', flag: '🇵🇱', name: 'Polski' },
+  { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
+  { code: 'ro', flag: '🇷🇴', name: 'Română' },
+  { code: 'bg', flag: '🇧🇬', name: 'Български' },
+  { code: 'cs', flag: '🇨🇿', name: 'Čeština' },
+  { code: 'sk', flag: '🇸🇰', name: 'Slovenčina' },
+  { code: 'hu', flag: '🇭🇺', name: 'Magyar' },
+  { code: 'sr', flag: '🇷🇸', name: 'Српски' }
+];
+
+const LANGUAGES_PER_PAGE = 10;
+const TOTAL_PAGES = Math.ceil(languages.length / LANGUAGES_PER_PAGE);
+
+// Show language selection with pagination
+async function showLanguageSelection(ctx, page = 0) {
   const userId = ctx.from.id;
-  const user = getUserData(userId);
+  const user = await getUserData(userId);
   
-  // Language buttons (arranged in 2 columns)
-  const languages = [
-    { code: 'en', flag: '🇺🇸', name: 'English' },
-    { code: 'hi', flag: '🇮🇳', name: 'हिंदी' },
-    { code: 'bn', flag: '🇧🇩', name: 'বাংলা' },
-    { code: 'ur', flag: '🇵🇰', name: 'اردو' },
-    { code: 'ru', flag: '🇷🇺', name: 'Русский' },
-    { code: 'pt', flag: '🇧🇷', name: 'Português' },
-    { code: 'es', flag: '🇪🇸', name: 'Español' },
-    { code: 'fr', flag: '🇫🇷', name: 'Français' },
-    { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
-    { code: 'it', flag: '🇮🇹', name: 'Italiano' },
-    { code: 'ph', flag: '🇵🇭', name: 'Filipino' },
-    { code: 'vi', flag: '🇻🇳', name: 'Tiếng Việt' },
-    { code: 'tr', flag: '🇹🇷', name: 'Türkçe' },
-    { code: 'ar', flag: '🇸🇦', name: 'العربية' },
-    { code: 'fa', flag: '🇮🇷', name: 'فارسی' },
-    { code: 'zh', flag: '🇨🇳', name: '中文' },
-    { code: 'ja', flag: '🇯🇵', name: '日本語' },
-    { code: 'ko', flag: '🇰🇷', name: '한국어' },
-    { code: 'uk', flag: '🇺🇦', name: 'Українська' },
-    { code: 'pt-pt', flag: '🇵🇹', name: 'Português (Portugal)' },
-    { code: 'en-ng', flag: '🇳🇬', name: 'English (Africa)' },
-    { code: 'ms', flag: '🇲🇾', name: 'Melayu' },
-    { code: 'he', flag: '🇮🇱', name: 'עברית' },
-    { code: 'th', flag: '🇹🇭', name: 'ไทย' },
-    { code: 'id', flag: '🇮🇩', name: 'Bahasa Indonesia' },
-    { code: 'si', flag: '🇱🇰', name: 'සිංහල' },
-    { code: 'ne', flag: '🇳🇵', name: 'नेपाली' },
-    { code: 'ps', flag: '🇦🇫', name: 'پښتو' },
-    { code: 'uz', flag: '🇺🇿', name: 'Oʻzbekcha' },
-    { code: 'kk', flag: '🇰🇿', name: 'Қазақша' },
-    { code: 'tg', flag: '🇹🇯', name: 'Тоҷикӣ' },
-    { code: 'el', flag: '🇬🇷', name: 'Ελληνικά' },
-    { code: 'pl', flag: '🇵🇱', name: 'Polski' },
-    { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
-    { code: 'ro', flag: '🇷🇴', name: 'Română' },
-    { code: 'bg', flag: '🇧🇬', name: 'Български' },
-    { code: 'cs', flag: '🇨🇿', name: 'Čeština' },
-    { code: 'sk', flag: '🇸🇰', name: 'Slovenčina' },
-    { code: 'hu', flag: '🇭🇺', name: 'Magyar' },
-    { code: 'sr', flag: '🇷🇸', name: 'Српски' }
-  ];
+  const start = page * LANGUAGES_PER_PAGE;
+  const end = start + LANGUAGES_PER_PAGE;
+  const pageLanguages = languages.slice(start, end);
   
   // Create buttons (2 per row)
   const buttons = [];
-  for (let i = 0; i < languages.length; i += 2) {
+  for (let i = 0; i < pageLanguages.length; i += 2) {
     const row = [];
     row.push(
       Markup.button.callback(
-        `${languages[i].flag} ${languages[i].name}`,
-        `set_lang_${languages[i].code}`
+        `${pageLanguages[i].flag} ${pageLanguages[i].name}`,
+        `set_lang_${pageLanguages[i].code}`
       )
     );
     
-    if (languages[i + 1]) {
+    if (pageLanguages[i + 1]) {
       row.push(
         Markup.button.callback(
-          `${languages[i + 1].flag} ${languages[i + 1].name}`,
-          `set_lang_${languages[i + 1].code}`
+          `${pageLanguages[i + 1].flag} ${pageLanguages[i + 1].name}`,
+          `set_lang_${pageLanguages[i + 1].code}`
         )
       );
     }
     buttons.push(row);
   }
   
-  const caption = "🌐 *Please select your preferred language*\n\n👇 Tap on your language below";
+  // Add navigation buttons
+  const navRow = [];
   
-  await ctx.replyWithPhoto(
-    IMAGES.LANGUAGE_SELECTION,
-    {
-      caption: caption,
-      parse_mode: 'Markdown',
-      ...Markup.inlineKeyboard(buttons)
-    }
-  );
+  if (page > 0) {
+    navRow.push(Markup.button.callback('⬅️ Prev', `lang_page_${page - 1}`));
+  }
+  
+  if (page < TOTAL_PAGES - 1) {
+    navRow.push(Markup.button.callback('Next ➡️', `lang_page_${page + 1}`));
+  }
+  
+  if (navRow.length > 0) {
+    buttons.push(navRow);
+  }
+  
+  const caption = `🌐 *Please select your preferred language*\n\n📄 Page ${page + 1} of ${TOTAL_PAGES}\n👇 Tap on your language below`;
+  
+  // If it's a callback query (editing message)
+  if (ctx.callbackQuery) {
+    await ctx.editMessageMedia(
+      {
+        type: 'photo',
+        media: IMAGES.LANGUAGE_SELECTION,
+        caption: caption,
+        parse_mode: 'Markdown'
+      },
+      {
+        reply_markup: {
+          inline_keyboard: buttons
+        }
+      }
+    );
+  } else {
+    // If it's a new message (from /start)
+    await ctx.replyWithPhoto(
+      IMAGES.LANGUAGE_SELECTION,
+      {
+        caption: caption,
+        parse_mode: 'Markdown',
+        ...Markup.inlineKeyboard(buttons)
+      }
+    );
+  }
 }
 
 // Language selection handler
