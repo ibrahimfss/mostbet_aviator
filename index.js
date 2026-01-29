@@ -819,41 +819,108 @@ bot.action("admin_view_tickets", async (ctx) => {
   });
 });
 
-// View Specific Ticket
-bot.action(/^admin_view_ticket_(\d+)$/, async (ctx) => {
-  if (ctx.from.id !== ADMIN_ID) return;
-  const userId = ctx.match[1];
-  const user = getUserData(userId);
-  
-  if (!user || !supportTickets.has(parseInt(userId))) {
-    await ctx.answerCbQuery("Ticket not found", { show_alert: true });
-    return;
-  }
-  
-  const name = `${user.firstName} ${user.lastName || ''}`.trim() || `User ${userId}`;
-  const username = user.username || "N/A";
-  
-  const caption = `📩 *SUPPORT TICKET*\n\n` +
-    `👤 *User:* ${name}\n` +
-    `🆔 *ID:* ${userId}\n` +
-    `👤 *Username:* @${username}\n` +
-    `🌐 *Language:* ${user.langName || user.lang}\n` +
-    `⏰ *Active since:* ${new Date().toLocaleString()}`;
-  
-  await ctx.editMessageCaption(caption, {
-    parse_mode: "Markdown",
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: "✏️ Message Reply", callback_data: `admin_reply_ticket_${userId}` },
-          { text: "❌ Close Ticket", callback_data: `admin_close_ticket_${userId}` }
-        ],
-        [
-          { text: "⬅️ Back", callback_data: "admin_view_tickets" }
-        ]
-      ]
+// View Specific Ticket with Pagination (Improved)
+bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return;
+    
+    const userId = parseInt(ctx.match[1]);
+    const msgIndex = ctx.match[2] ? parseInt(ctx.match[2]) : 0; // Current message index
+    
+    // FIX: Added await to prevent undefined values
+    const user = await getUserData(userId); 
+    
+    // Fetch ticket data from Firebase to get messages
+    const snapshot = await db.ref('tickets/' + userId).once('value');
+    const ticketData = snapshot.val();
+
+    if (!ticketData || !supportTickets.has(userId)) {
+        await ctx.answerCbQuery("Ticket not found or closed", { show_alert: true });
+        return;
     }
-  });
+
+    const messages = ticketData.messages || [];
+    const totalMessages = messages.length;
+    
+    // Get specific message to show
+    const currentMsg = totalMessages > 0 ? messages[msgIndex] : null;
+    
+    // Format User Details
+    const name = `${user.firstName} ${user.lastName || ''}`.trim() || `User ${userId}`;
+    const username = user.username ? `@${user.username}` : 'N/A';
+    const activeSince = user.joinedAt ? new Date(user.joinedAt).toLocaleString() : 'N/A';
+    const lang = user.langName || 'English';
+
+    // Prepare Caption
+    let caption = `📩 *SUPPORT TICKET*\n\n` +
+                  `👤 *User:* ${name}\n` +
+                  `🆔 *ID:* \`${userId}\`\n` +
+                  `👤 *Username:* ${username}\n` +
+                  `🌐 *Language:* ${lang}\n` +
+                  `⏰ *Active since:* ${activeSince}\n` +
+                  `-----------------------------\n`;
+
+    if (currentMsg) {
+        caption += `🔢 *Message:* ${msgIndex + 1}/${totalMessages}\n` +
+                   `⏰ *Time:* ${new Date(currentMsg.timestamp).toLocaleTimeString()}\n` +
+                   `🗨️ *Message:* ${currentMsg.text || (currentMsg.caption ? currentMsg.caption : 'Media File')}`;
+    } else {
+        caption += `⚠️ *No messages yet or data cleared.*`;
+    }
+
+    // Determine Media to Show
+    let mediaObj = {
+        type: 'photo',
+        media: IMAGES.SUPPORT, // Default Support Image
+        caption: caption,
+        parse_mode: 'Markdown'
+    };
+
+    if (currentMsg) {
+        if (currentMsg.type === 'photo') mediaObj = { type: 'photo', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+        else if (currentMsg.type === 'video') mediaObj = { type: 'video', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+        else if (currentMsg.type === 'document') mediaObj = { type: 'document', media: currentMsg.fileId, caption: caption, parse_mode: 'Markdown' };
+    }
+
+    // Navigation Buttons
+    const navButtons = [];
+    if (msgIndex > 0) {
+        navButtons.push({ text: "⬅️ Prev", callback_data: `admin_view_ticket_${userId}_${msgIndex - 1}` });
+    }
+    if (msgIndex < totalMessages - 1) {
+        navButtons.push({ text: "Next ➡️", callback_data: `admin_view_ticket_${userId}_${msgIndex + 1}` });
+    }
+
+    try {
+        await ctx.editMessageMedia(mediaObj, {
+            reply_markup: {
+                inline_keyboard: [
+                    navButtons, // Prev/Next Row
+                    [
+                        { text: "✏️ Reply", callback_data: `admin_reply_ticket_${userId}` },
+                        { text: "❌ Close Ticket", callback_data: `admin_close_ticket_${userId}` }
+                    ],
+                    [
+                        { text: "⬅️ Back List", callback_data: "admin_view_tickets" }
+                    ]
+                ]
+            }
+        });
+    } catch (err) {
+        // Fallback if media type change fails
+        await ctx.deleteMessage().catch(() => {});
+        await ctx.replyWithPhoto(mediaObj.media, {
+            caption: caption,
+            parse_mode: 'Markdown',
+            reply_markup: {
+                 inline_keyboard: [
+                    navButtons,
+                    [{ text: "✏️ Reply", callback_data: `admin_reply_ticket_${userId}` },
+                     { text: "❌ Close Ticket", callback_data: `admin_close_ticket_${userId}` }],
+                    [{ text: "⬅️ Back List", callback_data: "admin_view_tickets" }]
+                ]
+            }
+        });
+    }
 });
 
 // Ticket Reply Action
