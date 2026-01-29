@@ -325,7 +325,7 @@ const TOTAL_PAGES = Math.ceil(languages.length / LANGUAGES_PER_PAGE);
 // Show language selection with pagination
 async function showLanguageSelection(ctx, page = 0) {
   const userId = ctx.from.id;
-  const user = await getUserData(userId);
+  const user = await getUserData(userId);  // ✅ Pehli declaration - YAHI USE KARNA HAI
   
   const start = page * LANGUAGES_PER_PAGE;
   const end = start + LANGUAGES_PER_PAGE;
@@ -370,9 +370,10 @@ async function showLanguageSelection(ctx, page = 0) {
     buttons.push(navRow);
   }
   
+  // ✅✅✅ FIXED CODE ✅✅✅
   // Get user's language data for caption
-  const user = await getUserData(userId);
-  const userLangCode = user?.lang || 'en';
+  // const user = await getUserData(userId);  // ❌ YEH LINE COMPLETELY DELETE KAR DEIN
+  const userLangCode = user?.lang || 'en';  // ✅ Yahin pehle wale 'user' variable ko use karein
   const userLangData = languageTexts[userLangCode] || languageTexts['en'];
   
   // Use user's language for the caption
