@@ -1324,6 +1324,23 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
         caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
         parse_mode: 'Markdown'
       });
+    } else if (message.animation) {
+      await ctx.telegram.sendAnimation(targetUserId, message.animation.file_id, {
+        caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
+        parse_mode: 'Markdown'
+      });
+    } else if (message.voice) {
+      await ctx.telegram.sendVoice(targetUserId, message.voice.file_id, {
+        caption: `📨 *Message from Support:*`,
+        parse_mode: 'Markdown'
+      });
+    } else if (message.audio) {
+      await ctx.telegram.sendAudio(targetUserId, message.audio.file_id, {
+        caption: message.caption ? `📨 *Message from Support:*\n\n${message.caption}` : '📨 *Message from Support*',
+        parse_mode: 'Markdown'
+      });
+    } else if (message.sticker) {
+      await ctx.telegram.sendSticker(targetUserId, message.sticker.file_id);
     }
     
     await ctx.reply(`✅ Message sent to user ${targetUserId}`);
