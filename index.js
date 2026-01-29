@@ -3,6 +3,14 @@ import { languageTexts } from './languages.js';
 import { currencyData } from './currencies.js';
 import admin from "firebase-admin";
 
+/* =====================
+ENV & FIREBASE CONFIGURATION
+===================== */
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const CHANNEL_USERNAME = process.env.CHANNEL_USERNAME || '@Mostbet_Hacks';
+const CHANNEL_ID = process.env.CHANNEL_ID || -3645928410; // Agar channel ID pata hai to daalein
+const ADMIN_ID = Number(process.env.ADMIN_ID);
+
 // Add this function after all imports
 function escapeMarkdown(text) {
     if (!text) return '';
@@ -26,14 +34,6 @@ function escapeMarkdown(text) {
         .replace(/\./g, '\\.')
         .replace(/!/g, '\\!');
 }
-
-/* =====================
-ENV & FIREBASE CONFIGURATION
-===================== */
-const BOT_TOKEN = process.env.BOT_TOKEN;
-const CHANNEL_USERNAME = process.env.CHANNEL_USERNAME || '@Mostbet_Hacks';
-const CHANNEL_ID = process.env.CHANNEL_ID || -3645928410; // Agar channel ID pata hai to daalein
-const ADMIN_ID = Number(process.env.ADMIN_ID);
 
 // Firebase Initialization
 if (!admin.apps.length) {
