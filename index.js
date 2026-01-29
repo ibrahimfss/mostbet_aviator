@@ -807,48 +807,82 @@ bot.action("ADMIN_PANEL", async (ctx) => {
   );
 });
 
-// View Active Tickets
+// View Active Tickets - FIXED VERSION
 bot.action("admin_view_tickets", async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
 
-  const allTickets = await getAllTicketsFromFirebase();
-  const activeTickets = Object.keys(allTickets);
+  try {
+    const allTickets = await getAllTicketsFromFirebase();
+    const activeTickets = Object.keys(allTickets || {});
 
-  if (activeTickets.length === 0) {
+    if (activeTickets.length === 0) {
+      await ctx.editMessageCaption(
+        "✅ *NO ACTIVE TICKETS*\n\nThere are no active support tickets at the moment.",
+        {
+          parse_mode: "Markdown",
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "⬅️ Back to Admin Panel", callback_data: "ADMIN_PANEL" }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+
+    let caption = `📞 *ACTIVE SUPPORT TICKETS*\n\n*Total Active Tickets:* ${activeTickets.length}\n\n*Click on any user to view their ticket:*\n`;
+    const buttons = [];
+
+    // Show maximum 15 tickets per page
+    for (const userId of activeTickets.slice(0, 15)) {
+      try {
+        const user = await getUserData(parseInt(userId));
+        if (user) {
+          const name = `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`;
+          const username = user.username ? `@${user.username}` : 'No username';
+          
+          buttons.push([{
+            text: `👤 ${name.substring(0, 20)}${name.length > 20 ? '...' : ''} (ID: ${userId})`,
+            callback_data: `admin_view_ticket_${userId}`
+          }]);
+        } else {
+          // User not found in database but ticket exists
+          buttons.push([{
+            text: `❓ Unknown User (ID: ${userId})`,
+            callback_data: `admin_view_ticket_${userId}`
+          }]);
+        }
+      } catch (userError) {
+        console.error(`Error loading user ${userId}:`, userError);
+        buttons.push([{
+          text: `⚠️ Error Loading (ID: ${userId})`,
+          callback_data: `admin_view_ticket_${userId}`
+        }]);
+      }
+    }
+
+    // Add back button
+    buttons.push([{ text: "⬅️ Back to Admin Panel", callback_data: "ADMIN_PANEL" }]);
+
+    await ctx.editMessageCaption(caption, {
+      parse_mode: "Markdown",
+      reply_markup: { inline_keyboard: buttons }
+    });
+    
+  } catch (error) {
+    console.error("Error in admin_view_tickets:", error);
     await ctx.editMessageCaption(
-      "✅ NO ACTIVE TICKETS\n\nThere are no active support tickets.",
+      "❌ *ERROR LOADING TICKETS*\n\nFailed to load support tickets. Please try again.",
       {
         parse_mode: "Markdown",
         reply_markup: {
           inline_keyboard: [
-            [{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]
+            [{ text: "⬅️ Back to Admin Panel", callback_data: "ADMIN_PANEL" }]
           ]
         }
       }
     );
-    return;
   }
-
-  let caption = `📞 *ACTIVE SUPPORT TICKETS*\n\n*Total Active Tickets: ${activeTickets.length}*\n\n`;
-  const buttons = [];
-
-  for (const userId of activeTickets.slice(0, 10)) {
-    const user = await getUserData(parseInt(userId));
-    if (user) {
-      const name = `${user.firstName} ${user.lastName || ''}`.trim() || `User ${userId}`;
-      buttons.push([{
-        text: `${name} (ID: ${userId})`,
-        callback_data: `admin_view_ticket_${userId}`
-      }]);
-    }
-  }
-
-  buttons.push([{ text: "⬅️ Back", callback_data: "ADMIN_PANEL" }]);
-
-  await ctx.editMessageCaption(caption, {
-    parse_mode: "Markdown",
-    reply_markup: { inline_keyboard: buttons }
-  });
 });
 
 // View Specific Ticket with Pagination (Improved) - FIXED VERSION
