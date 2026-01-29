@@ -519,6 +519,13 @@ bot.action('change_language', async (ctx) => {
   await ctx.answerCbQuery();
 });
 
+// Language pagination handler
+bot.action(/^lang_page_(\d+)$/, async (ctx) => {
+  const page = parseInt(ctx.match[1]);
+  await showLanguageSelection(ctx, page);
+  await ctx.answerCbQuery();
+});
+
 // Show Instructions Video Handler
 bot.action('show_instructions', async (ctx) => {
   const userId = ctx.from.id;
