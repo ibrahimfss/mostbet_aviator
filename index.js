@@ -1622,9 +1622,7 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
   // User support message - 100% DELIVERY GUARANTEE LOGIC
   if (supportTickets.has(userId)) {
       const user = await getUserData(userId); 
-      // FIX: Remove escapeMarkdown for username to avoid backslash
-      const username = user.username ? 
-            `@${user.username}`.replace(/\\/g, '') : 'N/A';
+      const username = user.username ? `@${user.username}` : 'N/A';
       const msgTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
       
       // 1. Prepare Message Data for Storage
