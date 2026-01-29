@@ -971,36 +971,32 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         const activeSince = user.joinedAt ? new Date(user.joinedAt).toLocaleString() : 'N/A';
         const lang = user.langName || 'English';
 
-                // FIX: Prepare SAFE Caption without Markdown issues
-        // First, clean the message content to prevent Markdown errors
+        // FIX: Prepare SAFE Caption without Markdown issues
         const cleanText = (text) => {
             if (!text) return '📎 Media File';
-            // Remove markdown special characters that cause parsing errors
-            return text
-                .replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&') // Escape markdown chars
-                .replace(/❤️/g, '❤') // Fix heart emoji issue
-                .substring(0, 1000); // Limit length
+            // Use the escapeMarkdown function
+            return escapeMarkdown(text.toString()).substring(0, 500);
         };
         
         // Build caption with proper escaping
-        let caption = `📩 *SUPPORT TICKET*\n\n` +
-                      `👤 *User:* ${cleanText(name)}\n` +
-                      `🆔 *ID:* \`${userId}\`\n` +
-                      `👤 *Username:* ${cleanText(username)}\n` +
-                      `🌐 *Language:* ${cleanText(lang)}\n` +
-                      `⏰ *Active since:* ${cleanText(activeSince)}\n` +
-                      `📊 *Messages:* ${totalMessages}\n` +
+        let caption = `📩 SUPPORT TICKET\n\n` +
+                      `👤 User: ${cleanText(name)}\n` +
+                      `🆔 ID: ${userId}\n` +
+                      `👤 Username: ${cleanText(username)}\n` +
+                      `🌐 Language: ${cleanText(lang)}\n` +
+                      `⏰ Active since: ${cleanText(activeSince)}\n` +
+                      `📊 Messages: ${totalMessages}\n` +
                       `-----------------------------\n`;
 
         if (currentMsg) {
             const msgContent = currentMsg.text || currentMsg.caption;
             const safeContent = cleanText(msgContent);
             
-            caption += `🔢 *Message:* ${msgIndex + 1}/${totalMessages}\n` +
-                       `⏰ *Time:* ${cleanText(new Date(currentMsg.timestamp || currentMsg.date).toLocaleString())}\n` +
-                       `🗨️ *Content:* ${safeContent}`;
+            caption += `🔢 Message: ${msgIndex + 1}/${totalMessages}\n` +
+                       `⏰ Time: ${cleanText(new Date(currentMsg.timestamp || currentMsg.date).toLocaleString())}\n` +
+                       `🗨️ Content: ${safeContent}`;
         } else {
-            caption += `⚠️ *No messages in this ticket.*\n\nTap "✏️ Reply" to start conversation.`;
+            caption += `⚠️ No messages in this ticket.\n\nTap "✏️ Reply" to start conversation.`;
         }
 
         // Determine Media to Show
@@ -1008,37 +1004,33 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
             type: 'photo',
             media: IMAGES.SUPPORT, // Default Support Image
             caption: caption,
-            parse_mode: 'Markdown'
+            parse_mode: 'HTML'  // Use HTML to avoid markdown issues
         };
 
-            if (currentMsg && currentMsg.fileId) {
+        if (currentMsg && currentMsg.fileId) {
             // Use HTML parse mode to avoid markdown issues
             if (currentMsg.type === 'photo') {
                 mediaObj = { 
                     type: 'photo', 
                     media: currentMsg.fileId, 
-                    caption: caption.replace(/\*/g, ''), // Remove asterisks for safety
-                    parse_mode: 'HTML'  // Changed to HTML
+                    caption: caption,
+                    parse_mode: 'HTML'
                 };
             } else if (currentMsg.type === 'video') {
                 mediaObj = { 
                     type: 'video', 
                     media: currentMsg.fileId, 
-                    caption: caption.replace(/\*/g, ''), // Remove asterisks
-                    parse_mode: 'HTML'  // Changed to HTML
+                    caption: caption,
+                    parse_mode: 'HTML'
                 };
             } else if (currentMsg.type === 'document') {
                 mediaObj = { 
                     type: 'document', 
                     media: currentMsg.fileId, 
-                    caption: caption.replace(/\*/g, ''), // Remove asterisks
-                    parse_mode: 'HTML'  // Changed to HTML
+                    caption: caption,
+                    parse_mode: 'HTML'
                 };
             }
-        } else {
-            // For default image, also use HTML to be safe
-            mediaObj.parse_mode = 'HTML';
-            mediaObj.caption = caption.replace(/\*/g, '<b>').replace(/\*/g, '</b>');
         }
 
         // Navigation Buttons
@@ -1081,9 +1073,9 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         
         // Fallback: Show simple message
         await ctx.editMessageCaption(
-            `⚠️ *Ticket Error*\n\nCould not load ticket for user ID: ${userId}\n\nError: ${error.message}`,
+            `⚠️ Ticket Error\n\nCould not load ticket for user ID: ${userId}\n\nError: ${error.message}`,
             {
-                parse_mode: "Markdown",
+                parse_mode: "HTML",
                 reply_markup: {
                     inline_keyboard: [
                         [{ text: "⬅️ Back to Tickets", callback_data: "admin_view_tickets" }]
