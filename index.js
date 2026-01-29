@@ -968,7 +968,18 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         // Format User Details
         const name = `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`;
         const username = user.username ? `@${user.username}` : 'N/A';
-        const activeSince = user.joinedAt ? new Date(user.joinedAt).toLocaleString() : 'N/A';
+        // FIX: Correct time formatting for active since
+        const activeSince = user.joinedAt ? 
+            new Date(user.joinedAt).toLocaleString('en-IN', { 
+                timeZone: 'Asia/Kolkata',
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }) : 'N/A';
         const lang = user.langName || 'English';
 
         // FIX: Prepare SAFE Caption without Markdown issues
