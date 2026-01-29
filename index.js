@@ -515,7 +515,7 @@ bot.action('check_join', async (ctx) => {
 
 // Change language
 bot.action('change_language', async (ctx) => {
-  await showLanguageSelection(ctx);
+  await showLanguageSelection(ctx, 0); // Start from page 0
   await ctx.answerCbQuery();
 });
 
