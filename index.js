@@ -111,6 +111,38 @@ async function getUserStatsFromFirebase() {
   }
 }
 
+// Add message to ticket history (REQUIRED FOR SUPPORT CHAT)
+async function addMessageToTicket(userId, messageData) {
+  try {
+    const ticketRef = db.ref('tickets/' + userId);
+    const snapshot = await ticketRef.once('value');
+    let ticketData = snapshot.val();
+
+    if (!ticketData) {
+      ticketData = { userId: userId, messages: [], status: 'open', openedAt: new Date().toISOString() };
+    }
+
+    // Ensure messages is initialized
+    if (!ticketData.messages) ticketData.messages = [];
+    
+    // Convert object to array if Firebase returned an object map (Important for index access)
+    if (typeof ticketData.messages === 'object' && !Array.isArray(ticketData.messages)) {
+        ticketData.messages = Object.values(ticketData.messages);
+    }
+    
+    // Add new message
+    ticketData.messages.push({
+      ...messageData,
+      timestamp: new Date().toISOString()
+    });
+
+    // Save back to Firebase
+    await ticketRef.set(ticketData);
+  } catch (error) {
+    console.error('Error adding message to ticket:', error);
+  }
+}
+
 // Save message to ticket
 async function saveMessageToTicket(userId, msgData) {
   try {
