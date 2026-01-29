@@ -987,8 +987,16 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         // FIX: Prepare SAFE Caption without Markdown issues
         const cleanText = (text) => {
             if (!text) return '📎 Media File';
-            // Use the escapeMarkdown function
-            return escapeMarkdown(text.toString()).substring(0, 500);
+            // Don't escape underscores in usernames
+        const str = text.toString();
+            // Only escape characters that break HTML, not underscores
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .substring(0, 500);
         };
         
         // Build caption with proper escaping
