@@ -361,7 +361,9 @@ async function showLanguageSelection(ctx, page = 0) {
   }
   
   if (page < TOTAL_PAGES - 1) {
-    navRow.push(Markup.button.callback('Next ➡️', `lang_page_${page + 1}`));
+    // First page shows "More Languages", other pages show "Next ➡️"
+    const nextButtonText = page === 0 ? '🌐 More Languages' : 'Next ➡️';
+    navRow.push(Markup.button.callback(nextButtonText, `lang_page_${page + 1}`));
   }
   
   if (navRow.length > 0) {
