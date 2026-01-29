@@ -111,6 +111,28 @@ async function getUserStatsFromFirebase() {
   }
 }
 
+// Save message to ticket
+async function saveMessageToTicket(userId, msgData) {
+  try {
+    await db.ref(`tickets/${userId}/messages`).push(msgData);
+  } catch (error) {
+    console.error('Error saving ticket message:', error);
+  }
+}
+
+// Get ticket messages
+async function getTicketMessages(userId) {
+  try {
+    const snapshot = await db.ref(`tickets/${userId}/messages`).once('value');
+    const messages = snapshot.val() || {};
+    // Convert object to array and sort by date
+    return Object.values(messages).sort((a, b) => new Date(a.date) - new Date(b.date));
+  } catch (error) {
+    console.error('Error getting ticket messages:', error);
+    return [];
+  }
+}
+
 if (!BOT_TOKEN || !ADMIN_ID) throw new Error("BOT_TOKEN or ADMIN_ID missing");
 
 const bot = new Telegraf(BOT_TOKEN);
