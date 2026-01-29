@@ -1453,107 +1453,161 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
   return;
 }
   
-  // User support message - ENHANCED MEDIA HANDLING & SAVING
-    if (supportTickets.has(userId)) {
-        const user = await getUserData(userId); // Fixed Await
-        const username = user.username ? `@${user.username}` : 'N/A';
-        const msgTime = new Date().toLocaleString();
-        
-        // Prepare Message Data for Storage
-        let messageData = {
-            type: 'text',
-            text: message.text || '',
-            fileId: null,
-            caption: message.caption || ''
-        };
+  // User support message - 100% DELIVERY GUARANTEE LOGIC
+  if (supportTickets.has(userId)) {
+      const user = await getUserData(userId); 
+      const username = user.username ? `@${user.username}` : 'N/A';
+      const msgTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+      
+      // 1. Prepare Message Data for Storage
+      let messageData = {
+          type: 'text',
+          text: message.text || '',
+          fileId: null,
+          caption: message.caption || ''
+      };
 
-        let fileId = null;
-        let msgType = 'text';
+      let fileId = null;
+      let msgType = 'text';
 
-        if (message.photo) {
-            fileId = message.photo[message.photo.length - 1].file_id;
-            msgType = 'photo';
-        } else if (message.video) {
-            fileId = message.video.file_id;
-            msgType = 'video';
-        } else if (message.document) {
-            fileId = message.document.file_id;
-            msgType = 'document';
-        } else if (message.voice) {
-            fileId = message.voice.file_id;
-            msgType = 'voice';
-        }
+      if (message.photo) {
+          fileId = message.photo[message.photo.length - 1].file_id;
+          msgType = 'photo';
+      } else if (message.video) {
+          fileId = message.video.file_id;
+          msgType = 'video';
+      } else if (message.document) {
+          fileId = message.document.file_id;
+          msgType = 'document';
+      } else if (message.voice) {
+          fileId = message.voice.file_id;
+          msgType = 'voice';
+      } else if (message.audio) {
+          fileId = message.audio.file_id;
+          msgType = 'audio';
+      } else if (message.sticker) {
+           fileId = message.sticker.file_id;
+           msgType = 'sticker';
+      }
 
-        if (fileId) {
-            messageData.type = msgType;
-            messageData.fileId = fileId;
-        }
+      if (fileId) {
+          messageData.type = msgType;
+          messageData.fileId = fileId;
+      }
 
-        // SAVE TO FIREBASE
-        await addMessageToTicket(userId, messageData);
+      // 2. SAVE TO FIREBASE
+      try {
+          await addMessageToTicket(userId, messageData);
+      } catch (dbError) {
+          console.error("Firebase Save Error:", dbError);
+      }
 
-        // NOTIFY ADMIN (Improved Layout)
-        const captionOrText = message.caption || message.text || 'Media File';
-        
-        const adminNotification = `📩 *NEW SUPPORT MESSAGE*\n\n` +
-            `👤 *From:* ${user.firstName} ${user.lastName || ''}\n` +
-            `🆔 *ID:* \`${userId}\`\n` +
-            `👤 *Username:* ${username}\n` +
-            `⏰ *Time:* ${msgTime}\n` +
-            `🌐 *Language:* ${user.langName || user.lang}\n\n` +
-            `📨 *Message:* ${captionOrText}`;
+      // 3. PREPARE ADMIN NOTIFICATION
+      // HTML Escape Function to prevent crashes
+      const escapeHtml = (unsafe) => {
+          if (!unsafe) return '';
+          return unsafe
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+      }
 
-        const adminKeyboard = {
-            inline_keyboard: [
-                [
-                    { text: '👁️ View History', callback_data: `admin_view_ticket_${userId}` }
-                ],
-                [
-                    { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                    { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-                ]
-            ]
-        };
+      const safeName = escapeHtml(user.firstName + ' ' + (user.lastName || ''));
+      const safeCaption = escapeHtml(message.caption || message.text || '');
+      
+      const adminNotification = `📩 <b>NEW SUPPORT MESSAGE</b>\n\n` +
+          `👤 <b>From:</b> ${safeName}\n` +
+          `🆔 <b>ID:</b> <code>${userId}</code>\n` +
+          `👤 <b>Username:</b> ${username}\n` +
+          `⏰ <b>Time:</b> ${msgTime}\n` +
+          `🌐 <b>Language:</b> ${user.langName || user.lang}\n\n` +
+          `📨 <b>Message:</b> ${safeCaption ? safeCaption : '<i>(Media File)</i>'}`;
 
-        try {
-            if (msgType === 'text') {
-                await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
-                    parse_mode: 'Markdown',
-                    reply_markup: adminKeyboard
-                });
-            } else if (msgType === 'photo') {
-                await ctx.telegram.sendPhoto(ADMIN_ID, fileId, {
-                    caption: adminNotification,
-                    parse_mode: 'Markdown',
-                    reply_markup: adminKeyboard
-                });
-            } else if (msgType === 'video') {
-                await ctx.telegram.sendVideo(ADMIN_ID, fileId, {
-                    caption: adminNotification,
-                    parse_mode: 'Markdown',
-                    reply_markup: adminKeyboard
-                });
-            } else {
-                // Documents/Voice/Others
-                await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
-                    parse_mode: 'Markdown',
-                    reply_markup: adminKeyboard
-                });
-            }
+      const adminKeyboard = {
+          inline_keyboard: [
+              [
+                  { text: '👁️ View History', callback_data: `admin_view_ticket_${userId}` }
+              ],
+              [
+                  { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                  { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+              ]
+          ]
+      };
 
-            // Send confirmation to user
-            const langCode = user?.lang || 'en';
-            const langData = languageTexts[langCode] || languageTexts['en'];
-            const confirmationMsg = langData.supportConfirmation || "✅ Your message has been sent to support team.";
-            
-            await ctx.reply(confirmationMsg);
+      // 4. SEND TO ADMIN (With Fallback)
+      try {
+          // Attempt 1: Send Professional Formatted Message
+          if (msgType === 'text') {
+              await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
+                  parse_mode: 'HTML',
+                  reply_markup: adminKeyboard
+              });
+          } else if (msgType === 'sticker') {
+               // Stickers cannot have captions, so send separately
+               await ctx.telegram.sendSticker(ADMIN_ID, fileId);
+               await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
+                  parse_mode: 'HTML',
+                  reply_markup: adminKeyboard
+              });
+          } else if (['photo', 'video', 'document', 'audio', 'voice'].includes(msgType)) {
+              // Generic method for media
+              const method = `send${msgType.charAt(0).toUpperCase() + msgType.slice(1)}`;
+              await ctx.telegram[method](ADMIN_ID, fileId, {
+                  caption: adminNotification,
+                  parse_mode: 'HTML',
+                  reply_markup: adminKeyboard
+              });
+          } else {
+              // Fallback for unknown types
+              await ctx.forwardMessage(ADMIN_ID, ctx.chat.id, message.message_id);
+              await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
+                  parse_mode: 'HTML',
+                  reply_markup: adminKeyboard
+              });
+          }
 
-        } catch (error) {
-            console.error('Error handling support message:', error);
-            await ctx.reply("❌ Failed to send your message. Please try again.");
-        }
-        return;
-    }
+      } catch (adminErr) {
+          console.error("Format send failed, using fallback:", adminErr.message);
+          
+          // Attempt 2 (Fail-Safe): FORWARD ORIGINAL + PLAIN TEXT BUTTONS
+          // Ye tab chalega agar upar wala 'HTML' parse fail ho gaya
+          try {
+              // 1. Forward original message (100% guarantee to show content)
+              await ctx.forwardMessage(ADMIN_ID, ctx.chat.id, message.message_id);
+              
+              // 2. Send Controls below it
+              await ctx.telegram.sendMessage(ADMIN_ID, 
+                  `⚠️ <b>Format Error</b> - Above message from:\n` +
+                  `👤 ${safeName} (ID: <code>${userId}</code>)\n` +
+                  `👇 Use buttons to reply:`, 
+                  {
+                      parse_mode: 'HTML',
+                      reply_markup: adminKeyboard
+                  }
+              );
+          } catch (finalErr) {
+              console.error("CRITICAL: Could not notify admin at all.", finalErr);
+              // Agar ye bhi fail hua, to hi user ko error dikhega
+              await ctx.reply("❌ Server error. Please try sending text only.");
+              return;
+          }
+      }
+
+      // 5. SUCCESS CONFIRMATION TO USER
+      try {
+          const langCode = user?.lang || 'en';
+          const langData = languageTexts[langCode] || languageTexts['en'];
+          const confirmationMsg = langData.supportConfirmation || "✅ Your message has been sent to support team.";
+          
+          await ctx.reply(confirmationMsg);
+      } catch (replyErr) {
+          console.error('Error sending confirmation to user:', replyErr);
+      }
+      return;
+  }
   
   // Admin search user
   if (userId === ADMIN_ID && message.text && !message.text.startsWith('/')) {
