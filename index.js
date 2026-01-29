@@ -272,7 +272,7 @@ bot.start(async (ctx) => {
   }
 
   // Show language selection
-  await showLanguageSelection(ctx);
+await showLanguageSelection(ctx, 0); // Start from page 0
 });
 
 // ==================== LANGUAGE SELECTION WITH PAGINATION ====================
