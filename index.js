@@ -1451,6 +1451,89 @@ if (supportTickets.has(userId)) {
           }
         }
       );
+
+    } else if (message.animation) {
+      // GIF/Animation with or without caption
+      const animation = message.animation;
+      const caption = message.caption 
+        ? `${userInfo}\n\n🎬 *GIF Caption:*\n${message.caption}`
+        : userInfo;
+      
+      await ctx.telegram.sendAnimation(
+        ADMIN_ID,
+        animation.file_id,
+        {
+          caption: caption,
+          parse_mode: 'Markdown',
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+              ]
+            ]
+          }
+        }
+      );
+      
+    } else if (message.sticker) {
+      // Sticker message
+      const sticker = message.sticker;
+      await ctx.telegram.sendSticker(
+        ADMIN_ID,
+        sticker.file_id,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+              ]
+            ]
+          }
+        }
+      );
+      
+      // Send user info separately for stickers
+      await ctx.telegram.sendMessage(
+        ADMIN_ID,
+        userInfo,
+        {
+          parse_mode: 'Markdown',
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+              ]
+            ]
+          }
+        }
+      );
+      
+    } else if (message.audio) {
+      // Audio file
+      const audio = message.audio;
+      const caption = message.caption 
+        ? `${userInfo}\n\n🎵 *Audio Caption:*\n${message.caption}`
+        : userInfo;
+      
+      await ctx.telegram.sendAudio(
+        ADMIN_ID,
+        audio.file_id,
+        {
+          caption: caption,
+          parse_mode: 'Markdown',
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+              ]
+            ]
+          }
+        }
+      );
       
     } else {
       // For other message types, forward as is
