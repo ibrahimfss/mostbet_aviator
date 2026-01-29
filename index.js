@@ -1421,242 +1421,107 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
   return;
 }
   
-  // User support message - ENHANCED MEDIA HANDLING
-if (supportTickets.has(userId)) {
-  const user = await getUserData(userId);  // ✅ Await added
-  const userInfo = `📩 *NEW SUPPORT MESSAGE*\n\n👤 From: ${user.firstName || 'User'}\n🆔 ID: ${userId}\n🌐 Language: ${user.langName || user.lang}`;
-  
-  try {
-    // Handle different message types
-    if (message.text) {
-      // Text message
-      const fullMessage = `${userInfo}\n\n📨 *Message:*\n${message.text}`;
-      await ctx.telegram.sendMessage(
-        ADMIN_ID,
-        fullMessage,
-        {
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
-      
-    } else if (message.photo) {
-      // Photo with or without caption
-      const photo = message.photo[message.photo.length - 1]; // Highest resolution
-      const caption = message.caption 
-        ? `${userInfo}\n\n📷 *Photo Caption:*\n${message.caption}`
-        : userInfo;
-      
-      await ctx.telegram.sendPhoto(
-        ADMIN_ID,
-        photo.file_id,
-        {
-          caption: caption,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
-      
-    } else if (message.video) {
-      // Video with or without caption
-      const video = message.video;
-      const caption = message.caption 
-        ? `${userInfo}\n\n🎬 *Video Caption:*\n${message.caption}`
-        : userInfo;
-      
-      await ctx.telegram.sendVideo(
-        ADMIN_ID,
-        video.file_id,
-        {
-          caption: caption,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
-      
-    } else if (message.document) {
-      // Document with or without caption
-      const doc = message.document;
-      const caption = message.caption 
-        ? `${userInfo}\n\n📄 *Document Caption:*\n${message.caption}`
-        : userInfo;
-      
-      await ctx.telegram.sendDocument(
-        ADMIN_ID,
-        doc.file_id,
-        {
-          caption: caption,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
-      
-    } else if (message.voice) {
-      // Voice message
-      const voice = message.voice;
-      await ctx.telegram.sendVoice(
-        ADMIN_ID,
-        voice.file_id,
-        {
-          caption: userInfo,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
+  // User support message - ENHANCED MEDIA HANDLING & SAVING
+    if (supportTickets.has(userId)) {
+        const user = await getUserData(userId); // Fixed Await
+        const username = user.username ? `@${user.username}` : 'N/A';
+        const msgTime = new Date().toLocaleString();
+        
+        // Prepare Message Data for Storage
+        let messageData = {
+            type: 'text',
+            text: message.text || '',
+            fileId: null,
+            caption: message.caption || ''
+        };
 
-    } else if (message.animation) {
-      // GIF/Animation with or without caption
-      const animation = message.animation;
-      const caption = message.caption 
-        ? `${userInfo}\n\n🎬 *GIF Caption:*\n${message.caption}`
-        : userInfo;
-      
-      await ctx.telegram.sendAnimation(
-        ADMIN_ID,
-        animation.file_id,
-        {
-          caption: caption,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
+        let fileId = null;
+        let msgType = 'text';
+
+        if (message.photo) {
+            fileId = message.photo[message.photo.length - 1].file_id;
+            msgType = 'photo';
+        } else if (message.video) {
+            fileId = message.video.file_id;
+            msgType = 'video';
+        } else if (message.document) {
+            fileId = message.document.file_id;
+            msgType = 'document';
+        } else if (message.voice) {
+            fileId = message.voice.file_id;
+            msgType = 'voice';
         }
-      );
-      
-    } else if (message.sticker) {
-      // Sticker message
-      const sticker = message.sticker;
-      await ctx.telegram.sendSticker(
-        ADMIN_ID,
-        sticker.file_id,
-        {
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
+
+        if (fileId) {
+            messageData.type = msgType;
+            messageData.fileId = fileId;
         }
-      );
-      
-      // Send user info separately for stickers
-      await ctx.telegram.sendMessage(
-        ADMIN_ID,
-        userInfo,
-        {
-          parse_mode: 'Markdown',
-          reply_markup: {
+
+        // SAVE TO FIREBASE
+        await addMessageToTicket(userId, messageData);
+
+        // NOTIFY ADMIN (Improved Layout)
+        const captionOrText = message.caption || message.text || 'Media File';
+        
+        const adminNotification = `📩 *NEW SUPPORT MESSAGE*\n\n` +
+            `👤 *From:* ${user.firstName} ${user.lastName || ''}\n` +
+            `🆔 *ID:* \`${userId}\`\n` +
+            `👤 *Username:* ${username}\n` +
+            `⏰ *Time:* ${msgTime}\n` +
+            `🌐 *Language:* ${user.langName || user.lang}\n\n` +
+            `📨 *Message:* ${captionOrText}`;
+
+        const adminKeyboard = {
             inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
+                [
+                    { text: '👁️ View History', callback_data: `admin_view_ticket_${userId}` }
+                ],
+                [
+                    { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
+                    { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
+                ]
             ]
-          }
+        };
+
+        try {
+            if (msgType === 'text') {
+                await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
+                    parse_mode: 'Markdown',
+                    reply_markup: adminKeyboard
+                });
+            } else if (msgType === 'photo') {
+                await ctx.telegram.sendPhoto(ADMIN_ID, fileId, {
+                    caption: adminNotification,
+                    parse_mode: 'Markdown',
+                    reply_markup: adminKeyboard
+                });
+            } else if (msgType === 'video') {
+                await ctx.telegram.sendVideo(ADMIN_ID, fileId, {
+                    caption: adminNotification,
+                    parse_mode: 'Markdown',
+                    reply_markup: adminKeyboard
+                });
+            } else {
+                // Documents/Voice/Others
+                await ctx.telegram.sendMessage(ADMIN_ID, adminNotification, {
+                    parse_mode: 'Markdown',
+                    reply_markup: adminKeyboard
+                });
+            }
+
+            // Send confirmation to user
+            const langCode = user?.lang || 'en';
+            const langData = languageTexts[langCode] || languageTexts['en'];
+            const confirmationMsg = langData.supportConfirmation || "✅ Your message has been sent to support team.";
+            
+            await ctx.reply(confirmationMsg);
+
+        } catch (error) {
+            console.error('Error handling support message:', error);
+            await ctx.reply("❌ Failed to send your message. Please try again.");
         }
-      );
-      
-    } else if (message.audio) {
-      // Audio file
-      const audio = message.audio;
-      const caption = message.caption 
-        ? `${userInfo}\n\n🎵 *Audio Caption:*\n${message.caption}`
-        : userInfo;
-      
-      await ctx.telegram.sendAudio(
-        ADMIN_ID,
-        audio.file_id,
-        {
-          caption: caption,
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
-      
-    } else {
-      // For other message types, forward as is
-      await ctx.forwardMessage(ADMIN_ID, ctx.chat.id, ctx.message.message_id);
-      
-      // Send user info separately
-      await ctx.telegram.sendMessage(
-        ADMIN_ID,
-        userInfo,
-        {
-          parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '✍️ Reply', callback_data: `admin_reply_ticket_${userId}` },
-                { text: '❌ Close', callback_data: `admin_close_ticket_${userId}` }
-              ]
-            ]
-          }
-        }
-      );
+        return;
     }
-    
-    // Send confirmation to user
-    const langCode = user?.lang || 'en';
-    const langData = languageTexts[langCode] || languageTexts['en'];
-    const confirmationMsg = langData.supportConfirmation || "✅ Your message has been sent to support team.";
-    
-    await ctx.reply(confirmationMsg);
-    
-  } catch (error) {
-    console.error('Error handling support message:', error);
-    await ctx.reply("❌ Failed to send your message. Please try again.");
-  }
-  return;
-}
   
   // Admin search user
   if (userId === ADMIN_ID && message.text && !message.text.startsWith('/')) {
