@@ -967,7 +967,9 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         
         // Format User Details
         const name = `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`;
-        const username = user.username ? `@${user.username}` : 'N/A';
+        // FIX: Remove escapeMarkdown for username to avoid backslash
+        const username = user.username ? 
+            `@${user.username}`.replace(/\\/g, '') : 'N/A';
         // FIX: Correct time formatting for active since
         const activeSince = user.joinedAt ? 
             new Date(user.joinedAt).toLocaleString('en-IN', { 
