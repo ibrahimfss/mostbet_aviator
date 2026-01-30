@@ -972,20 +972,36 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
             `@${user.username}`.replace(/\\/g, '') : 'N/A';
         const lang = user.langName || 'English';
 
-        // FIX: Date formatting function (DD/MM/YYYY, HH:mm:ss)
+        // FIX: Simple date formatting from Firebase timestamp to IST
         const formatDate = (dateString) => {
             if (!dateString) return 'N/A';
             try {
-                const date = new Date(dateString);
-                // DD/MM/YYYY, HH:mm:ss format
-                const day = date.getDate().toString().padStart(2, '0');
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const year = date.getFullYear();
-                const hours = date.getHours().toString().padStart(2, '0');
-                const minutes = date.getMinutes().toString().padStart(2, '0');
-                const seconds = date.getSeconds().toString().padStart(2, '0');
+                // Firebase timestamp ya ISO string handle kare
+                let date;
+                if (typeof dateString === 'number') {
+                    // Firebase timestamp (milliseconds)
+                    date = new Date(dateString);
+                } else if (dateString.includes('T')) {
+                    // ISO string
+                    date = new Date(dateString);
+                } else {
+                    return 'N/A';
+                }
+                
+                // Add 5.5 hours for IST (UTC+5:30)
+                const istTime = new Date(date.getTime() + (5.5 * 60 * 60 * 1000));
+                
+                // Extract components
+                const day = istTime.getUTCDate().toString().padStart(2, '0');
+                const month = (istTime.getUTCMonth() + 1).toString().padStart(2, '0');
+                const year = istTime.getUTCFullYear();
+                const hours = istTime.getUTCHours().toString().padStart(2, '0');
+                const minutes = istTime.getUTCMinutes().toString().padStart(2, '0');
+                const seconds = istTime.getUTCSeconds().toString().padStart(2, '0');
+                
                 return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
             } catch (e) {
+                console.error('Date formatting error for:', dateString, e);
                 return 'N/A';
             }
         };
