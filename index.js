@@ -970,25 +970,31 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
         // FIX: Remove escapeMarkdown for username to avoid backslash
         const username = user.username ? 
             `@${user.username}`.replace(/\\/g, '') : 'N/A';
-        // FIX: Correct time formatting for active since
-        const activeSince = user.joinedAt ? 
-            new Date(user.joinedAt).toLocaleString('en-IN', { 
-                timeZone: 'Asia/Kolkata',
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            }) : 'N/A';
         const lang = user.langName || 'English';
+
+        // FIX: Date formatting function (DD/MM/YYYY, HH:mm:ss)
+        const formatDate = (dateString) => {
+            if (!dateString) return 'N/A';
+            try {
+                const date = new Date(dateString);
+                // DD/MM/YYYY, HH:mm:ss format
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const year = date.getFullYear();
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
+                return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+            } catch (e) {
+                return 'N/A';
+            }
+        };
 
         // FIX: Prepare SAFE Caption without Markdown issues
         const cleanText = (text) => {
             if (!text) return '📎 Media File';
             // Don't escape underscores in usernames
-        const str = text.toString();
+            const str = text.toString();
             // Only escape characters that break HTML, not underscores
             return str
                 .replace(/&/g, '&amp;')
@@ -999,39 +1005,29 @@ bot.action(/^admin_view_ticket_(\d+)(?:_(\d+))?$/, async (ctx) => {
                 .substring(0, 500);
         };
         
-        // Build caption with proper escaping
-        let caption = `📩 *SUPPORT TICKET*\n\n` +
-                      `👤 *User*: ${cleanText(name)}\n` +
-                      `🆔 *ID*: ${userId}\n` +
-                      `👤 *Username*: ${username}\n` +  // Don't clean username, already formatted
-                      `🌐 *Language*: ${cleanText(lang)}\n` +
-                      `⏰ *Active since*: ${cleanText(activeSince)}\n` +
-                      `📊 *Messages: ${totalMessages}*\n` +
+        // Build PROFESSIONAL caption with HTML formatting
+        let caption = `<b>📩 SUPPORT TICKET</b>\n\n` +
+                      `<b>👤 User:</b> ${cleanText(name)}\n` +
+                      `<b>🆔 ID:</b> <code>${userId}</code>\n` +
+                      `<b>👤 Username:</b> ${username}\n` +
+                      `<b>🌐 Language:</b> ${cleanText(lang)}\n` +
+                      `<b>⏰ Active since:</b> ${formatDate(user.joinedAt)}\n` +
+                      `<b>📊 Messages:</b> ${totalMessages}\n` +
                       `-----------------------------\n`;
 
-            if (currentMsg) {
+        if (currentMsg) {
             const msgContent = currentMsg.text || currentMsg.caption;
             const safeContent = cleanText(msgContent);
             
-            // FIX: Correct time formatting without backslashes
+            // Format message time
             const msgTime = currentMsg.timestamp || currentMsg.date;
-            const formattedTime = msgTime ? 
-                new Date(msgTime).toLocaleString('en-IN', { 
-                    timeZone: 'Asia/Kolkata',
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                }) : 'N/A';
+            const formattedMsgTime = formatDate(msgTime);
             
-            caption += `🔢 *Message*: ${msgIndex + 1}/${totalMessages}\n` +
-                       `⏰ *Time*: ${formattedTime}\n` +
-                       `🗨️ *Content*: ${safeContent}`;
+            caption += `<b>🔢 Message:</b> ${msgIndex + 1}/${totalMessages}\n` +
+                       `<b>⏰ Time:</b> ${formattedMsgTime}\n` +
+                       `<b>🗨️ Content:</b> ${safeContent}`;
         } else {
-            caption += `⚠️ No messages in this ticket.\n\nTap "✏️ Reply" to start conversation.`;
+            caption += `⚠️ <i>No messages in this ticket.</i>\n\nTap "✏️ Reply" to start conversation.`;
         }
 
         // Determine Media to Show
