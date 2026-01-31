@@ -1256,62 +1256,144 @@ bot.action(/^admin_user_list_(\d+)$/, async (ctx) => {
 bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   const userId = ctx.match[1];
-  const user = getUserData(parseInt(userId));
-  
-  if (!user) {
-    await ctx.answerCbQuery("User not found", { show_alert: true });
-    return;
-  }
-  
-  const status = user.active ? "✅ ACTIVE" : "❌ INACTIVE";
-  const fullName = `${user.firstName} ${user.lastName || ''}`.trim() || `User ${userId}`;
-  
-  // Create buttons
-  const buttons = [
-    [
-      { text: "✏️ MSG", callback_data: `admin_reply_${userId}` },
-      { text: "👁️ VIEW", url: `tg://user?id=${userId}` }
-    ],
-    [
-      { text: user.active ? "❌ DEACTIVATE" : "✅ ACTIVATE", 
-        callback_data: `admin_toggle_user_${userId}` }
-    ],
-    [
-      { text: "⬅️ Back", callback_data: "admin_user_list_1" }
-    ]
-  ];
   
   try {
-    // Try to get user profile photo
-    const photos = await ctx.telegram.getUserProfilePhotos(userId, 0, 1);
+    // ✅ Await add karein
+    const user = await getUserData(parseInt(userId));
     
-    if (photos.total_count > 0) {
-      const photo = photos.photos[0][0];
-      await ctx.editMessageMedia({
-        type: "photo",
-        media: photo.file_id,
-        caption: `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: @${user.username || 'N/A'}\n*Status*: ${status}\n*Language*: ${user.langName}`,
-        parse_mode: "Markdown"
-      }, {
-        reply_markup: { inline_keyboard: buttons }
-      });
-    } else {
+    if (!user) {
+      await ctx.answerCbQuery("❌ User not found in database", { show_alert: true });
+      return;
+    }
+    
+    // ✅ User activity check based on last seen
+    const lastSeenDate = user.lastSeen ? new Date(user.lastSeen) : new Date();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    
+    // Auto-inactive if user hasn't been seen for 1 week
+    const isRecentlyActive = lastSeenDate >= oneWeekAgo;
+    const displayStatus = user.active && isRecentlyActive ? 
+      "✅ ACTIVE" : "❌ INACTIVE";
+    
+    // ✅ Proper name formatting
+    const fullName = [user.firstName, user.lastName]
+      .filter(Boolean)
+      .join(' ')
+      .trim() || `User ${userId}`;
+    
+    // ✅ Username formatting
+    const username = user.username ? `@${user.username}` : 'No Username';
+    
+    // ✅ Language formatting
+    const language = user.langName || user.lang || 'Not Set';
+    
+    // ✅ Date formatting for joined and last seen
+    const formatDate = (dateString) => {
+      if (!dateString) return 'N/A';
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+      } catch {
+        return 'N/A';
+      }
+    };
+    
+    // ✅ Professional caption
+    const caption = `👤 *USER DETAILS*\n\n` +
+      `👤 *Name:* ${fullName}\n` +
+      `🆔 *ID:* \`${userId}\`\n` +
+      `👤 *Username:* ${username}\n` +
+      `📊 *Status:* ${displayStatus}\n` +
+      `🌐 *Language:* ${language}\n` +
+      `📅 *Joined:* ${formatDate(user.joinedAt)}\n` +
+      `👀 *Last Seen:* ${formatDate(user.lastSeen)}\n\n` +
+      `_Status automatically updates based on activity._`;
+    
+    // ✅ Buttons array
+    const buttons = [
+      [
+        { 
+          text: "✏️ Send Message", 
+          callback_data: `admin_reply_${userId}` 
+        },
+        { 
+          text: "👁️ View Profile", 
+          url: `tg://user?id=${userId}` 
+        }
+      ],
+      [
+        { 
+          text: user.active ? "❌ Deactivate" : "✅ Activate", 
+          callback_data: `admin_toggle_user_${userId}` 
+        }
+      ],
+      [
+        { 
+          text: "⬅️ Back to List", 
+          callback_data: `admin_user_list_1` 
+        }
+      ]
+    ];
+    
+    // ✅ Try to get profile photo
+    try {
+      const photos = await ctx.telegram.getUserProfilePhotos(userId, 0, 1);
+      
+      if (photos.total_count > 0) {
+        const photo = photos.photos[0][0];
+        await ctx.editMessageMedia({
+          type: "photo",
+          media: photo.file_id,
+          caption: caption,
+          parse_mode: "Markdown"
+        }, {
+          reply_markup: { inline_keyboard: buttons }
+        });
+      } else {
+        // Use default image if no profile photo
+        await ctx.editMessageMedia({
+          type: "photo",
+          media: IMAGES.USER_LIST,
+          caption: caption,
+          parse_mode: "Markdown"
+        }, {
+          reply_markup: { inline_keyboard: buttons }
+        });
+      }
+    } catch (photoError) {
+      console.error("Error fetching profile photo:", photoError);
+      // Fallback to default image
       await ctx.editMessageMedia({
         type: "photo",
         media: IMAGES.USER_LIST,
-        caption: `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: @${user.username || 'N/A'}\n*Status*: ${status}\n*Language*: ${user.langName}`,
+        caption: caption,
         parse_mode: "Markdown"
       }, {
         reply_markup: { inline_keyboard: buttons }
       });
     }
+    
   } catch (error) {
-    console.error("Error fetching profile photo:", error);
+    console.error("Error in admin_view_user:", error);
+    await ctx.answerCbQuery("❌ Error loading user details", { show_alert: true });
+    
+    // Fallback to simple view
     await ctx.editMessageCaption(
-      `👤 *USER DETAILS*\n\n👤: ${fullName}\n🆔: \`${userId}\`\n👤: @${user.username || 'N/A'}\n*Status*: ${status}\n*Language*: ${user.langName}`,
+      `⚠️ *USER DETAILS*\n\n` +
+      `Error loading details for user ID: ${userId}\n\n` +
+      `Please try again or check user ID.`,
       {
         parse_mode: "Markdown",
-        reply_markup: { inline_keyboard: buttons }
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: "⬅️ Back to List", callback_data: `admin_user_list_1` }]
+          ]
+        }
       }
     );
   }
