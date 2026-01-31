@@ -1284,7 +1284,8 @@ bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
     
     // ✅ Username formatting - WITHOUT ESCAPE MARKDOWN (Keep underscores)
     const rawUsername = user.username || '';
-    const username = user.username ? `@${user.username}` : 'No username';
+    // DIRECTLY use raw username without any processing
+    const usernameDisplay = rawUsername ? `@${rawUsername}` : 'No username';
     
     // ✅ Language formatting
     const language = user.langName || user.lang || 'Not Set';
@@ -1308,7 +1309,7 @@ bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
     const caption = `👤 *USER DETAILS*\n\n` +
       `👤 *Name:* ${fullName}\n` +
       `🆔 *ID:* \`${userId}\`\n` +
-      `👤 *Username:* ${username}\n` +
+      `👤 *Username:* ${usernameDisplay}\n` +
       `📊 *Status:* ${displayStatus}\n` +
       `🌐 *Language:* ${language}\n` +
       `📅 *Joined:* ${formatDate(user.joinedAt)}\n` +
