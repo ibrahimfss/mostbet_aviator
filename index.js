@@ -1678,19 +1678,24 @@ bot.on('message', async (ctx) => {
   
   // Handle admin commands
   if (message.text && message.text.startsWith('/')) {
-    if (message.text === '/cancel' && userId === ADMIN_ID) {
-      if (adminBroadcastMode.has(userId)) {
-        adminBroadcastMode.delete(userId);
-        await ctx.reply('✅ Broadcast cancelled.');
-        return;
-      }
-      if (adminReplyTarget.has(userId)) {
-        adminReplyTarget.delete(userId);
-        await ctx.reply('✅ Reply cancelled.');
-        return;
-      }
+  if (message.text === '/cancel' && userId === ADMIN_ID) {
+    if (adminBroadcastMode.has(userId)) {
+      adminBroadcastMode.delete(userId);
+      await ctx.reply('✅ Broadcast cancelled.');
+      return;
+    }
+    if (adminReplyTarget.has(userId)) {
+      adminReplyTarget.delete(userId);
+      await ctx.reply('✅ Reply cancelled.');
+      return;
+    }
+    if (adminSearchMode.has(userId)) {
+      adminSearchMode.delete(userId);
+      await ctx.reply('✅ Search cancelled.');
+      return;
     }
   }
+}
   
   // Admin broadcast message - FIXED VERSION WITH CHUNKS
 if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
