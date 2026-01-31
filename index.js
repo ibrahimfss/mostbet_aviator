@@ -2186,13 +2186,26 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
         await ctx.reply('❌ User not found in database.\n\nPlease check:\n• User ID\n• Username (with or without @)\n\nOr go back to Admin Panel.');
       }
       
-      // ✅ Remove search mode after successful or failed search
-      adminSearchMode.delete(userId);
-      return;
-    } catch (error) {
-      console.error('Error in admin search:', error);
-      // ✅ Remove search mode on error too
-      adminSearchMode.delete(userId);
+      // ✅ PERSISTENT SEARCH MODE - DO NOT DELETE, SHOW CONTINUE OPTION
+const searchResultButtons = [
+  [
+    { text: '👁️ View Details', callback_data: `admin_view_user_${foundUser.id}` },
+    { text: '✏️ Send Message', callback_data: `admin_reply_${foundUser.id}` }
+  ],
+  [
+    { text: '🔍 Search Another User', callback_data: 'admin_search_continue' }
+  ],
+  [
+    { text: '⬅️ Back to Admin Panel', callback_data: 'ADMIN_PANEL' }
+  ]
+];
+
+await ctx.reply(caption, {
+  parse_mode: 'Markdown',
+  reply_markup: {
+    inline_keyboard: searchResultButtons
+  }
+});
       await ctx.reply('❌ Error searching for user. Please try again.');
     }
     return;
