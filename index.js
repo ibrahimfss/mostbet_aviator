@@ -1549,9 +1549,9 @@ bot.action('admin_cancel_broadcast', async (ctx) => {
   const activeTickets = Array.from(supportTickets.keys()).length;
   
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
-    `👥 Total Users: ${users.length}\n` +
-    `📞 Active Tickets: ${activeTickets}\n` +
-    `🌐 Languages: ${new Set(users.map(u => u.lang)).size}`;
+    `👥 *Total Users: ${users.length}*\n` +
+    `📞 *Active Tickets: ${activeTickets}*\n` +
+    `🌐 *Languages: ${new Set(users.map(u => u.lang)).size}*`;
   
   await ctx.editMessageMedia(
     {
