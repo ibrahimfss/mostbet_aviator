@@ -1490,6 +1490,27 @@ bot.action('admin_search_user', async (ctx) => {
   );
 });
 
+// ✅✅✅ NEW: Continue Search (Stay in Search Mode)
+bot.action('admin_search_continue', async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  
+  // Already in search mode, just show message
+  await ctx.answerCbQuery('🔍 You can search another user now.');
+  
+  await ctx.editMessageCaption(
+    "🔍 *SEARCH MODE ACTIVE*\n\nYou can search another user.\n\nSend:\n• User ID\n• OR Username (with or without @)\n\nType /cancel to exit search mode.",
+    {
+      parse_mode: "Markdown",
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "❌ Exit Search Mode", callback_data: "admin_cancel_search" }],
+          [{ text: "⬅️ Back to Admin Panel", callback_data: "ADMIN_PANEL" }]
+        ]
+      }
+    }
+  );
+});
+
 // ==================== BROADCAST FUNCTIONALITY ====================
 
 // Broadcast Action - UPDATED WITH PERSISTENT MODE
