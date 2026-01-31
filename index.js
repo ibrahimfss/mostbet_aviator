@@ -1810,14 +1810,34 @@ if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
   return undefined; // No formatting
 };
         
-        const parseMode = detectParseMode();
+  const parseMode = detectParseMode();
         
         // Handle ALL MEDIA TYPES with proper formatting
         if (message.text) {
-          await ctx.telegram.sendMessage(targetUserId, message.text, {
-            parse_mode: parseMode || 'Markdown'
-          });
-        } else if (message.photo) {
+  try {
+    // Try with detected parse mode
+    await ctx.telegram.sendMessage(targetUserId, message.text, {
+      parse_mode: parseMode || 'MarkdownV2'
+    });
+  } catch (formatError) {
+    // If MarkdownV2 fails, try with HTML
+    if (parseMode === 'MarkdownV2') {
+      try {
+        await ctx.telegram.sendMessage(targetUserId, message.text, {
+          parse_mode: 'HTML'
+        });
+      } catch (htmlError) {
+        // If both fail, send without formatting
+        await ctx.telegram.sendMessage(targetUserId, message.text);
+      }
+    } else {
+      // For other parse modes or if undefined
+      await ctx.telegram.sendMessage(targetUserId, message.text, {
+        parse_mode: parseMode || undefined
+      });
+    }
+  }
+} else if (message.photo) {
           const photo = message.photo[message.photo.length - 1];
           await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
             caption: message.caption || '',
