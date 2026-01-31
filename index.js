@@ -2095,7 +2095,7 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
       return;
   }
   
-    // Admin search user - IMPROVED VERSION (ONLY WHEN IN SEARCH MODE)
+        // Admin search user - IMPROVED VERSION (ONLY WHEN IN SEARCH MODE)
 if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !message.text.startsWith('/')) {
     // Check if it's a search query
     const query = message.text.trim();
@@ -2107,7 +2107,7 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
         const targetUserId = parseInt(query);
         // ✅ Await add karein
         foundUser = await getUserData(targetUserId);
-      } 
+      } else {
         // Search by username (with or without @) - WITH PARTIAL MATCH
         const searchUsername = query.replace(/^@/, '').toLowerCase();
         const allUsers = await getAllUsersFromFirebase();
@@ -2140,6 +2140,7 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
           await ctx.reply(response, { parse_mode: 'Markdown' });
           return;
         }
+      }
       
       if (foundUser) {
         // ✅ User activity check based on last seen
@@ -2192,41 +2193,32 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
           `🌐 *Language:* ${language}\n` +
           `${displayStatus}`;
         
+        // ✅ PERSISTENT SEARCH MODE - DO NOT DELETE, SHOW CONTINUE OPTION
+        const searchResultButtons = [
+          [
+            { text: '👁️ View Details', callback_data: `admin_view_user_${foundUser.id}` },
+            { text: '✏️ Send Message', callback_data: `admin_reply_${foundUser.id}` }
+          ],
+          [
+            { text: '🔍 Search Another User', callback_data: 'admin_search_continue' }
+          ],
+          [
+            { text: '⬅️ Back to Admin Panel', callback_data: 'ADMIN_PANEL' }
+          ]
+        ];
+        
         await ctx.reply(caption, {
           parse_mode: 'Markdown',
           reply_markup: {
-            inline_keyboard: [
-              [
-                { text: '👁️ View Details', callback_data: `admin_view_user_${foundUser.id}` },
-                { text: '✏️ Send Message', callback_data: `admin_reply_${foundUser.id}` }
-              ]
-            ]
+            inline_keyboard: searchResultButtons
           }
         });
-            } else {
+      } else {
         await ctx.reply('❌ User not found in database.\n\nPlease check:\n• User ID\n• Username (with or without @)\n\nOr go back to Admin Panel.');
       }
       
-      // ✅ PERSISTENT SEARCH MODE - DO NOT DELETE, SHOW CONTINUE OPTION
-const searchResultButtons = [
-  [
-    { text: '👁️ View Details', callback_data: `admin_view_user_${foundUser.id}` },
-    { text: '✏️ Send Message', callback_data: `admin_reply_${foundUser.id}` }
-  ],
-  [
-    { text: '🔍 Search Another User', callback_data: 'admin_search_continue' }
-  ],
-  [
-    { text: '⬅️ Back to Admin Panel', callback_data: 'ADMIN_PANEL' }
-  ]
-];
-
-await ctx.reply(caption, {
-  parse_mode: 'Markdown',
-  reply_markup: {
-    inline_keyboard: searchResultButtons
-  }
-});
+    } catch (error) {
+      console.error('Error in admin search:', error);
       await ctx.reply('❌ Error searching for user. Please try again.');
     }
     return;
