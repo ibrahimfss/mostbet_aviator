@@ -798,9 +798,9 @@ bot.action("ADMIN_PANEL", async (ctx) => {
   const uniqueLangs = new Set(Object.values(allUsers).map(u => u.langName || u.lang));
   
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
-                 `👥 Total Users: ${stats.total}\n` +
-                 `📞 Active Tickets: ${activeTickets}\n` +
-                 `🌐 Languages: ${uniqueLangs.size}`;
+                 `👥 *Total Users: ${stats.total}*\n` +
+                 `📞 *Active Tickets: ${activeTickets}*\n` +
+                 `🌐 *Languages: ${uniqueLangs.size}*`;
 
   await ctx.editMessageMedia(
     {
