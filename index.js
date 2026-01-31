@@ -1697,7 +1697,7 @@ bot.on('message', async (ctx) => {
   }
 }
   
-  // Admin broadcast message - FIXED VERSION WITH CHUNKS
+  // Admin broadcast message - FIXED VERSION WITH MARKDOWN/HTML SUPPORT
 if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
   const allUsers = Array.from(userStorage.keys()).filter(id => id !== ADMIN_ID);
   let sent = 0;
@@ -1705,13 +1705,12 @@ if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
   
   const progressMsg = await ctx.reply(`⏳ Broadcasting to ${allUsers.length} users...`);
   
-  // ✅ CHUNK-BASED BROADCASTING ADDED
   const CHUNK_SIZE = 30;
   
   for (let chunkIndex = 0; chunkIndex < allUsers.length; chunkIndex += CHUNK_SIZE) {
     const chunk = allUsers.slice(chunkIndex, chunkIndex + CHUNK_SIZE);
     
-    // ✅ LIVE PROGRESS UPDATE
+    // ✅ PROGRESS UPDATE
     try {
       await ctx.telegram.editMessageText(
         ctx.chat.id,
@@ -1734,49 +1733,63 @@ if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
           continue;
         }
         
-        // Handle ALL MEDIA TYPES with caption
+        // ✅✅✅ FIXED: DETECT MARKDOWN/HTML AND USE CORRECT PARSE MODE
+        const detectParseMode = () => {
+          const text = message.text || message.caption || '';
+          // Check for HTML tags
+          if (/<[a-z][\s\S]*>/i.test(text)) {
+            return 'HTML';
+          }
+          // Check for Markdown
+          if (/[_*[\]()~`>#+=|{}.!-]/.test(text)) {
+            return 'Markdown';
+          }
+          return undefined;
+        };
+        
+        const parseMode = detectParseMode();
+        
+        // Handle ALL MEDIA TYPES with proper formatting
         if (message.text) {
           await ctx.telegram.sendMessage(targetUserId, message.text, {
-            parse_mode: 'Markdown'
+            parse_mode: parseMode || 'Markdown'
           });
         } else if (message.photo) {
           const photo = message.photo[message.photo.length - 1];
           await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined
           });
         } else if (message.video) {
           await ctx.telegram.sendVideo(targetUserId, message.video.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined
           });
         } else if (message.document) {
           await ctx.telegram.sendDocument(targetUserId, message.document.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined
           });
-        } else if (message.animation) { // ✅ GIF support added
+        } else if (message.animation) {
           await ctx.telegram.sendAnimation(targetUserId, message.animation.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined
           });
         } else if (message.voice) {
           await ctx.telegram.sendVoice(targetUserId, message.voice.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined
           });
         } else if (message.audio) {
           await ctx.telegram.sendAudio(targetUserId, message.audio.file_id, {
             caption: message.caption || '',
-            parse_mode: message.caption ? 'Markdown' : undefined,
+            parse_mode: message.caption ? (parseMode || 'Markdown') : undefined,
             title: message.audio.title || '',
             performer: message.audio.performer || ''
           });
         } else if (message.sticker) {
-          // Stickers don't have captions
           await ctx.telegram.sendSticker(targetUserId, message.sticker.file_id);
         } else if (message.video_note) {
-          // Video notes (circular videos)
           await ctx.telegram.sendVideoNote(targetUserId, message.video_note.file_id);
         } else {
           // Fallback: Forward the original message
@@ -1801,22 +1814,20 @@ if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
       }
     }
     
-    // ✅ CHUNK COMPLETE PAUSE (to avoid Telegram limits)
+    // ✅ CHUNK COMPLETE PAUSE
     if (chunkIndex + CHUNK_SIZE < allUsers.length) {
       await new Promise(resolve => setTimeout(resolve, 500));
     }
   }
   
-  adminBroadcastMode.delete(userId);
-  
-  // ✅ FINAL REPORT WITH SUCCESS RATE
+  // ✅✅✅ FIXED: DON'T DELETE BROADCAST MODE - ADMIN CAN SEND MORE MESSAGES
   const successRate = allUsers.length > 0 ? Math.round((sent / allUsers.length) * 100) : 0;
   
   await ctx.telegram.editMessageText(
     ctx.chat.id,
     progressMsg.message_id,
     null,
-    `✅ *Broadcast Complete*\n\n📊 Total Users: ${allUsers.length}\n📨 Sent: ${sent} users\n❌ Failed: ${failed} users\n🎯 Success Rate: ${successRate}%`,
+    `✅ *Broadcast Complete*\n\n📊 Total Users: ${allUsers.length}\n📨 Sent: ${sent} users\n❌ Failed: ${failed} users\n🎯 Success Rate: ${successRate}%\n\n📝 *You can send another broadcast message now.*`,
     { parse_mode: 'Markdown' }
   );
   
