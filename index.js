@@ -2148,11 +2148,17 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
             ]
           }
         });
-      } else {
+            } else {
         await ctx.reply('❌ User not found in database.\n\nPlease check:\n• User ID\n• Username (with or without @)\n\nOr go back to Admin Panel.');
       }
+      
+      // ✅ Remove search mode after successful or failed search
+      adminSearchMode.delete(userId);
+      return;
     } catch (error) {
       console.error('Error in admin search:', error);
+      // ✅ Remove search mode on error too
+      adminSearchMode.delete(userId);
       await ctx.reply('❌ Error searching for user. Please try again.');
     }
     return;
