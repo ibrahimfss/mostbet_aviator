@@ -1639,73 +1639,150 @@ bot.on('message', async (ctx) => {
     }
   }
   
-  // Admin broadcast message
-  if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
-    const allUsers = Array.from(userStorage.keys()).filter(id => id !== ADMIN_ID);
-    let sent = 0;
-    let failed = 0;
-    
-    const progressMsg = await ctx.reply(`⏳ Broadcasting to ${allUsers.length} users...`);
-    
-    for (const targetUserId of allUsers) {
-      try {
-        // Check if user is active
-        const user = getUserData(targetUserId);
-        if (!user || !user.active) {
-          failed++;
-          continue;
-        }
-        
-        // Forward or send message based on type
-        if (message.text) {
-          await ctx.telegram.sendMessage(targetUserId, message.text, {
-            parse_mode: 'Markdown'
-          });
-        } else if (message.photo) {
-          const photo = message.photo[message.photo.length - 1];
-          await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
-            caption: message.caption || '',
-            parse_mode: 'Markdown'
-          });
-        } else if (message.video) {
-          await ctx.telegram.sendVideo(targetUserId, message.video.file_id, {
-            caption: message.caption || '',
-            parse_mode: 'Markdown'
-          });
-        } else if (message.document) {
-          await ctx.telegram.sendDocument(targetUserId, message.document.file_id, {
-            caption: message.caption || '',
-            parse_mode: 'Markdown'
-          });
-        }
-        
-        sent++;
-        
-        // Small delay to avoid rate limits
-        await new Promise(resolve => setTimeout(resolve, 100));
-      } catch (error) {
+  // Admin broadcast message - FIXED VERSION
+if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
+  const allUsers = Array.from(userStorage.keys()).filter(id => id !== ADMIN_ID);
+  let sent = 0;
+  let failed = 0;
+  
+  const progressMsg = await ctx.reply(`⏳ Broadcasting to ${allUsers.length} users...`);
+  
+  for (const targetUserId of allUsers) {
+    try {
+      // Check if user is active
+      const user = await getUserData(targetUserId); // ✅ Await added
+      if (!user || !user.active) {
         failed++;
-        console.error(`Failed to send to user ${targetUserId}:`, error.message);
-        // Mark user as inactive if blocked
-        if (error.description?.includes('blocked')) {
-          const user = getUserData(targetUserId);
-          if (user) user.active = false;
+        continue;
+      }
+      
+      // Handle ALL MEDIA TYPES with caption
+      if (message.text) {
+        await ctx.telegram.sendMessage(targetUserId, message.text, {
+          parse_mode: 'Markdown'
+        });
+      } else if (message.photo) {
+        const photo = message.photo[message.photo.length - 1];
+        await ctx.telegram.sendPhoto(targetUserId, photo.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined
+        });
+      } else if (message.video) {
+        await ctx.telegram.sendVideo(targetUserId, message.video.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined
+        });
+      } else if (message.document) {
+        await ctx.telegram.sendDocument(targetUserId, message.document.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined
+        });
+      } else if (message.animation) { // ✅ GIF support added
+        await ctx.telegram.sendAnimation(targetUserId, message.animation.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined
+        });
+      } else if (message.voice) {
+        await ctx.telegram.sendVoice(targetUserId, message.voice.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined
+        });
+      } else if (message.audio) {
+        await ctx.telegram.sendAudio(targetUserId, message.audio.file_id, {
+          caption: message.caption || '',
+          parse_mode: message.caption ? 'Markdown' : undefined,
+          title: message.audio.title || '',
+          performer: message.audio.performer || ''
+        });
+      } else if (message.sticker) {
+        // Stickers don't have captions
+        await ctx.telegram.sendSticker(targetUserId, message.sticker.file_id);
+      } else if (message.video_note) {
+        // Video notes (circular videos)
+        await ctx.telegram.sendVideoNote(targetUserId, message.video_note.file_id);
+      } else if (message.contact) {
+        // Contact sharing
+        await ctx.telegram.sendContact(
+          targetUserId,
+          message.contact.phone_number,
+          message.contact.first_name,
+          {
+            last_name: message.contact.last_name || '',
+            vcard: message.contact.vcard || ''
+          }
+        );
+      } else if (message.location) {
+        // Location sharing
+        await ctx.telegram.sendLocation(
+          targetUserId,
+          message.location.latitude,
+          message.location.longitude
+        );
+      } else if (message.venue) {
+        // Venue sharing
+        await ctx.telegram.sendVenue(
+          targetUserId,
+          message.venue.location.latitude,
+          message.venue.location.longitude,
+          message.venue.title,
+          message.venue.address,
+          {
+            foursquare_id: message.venue.foursquare_id || '',
+            foursquare_type: message.venue.foursquare_type || ''
+          }
+        );
+      } else if (message.poll) {
+        // Poll forwarding
+        await ctx.telegram.sendPoll(
+          targetUserId,
+          message.poll.question,
+          message.poll.options.map(opt => opt.text),
+          {
+            is_anonymous: message.poll.is_anonymous,
+            type: message.poll.type,
+            allows_multiple_answers: message.poll.allows_multiple_answers,
+            correct_option_id: message.poll.correct_option_id,
+            explanation: message.poll.explanation || '',
+            explanation_parse_mode: message.poll.explanation ? 'Markdown' : undefined,
+            open_period: message.poll.open_period,
+            close_date: message.poll.close_date ? new Date(message.poll.close_date * 1000) : undefined
+          }
+        );
+      } else {
+        // Fallback: Forward the original message
+        await ctx.forwardMessage(targetUserId, ctx.chat.id, message.message_id);
+      }
+      
+      sent++;
+      
+      // Small delay to avoid rate limits
+      await new Promise(resolve => setTimeout(resolve, 50)); // Reduced to 50ms for faster broadcasting
+      
+    } catch (error) {
+      failed++;
+      console.error(`Failed to send to user ${targetUserId}:`, error.message);
+      // Mark user as inactive if blocked
+      if (error.description?.includes('blocked') || error.code === 403) {
+        const user = await getUserData(targetUserId);
+        if (user) {
+          await updateUserData(targetUserId, { active: false });
         }
       }
     }
-    
-    adminBroadcastMode.delete(userId);
-    
-    await ctx.telegram.editMessageText(
-      ctx.chat.id,
-      progressMsg.message_id,
-      null,
-      `✅ *Broadcast Complete*\n\n📨 Sent: ${sent} users\n❌ Failed: ${failed} users\n📊 Total: ${allUsers.length} users`,
-      { parse_mode: 'Markdown' }
-    );
-    
-    return;
   }
+  
+  adminBroadcastMode.delete(userId);
+  
+  await ctx.telegram.editMessageText(
+    ctx.chat.id,
+    progressMsg.message_id,
+    null,
+    `✅ *Broadcast Complete*\n\n📨 Sent: ${sent} users\n❌ Failed: ${failed} users\n📊 Total: ${allUsers.length} users`,
+    { parse_mode: 'Markdown' }
+  );
+  
+  return;
+}
   
   // Admin reply to user - FIXED WITH AWAIT
 if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
