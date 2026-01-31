@@ -1560,6 +1560,27 @@ bot.action('admin_cancel_broadcast', async (ctx) => {
   );
 });
 
+// ✅✅✅ NEW: Continue Broadcast (Stay in Broadcast Mode)
+bot.action('admin_continue_broadcast', async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  
+  // Already in broadcast mode, just show message
+  await ctx.answerCbQuery('📝 You can send another broadcast message now.');
+  
+  await ctx.editMessageCaption(
+    '📢 *BROADCAST MODE ACTIVE*\n\nYou can send another message to broadcast.\n\nYou can send:\n• Text\n• Photo with caption\n• Video with caption\n\nType /cancel to exit broadcast mode.',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '❌ Exit Broadcast Mode', callback_data: 'admin_cancel_broadcast' }],
+          [{ text: '⬅️ Back to Admin Panel', callback_data: 'ADMIN_PANEL' }]
+        ]
+      }
+    }
+  );
+});
+
 // Cancel Search Action
 bot.action('admin_cancel_search', async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
