@@ -1937,19 +1937,38 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
         // ✅ Await add karein
         foundUser = await getUserData(targetUserId);
       } 
-      // Search by username (with or without @)
-      else {
+        // Search by username (with or without @) - WITH PARTIAL MATCH
         const searchUsername = query.replace(/^@/, '').toLowerCase();
         const allUsers = await getAllUsersFromFirebase();
+        const matchingUsers = [];
         
         // Loop through all users to find by username
         for (const [uid, user] of Object.entries(allUsers)) {
-          if (user.username && user.username.toLowerCase() === searchUsername) {
-            foundUser = user;
-            break;
+          if (user.username && user.username.toLowerCase().includes(searchUsername)) {
+            matchingUsers.push(user);
           }
         }
-      }
+        
+        if (matchingUsers.length === 1) {
+          foundUser = matchingUsers[0];
+        } else if (matchingUsers.length > 1) {
+          // Multiple users found - show list
+          let response = `🔍 *MULTIPLE USERS FOUND*\n\nFound ${matchingUsers.length} users matching "${searchUsername}":\n\n`;
+          
+          matchingUsers.slice(0, 10).forEach((user, index) => {
+            const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || `User ${user.id}`;
+            response += `${index + 1}. ${name} (@${user.username || 'no-username'}) - ID: ${user.id}\n`;
+          });
+          
+          if (matchingUsers.length > 10) {
+            response += `\n... and ${matchingUsers.length - 10} more users.`;
+          }
+          
+          response += `\n\nPlease use User ID for exact search.`;
+          
+          await ctx.reply(response, { parse_mode: 'Markdown' });
+          return;
+        }
       
       if (foundUser) {
         // ✅ User activity check based on last seen
