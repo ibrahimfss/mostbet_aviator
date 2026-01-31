@@ -2133,7 +2133,7 @@ if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !messa
           `👤 *Name:* ${fullName}\n` +
           `🆔 *ID:* \`${foundUser.id}\`\n` +
           `👤 *Username:* ${username}\n` +
-          `⌚ *First Start:* ${formatDateTime(foundUser.joinedAt)}\n` +
+          `⌚ *Joined:* ${formatDateTime(foundUser.joinedAt)}\n` +
           `🌐 *Language:* ${language}\n` +
           `${displayStatus}`;
         
