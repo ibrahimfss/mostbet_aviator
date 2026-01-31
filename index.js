@@ -212,6 +212,7 @@ const userStorage = new Map(); // Store user data
 const adminBroadcastMode = new Map(); // Track broadcast mode
 const adminReplyTarget = new Map(); // Track admin reply target
 const supportTickets = new Map(); // Support tickets
+const adminSearchMode = new Map(); // Track admin search mode
 
 // Load tickets from Firebase on startup
 async function loadTicketsFromFirebase() {
