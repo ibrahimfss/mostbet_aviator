@@ -1324,7 +1324,7 @@ bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
         },
         { 
           text: "👁️ View Profile", 
-          url: `tg://user?id=${userId}` 
+          url: rawUsername ? `https://t.me/${rawUsername}` : `tg://user?id=${userId}` 
         }
       ],
       [
