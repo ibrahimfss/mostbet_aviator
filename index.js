@@ -1986,8 +1986,8 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
       return;
   }
   
-    // Admin search user - IMPROVED VERSION
-  if (userId === ADMIN_ID && message.text && !message.text.startsWith('/')) {
+    // Admin search user - IMPROVED VERSION (ONLY WHEN IN SEARCH MODE)
+if (userId === ADMIN_ID && adminSearchMode.has(userId) && message.text && !message.text.startsWith('/')) {
     // Check if it's a search query
     const query = message.text.trim();
     let foundUser = null;
