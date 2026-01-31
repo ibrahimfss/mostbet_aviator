@@ -10,7 +10,7 @@ export const languageTexts = {
       buttonCheck: "✅ Check Join"
     },
     registration: {
-      success: "Dear, 👋 *{userName}*\n\n✅ You selected *English*!\n\n🌐 *Step 1 – Register*\n\n‼️ THE ACCOUNT MUST BE NEW\n\n1️⃣ If after clicking the *\"REGISTER\"* button you get to the old account, you need to log out of it and click the button again.\n\n2️⃣ Specify a promocode during registration: `FSS23`\n\n💴 To gain access to signals, deposit your account (make a deposit) with at least *₹1000* or *$10* in any currency\n\n✅ After REGISTRATION, click the *\"GET SIGNAL\"* button.",
+      success: "Dear, 👋 *{userName}*\n\n✅ You selected *English*!\n\n🌐 *Step 1 – Register*\n\n‼️ THE ACCOUNT MUST BE NEW\n\n1️⃣ If after clicking the *\"REGISTER\"* button you get to the old account, you need to log out of it and click the button again.\n\n2️⃣ *Specify a promocode* during registration: `FSS23`\n\n💴 To gain access to signals, deposit your account (make a deposit) with at least *₹1000* or *$10* in any currency\n\n✅ After REGISTRATION, click the *\"GET SIGNAL\"* button.",
       buttonRegister: "🎰 REGISTER",
       buttonChange: "🌐 CHANGE LANGUAGE",
       buttonSignal: "📡 GET SIGNAL"
