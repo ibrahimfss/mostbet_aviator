@@ -1619,9 +1619,9 @@ bot.action('admin_cancel_search', async (ctx) => {
   const uniqueLangs = new Set(Object.values(allUsers).map(u => u.langName || u.lang));
   
   const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
-                 `👥 Total Users: ${stats.total}\n` +
-                 `📞 Active Tickets: ${activeTickets}\n` +
-                 `🌐 Languages: ${uniqueLangs.size}`;
+                 `👥 *Total Users: ${stats.total}*\n` +
+                 `📞 *Active Tickets: ${activeTickets}*\n` +
+                 `🌐 *Languages: ${uniqueLangs.size}*`;
 
   await ctx.editMessageMedia(
     {
@@ -1661,9 +1661,9 @@ bot.action('admin_refresh', async (ctx) => {
   const activeTickets = Array.from(supportTickets.keys()).length;
   
   const caption = `🛡️ *ADMIN CONTROL PANEL - REFRESHED*\n\n` +
-    `👥 Total Users: ${users.length}\n` +
-    `📞 Active Tickets: ${activeTickets}\n` +
-    `🌐 Languages: ${new Set(users.map(u => u.lang)).size}`;
+    `👥 *Total Users: ${users.length}*\n` +
+    `📞 *Active Tickets: ${activeTickets}*\n` +
+    `🌐 *Languages: ${new Set(users.map(u => u.lang)).size}*`;
   
   await ctx.editMessageCaption(caption, { parse_mode: "Markdown" });
   await ctx.answerCbQuery('✅ Panel refreshed');
