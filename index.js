@@ -1777,19 +1777,38 @@ if (userId === ADMIN_ID && adminBroadcastMode.has(userId)) {
           continue;
         }
         
-        // ✅✅✅ FIXED: DETECT MARKDOWN/HTML AND USE CORRECT PARSE MODE
-        const detectParseMode = () => {
-          const text = message.text || message.caption || '';
-          // Check for HTML tags
-          if (/<[a-z][\s\S]*>/i.test(text)) {
-            return 'HTML';
-          }
-          // Check for Markdown
-          if (/[_*[\]()~`>#+=|{}.!-]/.test(text)) {
-            return 'Markdown';
-          }
-          return undefined;
-        };
+    // ✅✅✅ FIXED: DETECT MARKDOWN/HTML AND USE CORRECT PARSE MODE
+    const detectParseMode = () => {
+    const text = message.text || message.caption || '';
+  
+  // Professional Markdown/HTML Detection Logic
+  const htmlPattern = /<([a-z][a-z0-9]*)\b[^>]*>|<\/[a-z][a-z0-9]*>/i;
+  const markdownPattern = /(\*\*.*?\*\*|__.*?__|\*.*?\*|_.*?_|`{1,3}.*?`{1,3}|\[.*?\]\(.*?\)|#{1,6}\s.*)/s;
+  
+  // Priority 1: Check for explicit HTML tags
+  if (htmlPattern.test(text)) {
+    return 'HTML';
+  }
+  
+  // Priority 2: Check for MarkdownV2 (Telegram's new Markdown)
+  // Check for bold, italic, underline, inline code, links, etc.
+  const hasMarkdownV2 = /(\*\*|__|\*|_|`|\[.*?\]\(|#{1,6}\s)/.test(text);
+  
+  if (hasMarkdownV2) {
+    // More specific check for complex Markdown
+    if (markdownPattern.test(text)) {
+      return 'MarkdownV2'; // Use MarkdownV2 for better formatting
+    }
+    return 'Markdown'; // Fallback to legacy Markdown
+  }
+  
+  // Priority 3: Check for simple formatting
+  if (/[_*[\]()~`>#+=|{}.!-]/.test(text)) {
+    return 'Markdown';
+  }
+  
+  return undefined; // No formatting
+};
         
         const parseMode = detectParseMode();
         
