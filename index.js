@@ -1469,20 +1469,21 @@ bot.action(/^admin_toggle_user_(\d+)$/, async (ctx) => {
   }
 });
 
-// Admin Search User
+// Admin Search User - UPDATED WITH PERSISTENT MODE
 bot.action('admin_search_user', async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   
-  // ✅ SET SEARCH MODE FLAG
+  // ✅ SET SEARCH MODE FLAG (PERSISTENT)
   adminSearchMode.set(ctx.from.id, true);
   
   await ctx.editMessageCaption(
-    "🔍 *SEARCH USER*\n\nSend:\n• User ID\n• OR Username\n\nType /cancel to cancel search.",
+    "🔍 *SEARCH MODE ACTIVATED*\n\nYou can now search multiple users.\n\nSend:\n• User ID\n• OR Username (with or without @)\n\nType /cancel to exit search mode.",
     {
       parse_mode: "Markdown",
       reply_markup: {
         inline_keyboard: [
-          [{ text: "❌ Cancel Search", callback_data: "admin_cancel_search" }]
+          [{ text: "❌ Exit Search Mode", callback_data: "admin_cancel_search" }],
+          [{ text: "⬅️ Back to Admin Panel", callback_data: "ADMIN_PANEL" }]
         ]
       }
     }
