@@ -1491,7 +1491,7 @@ bot.action('admin_search_user', async (ctx) => {
 
 // ==================== BROADCAST FUNCTIONALITY ====================
 
-// Broadcast Action
+// Broadcast Action - UPDATED WITH PERSISTENT MODE
 bot.action('admin_broadcast', async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   
@@ -1501,13 +1501,14 @@ bot.action('admin_broadcast', async (ctx) => {
     {
       type: 'photo',
       media: IMAGES.BROADCAST,
-      caption: '📢 *BROADCAST MESSAGE*\n\nPlease send the message you want to broadcast to all users.\n\nYou can send:\n• Text\n• Photo with caption\n• Video with caption\n\nType /cancel to cancel the broadcast.',
+      caption: '📢 *BROADCAST MODE ACTIVATED*\n\nYou can now send multiple broadcast messages.\n\nYou can send:\n• Text (with Markdown/HTML formatting)\n• Photo with caption\n• Video with caption\n\nType /cancel to exit broadcast mode.',
       parse_mode: 'Markdown'
     },
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '❌ Cancel Broadcast', callback_data: 'admin_cancel_broadcast' }]
+          [{ text: '❌ Exit Broadcast Mode', callback_data: 'admin_cancel_broadcast' }],
+          [{ text: '⬅️ Back to Admin Panel', callback_data: 'ADMIN_PANEL' }]
         ]
       }
     }
