@@ -1282,8 +1282,9 @@ bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
       .join(' ')
       .trim() || `User ${userId}`;
     
-    // ✅ Username formatting
-    const username = user.username ? `@${user.username}` : 'No Username';
+    // ✅ Username formatting - WITHOUT ESCAPE MARKDOWN (Keep underscores)
+    const rawUsername = user.username || '';
+    const username = rawUsername ? `@${rawUsername}` : 'No Username';
     
     // ✅ Language formatting
     const language = user.langName || user.lang || 'Not Set';
