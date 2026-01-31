@@ -1403,13 +1403,51 @@ bot.action(/^admin_view_user_(\d+)$/, async (ctx) => {
 bot.action(/^admin_toggle_user_(\d+)$/, async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
   const userId = ctx.match[1];
-  const user = getUserData(parseInt(userId));
   
-  if (user) {
-    user.active = !user.active;
-    await ctx.answerCbQuery(`✅ User ${user.active ? 'activated' : 'deactivated'}`);
-    // Go back to user view
+  try {
+    // ✅ Await add karein
+    const user = await getUserData(parseInt(userId));
+    
+    if (!user) {
+      await ctx.answerCbQuery("❌ User not found", { show_alert: true });
+      return;
+    }
+    
+    // Toggle user active status
+    const newActiveStatus = !user.active;
+    
+    // ✅ Update user data in Firebase and memory
+    await updateUserData(parseInt(userId), {
+      active: newActiveStatus,
+      lastSeen: new Date().toISOString()
+    });
+    
+    // ✅ Send notification to user if activated
+    if (newActiveStatus) {
+      try {
+        const userLang = user.lang || 'en';
+        const langData = languageTexts[userLang] || languageTexts['en'];
+        const activationMsg = langData.adminActivated || 
+          "✅ *Your account has been activated!*\n\nYou can now use the bot again. Type /start to begin.";
+        
+        await ctx.telegram.sendMessage(
+          parseInt(userId),
+          activationMsg,
+          { parse_mode: "Markdown" }
+        );
+      } catch (notifyError) {
+        console.log("User notification failed:", notifyError);
+      }
+    }
+    
+    await ctx.answerCbQuery(`✅ User ${newActiveStatus ? 'activated' : 'deactivated'}`);
+    
+    // Refresh the user view
     await bot.action(`admin_view_user_${userId}`)(ctx);
+    
+  } catch (error) {
+    console.error("Error toggling user status:", error);
+    await ctx.answerCbQuery("❌ Failed to update user status", { show_alert: true });
   }
 });
 
