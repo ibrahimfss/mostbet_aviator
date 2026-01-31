@@ -1560,6 +1560,55 @@ bot.action('admin_cancel_broadcast', async (ctx) => {
   );
 });
 
+// Cancel Search Action
+bot.action('admin_cancel_search', async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  
+  adminSearchMode.delete(ctx.from.id);
+  await ctx.answerCbQuery('✅ Search cancelled');
+  
+  // Go back to admin panel
+  const stats = await getUserStatsFromFirebase();
+  const allTickets = await getAllTicketsFromFirebase();
+  const activeTickets = Object.keys(allTickets).length;
+  const allUsers = await getAllUsersFromFirebase();
+  const uniqueLangs = new Set(Object.values(allUsers).map(u => u.langName || u.lang));
+  
+  const caption = `🛡️ *ADMIN CONTROL PANEL*\n\n` +
+                 `👥 Total Users: ${stats.total}\n` +
+                 `📞 Active Tickets: ${activeTickets}\n` +
+                 `🌐 Languages: ${uniqueLangs.size}`;
+
+  await ctx.editMessageMedia(
+    {
+      type: 'photo',
+      media: IMAGES.ADMIN_PANEL,
+      caption: caption,
+      parse_mode: 'Markdown'
+    },
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '📞 View Tickets', callback_data: 'admin_view_tickets' },
+            { text: '👥 User List', callback_data: 'admin_user_list_1' }
+          ],
+          [
+            { text: '📢 Broadcast', callback_data: 'admin_broadcast' },
+            { text: '🔍 Search User', callback_data: 'admin_search_user' }
+          ],
+          [
+            { text: '🔄 Refresh', callback_data: 'admin_refresh' }
+          ],
+          [
+            { text: '🔙 Back', callback_data: 'admin_back_to_registration' }
+          ]
+        ]
+      }
+    }
+  );
+});
+
 // Admin Refresh
 bot.action('admin_refresh', async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
