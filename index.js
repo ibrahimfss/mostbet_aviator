@@ -1428,8 +1428,23 @@ bot.action(/^admin_toggle_user_(\d+)$/, async (ctx) => {
       try {
         const userLang = user.lang || 'en';
         const langData = languageTexts[userLang] || languageTexts['en'];
-        const activationMsg = langData.adminActivated || 
-          "✅ *Your account has been activated!*\n\nYou can now use the bot again. Type /start to begin.";
+        
+        // ✅ Get user's full name for personalization
+        const userName = [user.firstName, user.lastName]
+          .filter(Boolean)
+          .join(' ')
+          .trim();
+        
+        // ✅ Personalized activation message
+        let activationMsg;
+        if (userName) {
+          activationMsg = `*Hey! 👋 ${userName}*\n\n` +
+                         `*Do you want to make from $1200 a day?* ✅\n\n` +
+                         `⭐️Activate the bot now! 35 spots left for today!\n\n🚀*Activate the bot* 👉 /start.`;
+        } else {
+          activationMsg = langData.adminActivated || 
+            "*Do you want to make from $1200 a day?* ✅\n\n⭐️Activate the bot now! 35 spots left for today!\n\n🚀*Activate the bot* 👉 /start.";
+        }
         
         await ctx.telegram.sendMessage(
           parseInt(userId),
