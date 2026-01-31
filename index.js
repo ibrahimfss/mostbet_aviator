@@ -1924,33 +1924,101 @@ if (userId === ADMIN_ID && adminReplyTarget.has(userId)) {
       return;
   }
   
-  // Admin search user
+    // Admin search user - IMPROVED VERSION
   if (userId === ADMIN_ID && message.text && !message.text.startsWith('/')) {
-    // Check if it's a search query (simple implementation)
+    // Check if it's a search query
     const query = message.text.trim();
+    let foundUser = null;
     
-    if (query.match(/^\d+$/)) {
-      // Search by user ID
-      const targetUserId = parseInt(query);
-      const user = getUserData(targetUserId);
+    try {
+      // Search by user ID (numeric)
+      if (query.match(/^\d+$/)) {
+        const targetUserId = parseInt(query);
+        // ✅ Await add karein
+        foundUser = await getUserData(targetUserId);
+      } 
+      // Search by username (with or without @)
+      else {
+        const searchUsername = query.replace(/^@/, '').toLowerCase();
+        const allUsers = await getAllUsersFromFirebase();
+        
+        // Loop through all users to find by username
+        for (const [uid, user] of Object.entries(allUsers)) {
+          if (user.username && user.username.toLowerCase() === searchUsername) {
+            foundUser = user;
+            break;
+          }
+        }
+      }
       
-      if (user) {
-        const caption = `🔍 *USER FOUND*\n\n👤 Name: ${user.firstName} ${user.lastName || ''}\n🆔 ID: ${user.id}\n🌐 Language: ${user.langName}\n✅ Status: ${user.active ? 'Active' : 'Inactive'}`;
+      if (foundUser) {
+        // ✅ User activity check based on last seen
+        const lastSeenDate = foundUser.lastSeen ? new Date(foundUser.lastSeen) : new Date();
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        
+        // Auto-inactive if user hasn't been seen for 1 week
+        const isRecentlyActive = lastSeenDate >= oneWeekAgo;
+        const displayStatus = foundUser.active && isRecentlyActive ? 
+          "✅ Active" : "❌ Inactive";
+        
+        // ✅ Proper name formatting
+        const fullName = [foundUser.firstName, foundUser.lastName]
+          .filter(Boolean)
+          .join(' ')
+          .trim() || `User ${foundUser.id}`;
+        
+        // ✅ Username formatting
+        const username = foundUser.username ? `@${foundUser.username}` : 'No Username';
+        
+        // ✅ Language formatting
+        const language = foundUser.langName || foundUser.lang || 'Not Set';
+        
+        // ✅ Date formatting for first start
+        const formatDateTime = (dateString) => {
+          if (!dateString) return 'N/A';
+          try {
+            const date = new Date(dateString);
+            // Format: DD:MM:YYYY : HH:MM:SS (IST)
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+            
+            return `${day}:${month}:${year} : ${hours}:${minutes}:${seconds}`;
+          } catch {
+            return 'N/A';
+          }
+        };
+        
+        // ✅ Professional caption
+        const caption = `🔍 *USER FOUND*\n\n` +
+          `👤 *Name:* ${fullName}\n` +
+          `🆔 *ID:* \`${foundUser.id}\`\n` +
+          `👤 *Username:* ${username}\n` +
+          `⌚ *First Start:* ${formatDateTime(foundUser.joinedAt)}\n` +
+          `🌐 *Language:* ${language}\n` +
+          `${displayStatus}`;
         
         await ctx.reply(caption, {
           parse_mode: 'Markdown',
           reply_markup: {
             inline_keyboard: [
               [
-                { text: 'View Details', callback_data: `admin_view_user_${user.id}` },
-                { text: 'Send Message', callback_data: `admin_reply_${user.id}` }
+                { text: '👁️ View Details', callback_data: `admin_view_user_${foundUser.id}` },
+                { text: '✏️ Send Message', callback_data: `admin_reply_${foundUser.id}` }
               ]
             ]
           }
         });
       } else {
-        await ctx.reply('❌ User not found in database.');
+        await ctx.reply('❌ User not found in database.\n\nPlease check:\n• User ID\n• Username (with or without @)\n\nOr go back to Admin Panel.');
       }
+    } catch (error) {
+      console.error('Error in admin search:', error);
+      await ctx.reply('❌ Error searching for user. Please try again.');
     }
     return;
   }
