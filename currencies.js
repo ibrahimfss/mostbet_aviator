@@ -4,7 +4,7 @@ export const currencyData = {
   "bn": { symbol: "৳", amount: "১৩৩৪", name: "বাংলাদেশী টাকা" },
   "ur": { symbol: "₨", amount: "3129", name: "پاکستانی روپیہ" },
   "ru": { symbol: "₽", amount: "858.26", name: "Российский рубль" },
-  "pt": { symbol: "R$", amount: "60.47", name: "Real brasileiro" },
+  "pt": { symbol: "R$", amount: "57.29", name: "Real brasileiro" },
   "es": { symbol: "€", amount: "9.57", name: "Euro" },
   "fr": { symbol: "€", amount: "9.57", name: "Euro" },
   "de": { symbol: "€", amount: "9.57", name: "Euro" },
