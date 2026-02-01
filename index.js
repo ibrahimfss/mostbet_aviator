@@ -533,8 +533,17 @@ bot.action('check_join', async (ctx) => {
     updateUserData(userId, { joinedChannel: true });
     
     // Prepare registration message with currency conversion
-    const registrationText = langData.registration.success
-      .replace('₹1000', `${currency.symbol}${currency.amount}`);
+// ✅ FIX: Get user's full name
+const fullName = [user.firstName, user.lastName]
+  .filter(Boolean)
+  .join(' ')
+  .trim();
+const userNameToShow = fullName || `User ${userId}`;
+
+const registrationText = langData.registration.success
+  .replace('₹1000', `${currency.symbol}${currency.amount}`)
+  .replace('{userName}', userNameToShow)  // ✅ FIX: Add user name replacement
+  .replace('{buttonSignal}', langData.registration.buttonSignal);  // ✅ Optional: Button text replacement
     
     // Create registration buttons array
     const registrationButtons = [
