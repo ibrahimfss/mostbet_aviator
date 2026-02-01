@@ -173,7 +173,7 @@ export const languageTexts = {
   "pt": {
     name: "Português",
     flag: "🇧🇷",
-    currency: { code: "R$", amount: "60", symbol: "R$" },
+    currency: { code: "€", amount: "9.20", symbol: "€" },
     select: "Por favor, selecione seu idioma preferido:",
     join: {
       text: "*Por favor, junte-se ao nosso canal oficial para continuar:*",
@@ -181,7 +181,7 @@ export const languageTexts = {
       buttonCheck: "✅ Verificar entrada"
     },
     registration: {
-      success: "✅ Você selecionou *Português*!\n\n🌐 *Passo 1 – Registrar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão \"REGISTER\" você acessar a conta antiga, precisa sair dela e clicar no botão novamente.\n\n2️⃣ Especifique um código promocional durante o registro: `FSS23`\n\n💴 Para obter acesso aos sinais, deposite em sua conta (faça um depósito) pelo menos *R$60* ou *$10* em qualquer moeda\n\n✅ Após o REGISTRO, clique no botão \"GET SIGNAL\".",
+      success: "✅ Você selecionou *Português*!\n\n🌐 *Passo 1 – Registrar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão \"REGISTER\" você acessar a conta antiga, precisa sair dela e clicar no botão novamente.\n\n2️⃣ Especifique um código promocional durante o registro: `FSS23`\n\n💴 Para obter acesso aos sinais, deposite em sua conta (faça um depósito) pelo menos *€9.20* ou *$10* em qualquer moeda\n\n✅ Após o REGISTRO, clique no botão \"GET SIGNAL\".",
       buttonRegister: "📝 REGISTRAR",
       buttonChange: "🔄 ALTERAR IDIOMA",
       buttonSignal: "📊 OBTER SINAL"
