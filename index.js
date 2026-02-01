@@ -758,7 +758,9 @@ bot.action('close_ticket_user', async (ctx) => {
   const currency = currencyData[langCode] || currencyData['en'];
   
   const registrationText = langData.registration.success
-    .replace('₹1000', `${currency.symbol}${currency.amount}`);
+  .replace('₹1000', `${currency.symbol}${currency.amount}`)
+  .replace('{userName}', `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
+  .replace('{buttonSignal}', langData.registration.buttonSignal || "📡 GET SIGNAL");
   
   const registrationButtons = [
     [
