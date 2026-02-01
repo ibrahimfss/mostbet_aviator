@@ -667,8 +667,10 @@ bot.action('back_to_registration', async (ctx) => {
   const currency = currencyData[langCode] || currencyData['en'];
   
   // Prepare registration message
-  const registrationText = langData.registration.success
-    .replace('₹1000', `${currency.symbol}${currency.amount}`);
+const registrationText = langData.registration.success
+  .replace('₹1000', `${currency.symbol}${currency.amount}`)
+  .replace('{userName}', `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
+  .replace('{buttonSignal}', langData.registration.buttonSignal || "📡 GET SIGNAL");
   
   // Buttons recreate karna zaroori hai
   const registrationButtons = [
