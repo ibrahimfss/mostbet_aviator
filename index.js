@@ -541,9 +541,9 @@ const fullName = [user.firstName, user.lastName]
 const userNameToShow = fullName || `User ${userId}`;
 
 const registrationText = langData.registration.success
-  .replace('₹1000', `${currency.symbol}${currency.amount}`)
-  .replace('{userName}', userNameToShow)  // ✅ FIX: Add user name replacement
-  .replace('{buttonSignal}', langData.registration.buttonSignal);  // ✅ Optional: Button text replacement
+  .replace(/{userName}/g, userNameToShow)
+  .replace(/{currencySymbol}/g, currency.symbol)
+  .replace(/{currencyAmount}/g, currency.amount);  // ✅ Optional: Button text replacement
     
     // Create registration buttons array
     const registrationButtons = [
@@ -668,9 +668,9 @@ bot.action('back_to_registration', async (ctx) => {
   
   // Prepare registration message
 const registrationText = langData.registration.success
-  .replace('₹1000', `${currency.symbol}${currency.amount}`)
-  .replace('{userName}', `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
-  .replace('{buttonSignal}', langData.registration.buttonSignal || "📡 GET SIGNAL");
+  .replace(/{userName}/g, `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
+  .replace(/{currencySymbol}/g, currency.symbol)
+  .replace(/{currencyAmount}/g, currency.amount);
   
   // Buttons recreate karna zaroori hai
   const registrationButtons = [
@@ -758,9 +758,9 @@ bot.action('close_ticket_user', async (ctx) => {
   const currency = currencyData[langCode] || currencyData['en'];
   
   const registrationText = langData.registration.success
-  .replace('₹1000', `${currency.symbol}${currency.amount}`)
-  .replace('{userName}', `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
-  .replace('{buttonSignal}', langData.registration.buttonSignal || "📡 GET SIGNAL");
+  .replace(/{userName}/g, `${user.firstName || ''} ${user.lastName || ''}`.trim() || `User ${userId}`)
+  .replace(/{currencySymbol}/g, currency.symbol)
+  .replace(/{currencyAmount}/g, currency.amount);
   
   const registrationButtons = [
     [
