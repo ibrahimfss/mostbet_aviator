@@ -176,10 +176,10 @@ export const languageTexts = {
       buttonCheck: "✅ Verificar entrada"
     },
     registration: {
-      success: "Caro, 👋 *{userName}!*\n\n✅ Você selecionou *Português*!\n\n🌐 *Passo 1 – Registrar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão *\"REGISTRAR\"* você acessar a conta antiga, precisa sair dela e clicar no botão novamente.\n\n2️⃣ Especifique um código promocional durante o registro: `FSS23`\n\n💴 Para obter acesso aos sinais, deposite em sua conta (faça um depósito) pelo menos *{currencySymbol}{currencyAmount}* ou *$10* em qualquer moeda\n\n✅ Após o REGISTRO, clique no botão *\"OBTER SINAL\"*.",
-      buttonRegister: "📝 REGISTRAR",
-      buttonChange: "🔄 ALTERAR IDIOMA",
-      buttonSignal: "📊 OBTER SINAL"
+      success: "Caro, 👋 *{userName}!*\n\n✅ Você selecionou *Português*!\n\n🌐 *Passo 1 – Registrar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão *\"REGISTRAR\"* você acessar a conta antiga, precisa sair dela e clicar no botão novamente.\n\n2️⃣ *Especifique um código promocional* durante o registro: `FSS23`\n\n💴 Para obter acesso aos sinais, deposite em sua conta (faça um depósito) pelo menos *{currencySymbol}{currencyAmount}* ou *$10* em qualquer moeda\n\n✅ Após o REGISTRO, clique no botão *\"OBTER SINAL\"*.",
+      buttonRegister: "🎰 REGISTRAR",
+      buttonChange: "🌐 ALTERAR IDIOMA",
+      buttonSignal: "📡 OBTER SINAL"
     },
     instruction: {
       caption: "📲 *INSTRUÇÕES: Como se registrar e obter sinais – Assista com atenção*",
@@ -208,10 +208,10 @@ export const languageTexts = {
       buttonCheck: "✅ Verificar unión"
     },
     registration: {
-      success: "Estimado, 👋 *{userName}!*\n\n✅ ¡Seleccionaste *Español*!\n\n🌐 *Paso 1 – Registro*\n\n‼️ LA CUENTA DEVE SER NUEVA\n\n1️⃣ Si después de hacer clic en el botón *\"REGISTRARSE\"* llegas a la cuenta antigua, debes cerrar sesión y hacer clic en el botón nuevamente.\n\n2️⃣ Especifique un código promocional durante el registro: `FSS23`\n\n💴 Para obtener acceso a las señales, deposite en su cuenta (haga un depósito) al menos *{currencySymbol}{currencyAmount}* o *$10* en cualquier moneda\n\n✅ Después del REGISTRO, haz clic en el botón *\"OBTENER SEÑAL\"*.",
-      buttonRegister: "📝 REGISTRARSE",
-      buttonChange: "🔄 CAMBIAR IDIOMA",
-      buttonSignal: "📊 OBTENER SEÑAL"
+      success: "Estimado, 👋 *{userName}!*\n\n✅ ¡Seleccionaste *Español*!\n\n🌐 *Paso 1 – Registro*\n\n‼️ LA CUENTA DEVE SER NUEVA\n\n1️⃣ Si después de hacer clic en el botón *\"REGISTRARSE\"* llegas a la cuenta antigua, debes cerrar sesión y hacer clic en el botón nuevamente.\n\n2️⃣ *Especifique un código promocional* durante el registro: `FSS23`\n\n💴 Para obtener acceso a las señales, deposite en su cuenta (haga un depósito) al menos *{currencySymbol}{currencyAmount}* o *$10* en cualquier moneda\n\n✅ Después del REGISTRO, haz clic en el botón *\"OBTENER SEÑAL\"*.",
+      buttonRegister: "🎰 REGISTRARSE",
+      buttonChange: "🌐 CAMBIAR IDIOMA",
+      buttonSignal: "📡 OBTENER SEÑAL"
     },
     instruction: {
       caption: "📲 *INSTRUCCIONES: Cómo registrarse y obtener señales – Mira con atención*",
@@ -240,10 +240,10 @@ export const languageTexts = {
       buttonCheck: "✅ Vérifier l'adhésion"
     },
     registration: {
-      success: "Cher, 👋 *{userName}!*\n\n✅ Vous avez sélectionné *le Français*!\n\n🌐 *Étape 1 – Inscription*\n\n‼️ LE COMPTE DOIT ÊTRE NOUVEAU\n\n1️⃣ Si après avoir clic sur le bouton *\"S'INSCRIRE\"* vous accédez à l'ancien compte, vous devez vous déconnecter et cliquer à nouveau sur le bouton.\n\n2️⃣ Spécifiez un code promotionnel lors de l'inscription: `FSS23`\n\n💴 Pour accéder aux signaux, déposez sur votre compte (faites un dépósito) au moins *{currencySymbol}{currencyAmount}* ou *$10* dans n'importe quelle devise\n\n✅ Après INSCRIPTION, cliquez sur le bouton *\"OBTENIR UN SIGNAL\"*.",
-      buttonRegister: "📝 S'INSCRIRE",
-      buttonChange: "🔄 CHANGER DE LANGUE",
-      buttonSignal: "📊 OBTENIR UN SIGNAL"
+      success: "Cher, 👋 *{userName}!*\n\n✅ Vous avez sélectionné *le Français*!\n\n🌐 *Étape 1 – Inscription*\n\n‼️ LE COMPTE DOIT ÊTRE NOUVEAU\n\n1️⃣ Si après avoir clic sur le bouton *\"S'INSCRIRE\"* vous accédez à l'ancien compte, vous devez vous déconnecter et cliquer à nouveau sur le bouton.\n\n2️⃣ *Spécifiez un code promotionnel* lors de l'inscription: `FSS23`\n\n💴 Pour accéder aux signaux, déposez sur votre compte (faites un dépósito) au moins *{currencySymbol}{currencyAmount}* ou *$10* dans n'importe quelle devise\n\n✅ Après INSCRIPTION, cliquez sur le bouton *\"OBTENIR UN SIGNAL\"*.",
+      buttonRegister: "🎰 S'INSCRIRE",
+      buttonChange: "🌐 CHANGER DE LANGUE",
+      buttonSignal: "📡 OBTENIR UN SIGNAL"
     },
     instruction: {
       caption: "📲 *INSTRUCTIONS: Comment s'inscrire et obtenir des signaux – Regardez attentivement*",
@@ -272,10 +272,10 @@ export const languageTexts = {
       buttonCheck: "✅ Beitritt prüfen"
     },
     registration: {
-      success: "Sehr geehrter, 👋 *{userName}!*\n\n✅ Sie haben *Deutsch* ausgewählt!\n\n🌐 *Schritt 1 – Registrierung*\n\n‼️ DAS KONTO MUSS NEU SEIN\n\n1️⃣ Wenn Sie nach dem Klicken auf die Schaltfläche *\"REGISTRIEREN\"* zum alten Konto gelangen, müssen Sie sich daraus abmelden und die Schaltfläche erneut klicken.\n\n2️⃣ Geben Sie während der Registrierung einen Promo-Code an: `FSS23`\n\n💴 Um Zugang zu Signalen zu erhalten, zahlen Sie Ihr Konto mit mindestens *{currencySymbol}{currencyAmount}* oder *$10* in jeder Währung ein (machen Sie eine Einzahlung)\n\n✅ Nach der REGISTRIERUNG klicken Sie auf die Schaltfläche *\"SIGNAL ERHALTEN\"*.",
-      buttonRegister: "📝 REGISTRIEREN",
-      buttonChange: "🔄 SPRACHE ÄNDERN",
-      buttonSignal: "📊 SIGNAL ERHALTEN"
+      success: "Sehr geehrter, 👋 *{userName}!*\n\n✅ Sie haben *Deutsch* ausgewählt!\n\n🌐 *Schritt 1 – Registrierung*\n\n‼️ DAS KONTO MUSS NEU SEIN\n\n1️⃣ Wenn Sie nach dem Klicken auf die Schaltfläche *\"REGISTRIEREN\"* zum alten Konto gelangen, müssen Sie sich daraus abmelden und die Schaltfläche erneut klicken.\n\n2️⃣ *Geben Sie während der Registrierung einen Promo-Code* an: `FSS23`\n\n💴 Um Zugang zu Signalen zu erhalten, zahlen Sie Ihr Konto mit mindestens *{currencySymbol}{currencyAmount}* oder *$10* in jeder Währung ein (machen Sie eine Einzahlung)\n\n✅ Nach der REGISTRIERUNG klicken Sie auf die Schaltfläche *\"SIGNAL ERHALTEN\"*.",
+      buttonRegister: "🎰 REGISTRIEREN",
+      buttonChange: "🌐 SPRACHE ÄNDERN",
+      buttonSignal: "📡 SIGNAL ERHALTEN"
     },
     instruction: {
       caption: "📲 *ANLEITUNG: Wie man sich registriert und Signale erhält – Aufmerksam ansehen*",
@@ -304,10 +304,10 @@ export const languageTexts = {
       buttonCheck: "✅ Verifica iscrizione"
     },
     registration: {
-      success: "Caro, 👋 *{userName}!*\n\n✅ Hai selezionato *Italiano*!\n\n🌐 *Passo 1 – Registrazione*\n\n‼️ L'ACCOUNT DEVE ESSERE NUOVO\n\n1️⃣ Se dopo aver cliccato il pulsante *\"REGISTRATI\"* accedi al vecchio account, devi disconnetterti e cliccare nuovamente il pulsante.\n\n2️⃣ Specifica un codice promozionale durante la registrazione: `FSS23`\n\n💴 Per accedere ai segnali, deposita sul tuo account (effettua un deposito) almeno *{currencySymbol}{currencyAmount}* o *$10* in qualsiasi valuta\n\n✅ Dopo la REGISTRAZIONE, clicca il pulsante *\"OTTIENI SEGNALE\"*.",
-      buttonRegister: "📝 REGISTRATI",
-      buttonChange: "🔄 CAMBIA LINGUA",
-      buttonSignal: "📊 OTTIENI SEGNALE"
+      success: "Caro, 👋 *{userName}!*\n\n✅ Hai selezionato *Italiano*!\n\n🌐 *Passo 1 – Registrazione*\n\n‼️ L'ACCOUNT DEVE ESSERE NUOVO\n\n1️⃣ Se dopo aver cliccato il pulsante *\"REGISTRATI\"* accedi al vecchio account, devi disconnetterti e cliccare nuovamente il pulsante.\n\n2️⃣ *Specifica un codice promozionale* durante la registrazione: `FSS23`\n\n💴 Per accedere ai segnali, deposita sul tuo account (effettua un deposito) almeno *{currencySymbol}{currencyAmount}* o *$10* in qualsiasi valuta\n\n✅ Dopo la REGISTRAZIONE, clicca il pulsante *\"OTTIENI SEGNALE\"*.",
+      buttonRegister: "🎰 REGISTRATI",
+      buttonChange: "🌐 CAMBIA LINGUA",
+      buttonSignal: "📡 OTTIENI SEGNALE"
     },
     instruction: {
       caption: "📲 *ISTRUZIONI: Come registrarsi e ottenere segnali – Guarda attentamente*",
@@ -336,10 +336,10 @@ export const languageTexts = {
       buttonCheck: "✅ التحقق من الانضمام"
     },
     registration: {
-      success: "عزيزي، 👋 *{userName}!*\n\n✅ لقد اخترت *العربية*!\n\n🌐 *الخطوة 1 - التسجيل*\n\n‼️ يجب أن يكون الحساب جديدًا\n\n1️⃣ إذا بعد النقر على زر *\"تسجيل\"* وصلت إلى الحساب القديم، يجب عليك تسجيل الخروج والنقر على الزر مرة أخرى.\n\n2️⃣ حدد رمزًا ترويجيًا أثناء التسجيل: `FSS23`\n\n💴 للحصول على إشارات، قم بإيداع حسابك (قم بإيداع) ما لا يقل عن *{currencySymbol}{currencyAmount}* أو *$10* بأي عملة\n\n✅ بعد التسجيل، انقر على زر *\"احصل على إشارة\"*.",
-      buttonRegister: "📝 تسجيل",
-      buttonChange: "🔄 تغيير اللغة",
-      buttonSignal: "📊 احصل على إشارة"
+      success: "عزيزي، 👋 *{userName}!*\n\n✅ لقد اخترت *العربية*!\n\n🌐 *الخطوة 1 - التسجيل*\n\n‼️ يجب أن يكون الحساب جديدًا\n\n1️⃣ إذا بعد النقر على زر *\"تسجيل\"* وصلت إلى الحساب القديم، يجب عليك تسجيل الخروج والنقر على الزر مرة أخرى.\n\n2️⃣ *حدد رمزًا ترويجيًا أثناء التسجيل*: `FSS23`\n\n💴 للحصول على إشارات، قم بإيداع حسابك (قم بإيداع) ما لا يقل عن *{currencySymbol}{currencyAmount}* أو *$10* بأي عملة\n\n✅ بعد التسجيل، انقر على زر *\"احصل على إشارة\"*.",
+      buttonRegister: "🎰 تسجيل",
+      buttonChange: "🌐 تغيير اللغة",
+      buttonSignal: "📡 احصل على إشارة"
     },
     instruction: {
       caption: "📲 *تعليمات: كيفية التسجيل والحصول على إشارات – شاهد بعناية*",
@@ -368,10 +368,10 @@ export const languageTexts = {
       buttonCheck: "✅ 检查加入"
     },
     registration: {
-      success: "尊敬的，👋 *{userName}!*\n\n✅ 您选择了*中文*!\n\n🌐 *步骤 1 - 注册*\n\n‼️ 账户必须是新的\n\n1️⃣ 如果点击*\"注册\"*按钮后进入旧账户，您需要退出并再次点击按钮。\n\n2️⃣ 注册时指定促销代码: `FSS23`\n\n💴 要获得信号访问权限，请存入您的账户（存款）至少 *{currencySymbol}{currencyAmount}* 或任何货币的 *$10*\n\n✅ 注册后，点击*\"获取信号\"*按钮。",
-      buttonRegister: "📝 注册",
-      buttonChange: "🔄 更改语言",
-      buttonSignal: "📊 获取信号"
+      success: "尊敬的，👋 *{userName}!*\n\n✅ 您选择了*中文*!\n\n🌐 *步骤 1 - 注册*\n\n‼️ 账户必须是新的\n\n1️⃣ 如果点击*\"注册\"*按钮后进入旧账户，您需要退出并再次点击按钮。\n\n2️⃣ *注册时指定促销代码:* `FSS23`\n\n💴 要获得信号访问权限，请存入您的账户（存款）至少 *{currencySymbol}{currencyAmount}* 或任何货币的 *$10*\n\n✅ 注册后，点击*\"获取信号\"*按钮。",
+      buttonRegister: "🎰 注册",
+      buttonChange: "🌐 更改语言",
+      buttonSignal: "📡 获取信号"
     },
     instruction: {
       caption: "📲 *说明: 如何注册和获取信号 - 仔细观看*",
@@ -400,10 +400,10 @@ export const languageTexts = {
       buttonCheck: "✅ 参加を確認"
     },
     registration: {
-      success: "親愛なる、👋 *{userName}!*\n\n✅ あなたは*日本語*を選択しました!\n\n🌐 *ステップ 1 - 登録*\n\n‼️ アカウントは新規である必要があります\n\n1️⃣ *「登録」*ボタンをクリックした後、古いアカウントにアクセスした場合は、ログアウトしてボタンを再度クリックする必要があります。\n\n2️⃣ 登録時にプロモーションコードを指定: `FSS23`\n\n💴 シグナルにアクセスするには、アカウントに少なくとも *{currencySymbol}{currencyAmount}* または任意の通貨で *$10* を入金してください（預金してください）\n\n✅ 登録後、*「シグナルを取得」*ボタンをクリックします。",
-      buttonRegister: "📝 登録",
-      buttonChange: "🔄 言語を変更",
-      buttonSignal: "📊 シグナルを取得"
+      success: "親愛なる、👋 *{userName}!*\n\n✅ あなたは*日本語*を選択しました!\n\n🌐 *ステップ 1 - 登録*\n\n‼️ アカウントは新規である必要があります\n\n1️⃣ *「登録」*ボタンをクリックした後、古いアカウントにアクセスした場合は、ログアウトしてボタンを再度クリックする必要があります。\n\n2️⃣ *登録時にプロモーションコードを指定:* `FSS23`\n\n💴 シグナルにアクセスするには、アカウントに少なくとも *{currencySymbol}{currencyAmount}* または任意の通貨で *$10* を入金してください（預金してください）\n\n✅ 登録後、*「シグナルを取得」*ボタンをクリックします。",
+      buttonRegister: "🎰 登録",
+      buttonChange: "🌐 言語を変更",
+      buttonSignal: "📡 シグナルを取得"
     },
     instruction: {
       caption: "📲 *説明: 登録方法とシグナルの取得方法 - 注意してご覧ください*",
@@ -432,10 +432,10 @@ export const languageTexts = {
       buttonCheck: "✅ 가입 확인"
     },
     registration: {
-      success: "친애하는, 👋 *{userName}!*\n\n✅ *한국어*를 선택하셨습니다!\n\n🌐 *단계 1 – 등록*\n\n‼️ 계정은 새 것이어야 합니다\n\n1️⃣ *\"등록\"* 버튼을 클릭한 후 이전 계정으로 이동하면 해당 계정에서 로그아웃하고 버튼을 다시 클릭해야 합니다.\n\n2️⃣ 등록 중 프로모션 코드를 지정하십시오: `FSS23`\n\n💴 신호에 액세스하려면 계정에 최소 *{currencySymbol}{currencyAmount}* 또는 어떤 통화로든 *$10*을 입금하십시오 (예금하십시오)\n\n✅ 등록 후 *\"신호 받기\"* 버튼을 클릭하십시오.",
-      buttonRegister: "📝 등록",
-      buttonChange: "🔄 언어 변경",
-      buttonSignal: "📊 신호 받기"
+      success: "친애하는, 👋 *{userName}!*\n\n✅ *한국어*를 선택하셨습니다!\n\n🌐 *단계 1 – 등록*\n\n‼️ 계정은 새 것이어야 합니다\n\n1️⃣ *\"등록\"* 버튼을 클릭한 후 이전 계정으로 이동하면 해당 계정에서 로그아웃하고 버튼을 다시 클릭해야 합니다.\n\n2️⃣ *등록 중 프로모션 코드를 지정하십시오:* `FSS23`\n\n💴 신호에 액세스하려면 계정에 최소 *{currencySymbol}{currencyAmount}* 또는 어떤 통화로든 *$10*을 입금하십시오 (예금하십시오)\n\n✅ 등록 후 *\"신호 받기\"* 버튼을 클릭하십시오.",
+      buttonRegister: "🎰 등록",
+      buttonChange: "🌐 언어 변경",
+      buttonSignal: "📡 신호 받기"
     },
     instruction: {
       caption: "📲 *지침: 등록 및 신호 받는 방법 – 주의 깊게 시청하세요*",
@@ -464,7 +464,7 @@ export const languageTexts = {
       buttonCheck: "✅ Suriin ang Pagsapi"
     },
     registration: {
-      success: "Mahal, 👋 *{userName}!*\n\n✅ Pinili mo ang *Filipino*!\n\n🌐 *Hakbang 1 – Magrehistro*\n\n‼️ DAPAT BAGO ANG ACCOUNT\n\n1️⃣ Kung pagkatapos i-click ang *\"MAGREHISTRO\"* button ay mapunta ka sa lumang account, kailangan mong mag-log out dito at i-click muli ang button.\n\n2️⃣ Tukuyin ang isang promocode sa panahon ng pagrehistro: `FSS23`\n\n💴 Upang makakuha ng access sa mga signal, ideposito ang iyong account (magdeposito) ng hindi bababa sa *{currencySymbol}{currencyAmount}* o *$10* sa anumang pera\n\n✅ Pagkatapos ng PAGREHISTRO, i-click ang *\"KUMUHA NG SIGNAL\"* button.",
+      success: "Mahal, 👋 *{userName}!*\n\n✅ Pinili mo ang *Filipino*!\n\n🌐 *Hakbang 1 – Magrehistro*\n\n‼️ DAPAT BAGO ANG ACCOUNT\n\n1️⃣ Kung pagkatapos i-click ang *\"MAGREHISTRO\"* button ay mapunta ka sa lumang account, kailangan mong mag-log out dito at i-click muli ang button.\n\n2️⃣ *Tukuyin ang isang promocode* sa panahon ng pagrehistro: `FSS23`\n\n💴 Upang makakuha ng access sa mga signal, ideposito ang iyong account (magdeposito) ng hindi bababa sa *{currencySymbol}{currencyAmount}* o *$10* sa anumang pera\n\n✅ Pagkatapos ng PAGREHISTRO, i-click ang *\"KUMUHA NG SIGNAL\"* button.",
       buttonRegister: "📝 MAGREHISTRO",
       buttonChange: "🔄 PALITAN ANG WIKA",
       buttonSignal: "📊 KUMUHA NG SIGNAL"
@@ -496,10 +496,10 @@ export const languageTexts = {
       buttonCheck: "✅ Kiểm tra tham gia"
     },
     registration: {
-      success: "Thân mến, 👋 *{userName}!*\n\n✅ Bạn đã chọn *Tiếng Việt*!\n\n🌐 *Bước 1 – Đăng ký*\n\n‼️ TÀI KHOẢN PHẢI MỚI\n\n1️⃣ Nếu sau khi nhấp vào nút *\"ĐĂNG KÝ\"* bạn vào tài khoản cũ, bạn cần đăng xuất và nhấp lại nút.\n\n2️⃣ Chỉ định mã khuyến mãi khi đăng ký: `FSS23`\n\n💴 Để có quyền truy cập tín hiệu, hãy nạp tiền vào tài khoản của bạn (thực hiện gửi tiền) ít nhất *{currencySymbol}{currencyAmount}* hoặc *$10* bằng bất kỳ loại tiền tệ nào\n\n✅ Sau khi ĐĂNG KÝ, nhấp vào nút *\"NHẬN TÍN HIỆU\"*.",
-      buttonRegister: "📝 ĐĂNG KÝ",
-      buttonChange: "🔄 THAY ĐỔI NGÔN NGỮ",
-      buttonSignal: "📊 NHẬN TÍN HIỆU"
+      success: "Thân mến, 👋 *{userName}!*\n\n✅ Bạn đã chọn *Tiếng Việt*!\n\n🌐 *Bước 1 – Đăng ký*\n\n‼️ TÀI KHOẢN PHẢI MỚI\n\n1️⃣ Nếu sau khi nhấp vào nút *\"ĐĂNG KÝ\"* bạn vào tài khoản cũ, bạn cần đăng xuất và nhấp lại nút.\n\n2️⃣ *Chỉ định mã khuyến mãi khi đăng ký:* `FSS23`\n\n💴 Để có quyền truy cập tín hiệu, hãy nạp tiền vào tài khoản của bạn (thực hiện gửi tiền) ít nhất *{currencySymbol}{currencyAmount}* hoặc *$10* bằng bất kỳ loại tiền tệ nào\n\n✅ Sau khi ĐĂNG KÝ, nhấp vào nút *\"NHẬN TÍN HIỆU\"*.",
+      buttonRegister: "🎰 ĐĂNG KÝ",
+      buttonChange: "🌐 THAY ĐỔI NGÔN NGỮ",
+      buttonSignal: "📡 NHẬN TÍN HIỆU"
     },
     instruction: {
       caption: "📲 *HƯỚNG DẪN: Cách đăng ký và nhận tín hiệu – Xem cẩn thận*",
@@ -528,10 +528,10 @@ export const languageTexts = {
       buttonCheck: "✅ Katılımı kontrol et"
     },
     registration: {
-      success: "Sevgili, 👋 *{userName}!*\n\n✅ *Türkçe* seçtiniz!\n\n🌐 *Adım 1 – Kayıt*\n\n‼️ HESAP YENİ OLMALI\n\n1️⃣ *\"KAYIT OL\"* düğmesine tıkladıktan sonra eski hesaba ulaşırsanız, o hesaptan çıkış yapmanız ve düğmeye tekrar tıklamanız gerekir.\n\n2️⃣ Kayıt sırasında bir promosyon kodu belirtin: `FSS23`\n\n💴 Sinyallere erişim kazanmak için hesabınıza en az *{currencySymbol}{currencyAmount}* veya herhangi bir para biriminde *$10* yatırın (depozito yapın)\n\n✅ KAYIT sonrasında, *\"SİNYAL AL\"* düğmesine tıklayın.",
-      buttonRegister: "📝 KAYIT OL",
-      buttonChange: "🔄 DİLİ DEĞİŞTİR",
-      buttonSignal: "📊 SİNYAL AL"
+      success: "Sevgili, 👋 *{userName}!*\n\n✅ *Türkçe* seçtiniz!\n\n🌐 *Adım 1 – Kayıt*\n\n‼️ HESAP YENİ OLMALI\n\n1️⃣ *\"KAYIT OL\"* düğmesine tıkladıktan sonra eski hesaba ulaşırsanız, o hesaptan çıkış yapmanız ve düğmeye tekrar tıklamanız gerekir.\n\n2️⃣ *Kayıt sırasında bir promosyon* kodu belirtin: `FSS23`\n\n💴 Sinyallere erişim kazanmak için hesabınıza en az *{currencySymbol}{currencyAmount}* veya herhangi bir para biriminde *$10* yatırın (depozito yapın)\n\n✅ KAYIT sonrasında, *\"SİNYAL AL\"* düğmesine tıklayın.",
+      buttonRegister: "🎰 KAYIT OL",
+      buttonChange: "🌐 DİLİ DEĞİŞTİR",
+      buttonSignal: "📡 SİNYAL AL"
     },
     instruction: {
       caption: "📲 *TALİMATLAR: Nasıl Kayıt Olunur ve Sinyal Alınır – Dikkatle İzleyin*",
@@ -560,10 +560,10 @@ export const languageTexts = {
       buttonCheck: "✅ بررسی عضویت"
     },
     registration: {
-      success: "عزیز، 👋 *{userName}!*\n\n✅ شما *فارسی* را انتخاب کردید!\n\n🌐 *مرحله 1 – ثبت نام*\n\n‼️ حساب باید جدید باشد\n\n1️⃣ اگر پس از کلیک بر روی دکمه *\"ثبت نام\"* به حساب قدیمی وارد شدید، باید از آن خارج شده و دوباره دکمه را کلیک کنید.\n\n2️⃣ در حین ثبت نام یک کد تبلیغاتی مشخص کنید: `FSS23`\n\n💴 برای دسترسی به سیگنال‌ها، حساب خود را حداقل با *{currencySymbol}{currencyAmount}* یا *$10* به هر ارزی واریز کنید (سپرده گذاری کنید)\n\n✅ پس از ثبت نام، روی دکمه *\"دریافت سیگنال\"* کلیک کنید.",
-      buttonRegister: "📝 ثبت نام",
-      buttonChange: "🔄 تغییر زبان",
-      buttonSignal: "📊 دریافت سیگنال"
+      success: "عزیز، 👋 *{userName}!*\n\n✅ شما *فارسی* را انتخاب کردید!\n\n🌐 *مرحله 1 – ثبت نام*\n\n‼️ حساب باید جدید باشد\n\n1️⃣ اگر پس از کلیک بر روی دکمه *\"ثبت نام\"* به حساب قدیمی وارد شدید، باید از آن خارج شده و دوباره دکمه را کلیک کنید.\n\n2️⃣ *در حین ثبت نام یک کد تبلیغاتی مشخص کنید:* `FSS23`\n\n💴 برای دسترسی به سیگنال‌ها، حساب خود را حداقل با *{currencySymbol}{currencyAmount}* یا *$10* به هر ارزی واریز کنید (سپرده گذاری کنید)\n\n✅ پس از ثبت نام، روی دکمه *\"دریافت سیگنال\"* کلیک کنید.",
+      buttonRegister: "🎰 ثبت نام",
+      buttonChange: "🌐 تغییر زبان",
+      buttonSignal: "📡 دریافت سیگنال"
     },
     instruction: {
       caption: "📲 *دستورالعمل: نحوه ثبت نام و دریافت سیگنال – با دقت تماشا کنید*",
@@ -592,10 +592,10 @@ export const languageTexts = {
       buttonCheck: "✅ Перевірити приєднання"
     },
     registration: {
-      success: "Шановний, 👋 *{userName}!*\n\n✅ Ви вибрали *українську*!\n\n🌐 *Крок 1 – Реєстрація*\n\n‼️ ОБЛІКОВИЙ ЗАПИС ПОВИНЕН БУТИ НОВИМ\n\n1️⃣ Якщо після натискання кнопки *\"ЗАРЕЄСТРУВАТИСЯ\"* ви потрапили в старий обліковий запис, вам потрібно вийти з нього і знову натиснути кнопку.\n\n2️⃣ Вкажіть промокод під час реєстрації: `FSS23`\n\n💴 Щоб отримати доступ до сигналів, поповніть свій рахунок (зробіть депозит) мінімум на *{currencySymbol}{currencyAmount}* або *$10* в будь-якій валюті\n\n✅ Після РЕЄСТРАЦІЇ натисніть кнопку *\"ОТРИМАТИ СИГНАЛ\"*.",
-      buttonRegister: "📝 ЗАРЕЄСТРУВАТИСЯ",
-      buttonChange: "🔄 ЗМІНИТИ МОВУ",
-      buttonSignal: "📊 ОТРИМАТИ СИГНАЛ"
+      success: "Шановний, 👋 *{userName}!*\n\n✅ Ви вибрали *українську*!\n\n🌐 *Крок 1 – Реєстрація*\n\n‼️ ОБЛІКОВИЙ ЗАПИС ПОВИНЕН БУТИ НОВИМ\n\n1️⃣ Якщо після натискання кнопки *\"ЗАРЕЄСТРУВАТИСЯ\"* ви потрапили в старий обліковий запис, вам потрібно вийти з нього і знову натиснути кнопку.\n\n2️⃣ *Вкажіть промокод під час реєстрації:* `FSS23`\n\n💴 Щоб отримати доступ до сигналів, поповніть свій рахунок (зробіть депозит) мінімум на *{currencySymbol}{currencyAmount}* або *$10* в будь-якій валюті\n\n✅ Після РЕЄСТРАЦІЇ натисніть кнопку *\"ОТРИМАТИ СИГНАЛ\"*.",
+      buttonRegister: "🎰 ЗАРЕЄСТРУВАТИСЯ",
+      buttonChange: "🌐 ЗМІНИТИ МОВУ",
+      buttonSignal: "📡 ОТРИМАТИ СИГНАЛ"
     },
     instruction: {
       caption: "📲 *ІНСТРУКЦІЯ: Як зареєструватися та отримувати сигнали – Дивись уважно*",
@@ -624,10 +624,10 @@ export const languageTexts = {
       buttonCheck: "✅ Verificar adesão"
     },
     registration: {
-      success: "Caro, 👋 *{userName}!*\n\n✅ Selecionou *Português (Portugal)*!\n\n🌐 *Passo 1 – Registar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão *\"REGISTAR\"* aceder à conta antiga, precisa de sair dela e clicar no botão novamente.\n\n2️⃣ Especifique um código promocional durante o registo: `FSS23`\n\n💴 Para obter acesso a sinais, deposite na sua conta (faça um depósito) pelo menos *{currencySymbol}{currencyAmount}* ou *$10* em qualquer moeda\n\n✅ Após o REGISTO, clique no botão *\"OBTER SINAL\"*.",
-      buttonRegister: "📝 REGISTAR",
-      buttonChange: "🔄 ALTERAR IDIOMA",
-      buttonSignal: "📊 OBTER SINAL"
+      success: "Caro, 👋 *{userName}!*\n\n✅ Selecionou *Português (Portugal)*!\n\n🌐 *Passo 1 – Registar*\n\n‼️ A CONTA DEVE SER NOVA\n\n1️⃣ Se depois de clicar no botão *\"REGISTAR\"* aceder à conta antiga, precisa de sair dela e clicar no botão novamente.\n\n2️⃣ *Especifique um código promocional* durante o registo: `FSS23`\n\n💴 Para obter acesso a sinais, deposite na sua conta (faça um depósito) pelo menos *{currencySymbol}{currencyAmount}* ou *$10* em qualquer moeda\n\n✅ Após o REGISTO, clique no botão *\"OBTER SINAL\"*.",
+      buttonRegister: "🎰 REGISTAR",
+      buttonChange: "🌐 ALTERAR IDIOMA",
+      buttonSignal: "📡 OBTER SINAL"
     },
     instruction: {
       caption: "📲 *INSTRUÇÕES: Como se registar e obter sinais – Assista com atenção*",
@@ -656,10 +656,10 @@ export const languageTexts = {
       buttonCheck: "✅ Check Join"
     },
     registration: {
-      success: "Dear, 👋 *{userName}!*\n\n✅ You selected *English (Africa)*!\n\n🌐 *Step 1 – Register*\n\n‼️ THE ACCOUNT MUST BE NEW\n\n1️⃣ If after clicking the *\"REGISTER\"* button you get to the old account, you need to log out of it and click the button again.\n\n2️⃣ Specify a promocode during registration: `FSS23`\n\n💴 To gain access to signals, deposit your account (make a deposit) with at least *{currencySymbol}{currencyAmount}* or *$10* in any currency\n\n✅ After REGISTRATION, click the *\"GET SIGNAL\"* button.",
-      buttonRegister: "📝 REGISTER",
-      buttonChange: "🔄 CHANGE LANGUAGE",
-      buttonSignal: "📊 GET SIGNAL"
+      success: "Dear, 👋 *{userName}!*\n\n✅ You selected *English (Africa)*!\n\n🌐 *Step 1 – Register*\n\n‼️ THE ACCOUNT MUST BE NEW\n\n1️⃣ If after clicking the *\"REGISTER\"* button you get to the old account, you need to log out of it and click the button again.\n\n2️⃣ *Specify a promocode* during registration: `FSS23`\n\n💴 To gain access to signals, deposit your account (make a deposit) with at least *{currencySymbol}{currencyAmount}* or *$10* in any currency\n\n✅ After REGISTRATION, click the *\"GET SIGNAL\"* button.",
+      buttonRegister: "🎰 REGISTER",
+      buttonChange: "🌐 CHANGE LANGUAGE",
+      buttonSignal: "📡 GET SIGNAL"
     },
     instruction: {
       caption: "📲 *INSTRUCTIONS How to Register & Get Signals – Watch Carefully*",
@@ -688,10 +688,10 @@ export const languageTexts = {
       buttonCheck: "✅ Semak Penyertaan"
     },
     registration: {
-      success: "Saudara, 👋 *{userName}!*\n\n✅ Anda telah memilih *Melayu*!\n\n🌐 *Langkah 1 – Daftar*\n\n‼️ AKAUN MESTI BAHARU\n\n1️⃣ Jika selepas mengklik butang *\"DAFTAR\"* anda masuk ke akaun lama, anda perlu log keluar dan klik butang semula.\n\n2️⃣ Nyatakan kod promosi semasa pendaftaran: `FSS23`\n\n💴 Untuk mendapatkan akses kepada isyarat, deposit akaun anda (buat deposit) sekurang-kurangnya *{currencySymbol}{currencyAmount}* atau *$10* dalam mana-mana mata wang\n\n✅ Selepas PENDAFTARAN, klik butang *\"DAPATKAN ISYARAT\"*.",
-      buttonRegister: "📝 DAFTAR",
+      success: "Saudara, 👋 *{userName}!*\n\n✅ Anda telah memilih *Melayu*!\n\n🌐 *Langkah 1 – Daftar*\n\n‼️ AKAUN MESTI BAHARU\n\n1️⃣ Jika selepas mengklik butang *\"DAFTAR\"* anda masuk ke akaun lama, anda perlu log keluar dan klik butang semula.\n\n2️⃣ *Nyatakan kod promosi* semasa pendaftaran: `FSS23`\n\n💴 Untuk mendapatkan akses kepada isyarat, deposit akaun anda (buat deposit) sekurang-kurangnya *{currencySymbol}{currencyAmount}* atau *$10* dalam mana-mana mata wang\n\n✅ Selepas PENDAFTARAN, klik butang *\"DAPATKAN ISYARAT\"*.",
+      buttonRegister: "🎰 DAFTAR",
       buttonChange: "🔄 TUKAR BAHASA",
-      buttonSignal: "📊 DAPATKAN ISYARAT"
+      buttonSignal: "📡 DAPATKAN ISYARAT"
     },
     instruction: {
       caption: "📲 *ARAHAN: Cara Mendaftar dan Dapatkan Isyarat – Tonton dengan Teliti*",
@@ -720,10 +720,10 @@ export const languageTexts = {
       buttonCheck: "✅ בדוק הצטרפות"
     },
     registration: {
-      success: "יקר, 👋 *{userName}!*\n\n✅ בחרת *עברית*!\n\n🌐 *שלב 1 – הרשמה*\n\n‼️ החשבון חייב להיות חדש\n\n1️⃣ אם לאחר לחיצה על כפתור *\"הירשם\"* אתה מגיע לחשבון הישן, עליך להתנתק ממנו ולחץ שוב על הכפתור.\n\n2️⃣ ציין קוד פרומוקוד במהלך ההרשמה: `FSS23`\n\n💴 כדי לקבל גישה לאותות, הפקד את החשבון שלך (בצע הפקדה) לפחות *{currencySymbol}{currencyAmount}* או *$10* בכל מטבע\n\n✅ לאחר ההרשמה, לחץ על הכפתור *\"קבל אות\"*.",
-      buttonRegister: "📝 הירשם",
-      buttonChange: "🔄 שנה שפה",
-      buttonSignal: "📊 קבל אות"
+      success: "יקר, 👋 *{userName}!*\n\n✅ בחרת *עברית*!\n\n🌐 *שלב 1 – הרשמה*\n\n‼️ החשבון חייב להיות חדש\n\n1️⃣ אם לאחר לחיצה על כפתור *\"הירשם\"* אתה מגיע לחשבון הישן, עליך להתנתק ממנו ולחץ שוב על הכפתור.\n\n2️⃣ *ציין קוד פרומוקוד במהלך ההרשמה:* `FSS23`\n\n💴 כדי לקבל גישה לאותות, הפקד את החשבון שלך (בצע הפקדה) לפחות *{currencySymbol}{currencyAmount}* או *$10* בכל מטבע\n\n✅ לאחר ההרשמה, לחץ על הכפתור *\"קבל אות\"*.",
+      buttonRegister: "🎰 הירשם",
+      buttonChange: "🌐 שנה שפה",
+      buttonSignal: "📡 קבל אות"
     },
     instruction: {
       caption: "📲 *הוראות: איך להירשם ולקבל אותות – צפו בקפידה*",
@@ -752,10 +752,10 @@ export const languageTexts = {
       buttonCheck: "✅ ตรวจสอบการเข้าร่วม"
     },
     registration: {
-      success: "ที่รัก, 👋 *{userName}!*\n\n✅ คุณเลือก *ไทย*!\n\n🌐 *ขั้นตอนที่ 1 – ลงทะเบียน*\n\n‼️ บัญชีต้องเป็นบัญชีใหม่\n\n1️⃣ หากหลังจากคลิกปุ่ม *\"ลงทะเบียน\"* คุณเข้าสู่บัญชีเก่า คุณต้องออกจากระบบและคลิกปุ่มอีกครั้ง\n\n2️⃣ ระบุรหัสโปรโมชั่นในระหว่างการลงทะเบียน: `FSS23`\n\n💴 เพื่อเข้าถึงสัญญาณ โปรดฝากเงินเข้าบัญชีของคุณ (ทำการฝากเงิน) อย่างน้อย *{currencySymbol}{currencyAmount}* หรือ *$10* ในสกุลเงินใดก็ได้\n\n✅ หลังจากลงทะเบียนแล้ว ให้คลิกปุ่ม *\"รับสัญญาณ\"*",
-      buttonRegister: "📝 ลงทะเบียน",
-      buttonChange: "🔄 เปลี่ยนภาษา",
-      buttonSignal: "📊 รับสัญญาณ"
+      success: "ที่รัก, 👋 *{userName}!*\n\n✅ คุณเลือก *ไทย*!\n\n🌐 *ขั้นตอนที่ 1 – ลงทะเบียน*\n\n‼️ บัญชีต้องเป็นบัญชีใหม่\n\n1️⃣ หากหลังจากคลิกปุ่ม *\"ลงทะเบียน\"* คุณเข้าสู่บัญชีเก่า คุณต้องออกจากระบบและคลิกปุ่มอีกครั้ง\n\n2️⃣ *ระบุรหัสโปรโมชั่นในระหว่างการลงทะเบียน:* `FSS23`\n\n💴 เพื่อเข้าถึงสัญญาณ โปรดฝากเงินเข้าบัญชีของคุณ (ทำการฝากเงิน) อย่างน้อย *{currencySymbol}{currencyAmount}* หรือ *$10* ในสกุลเงินใดก็ได้\n\n✅ หลังจากลงทะเบียนแล้ว ให้คลิกปุ่ม *\"รับสัญญาณ\"*",
+      buttonRegister: "🎰 ลงทะเบียน",
+      buttonChange: "🌐 เปลี่ยนภาษา",
+      buttonSignal: "📡 รับสัญญาณ"
     },
     instruction: {
       caption: "📲 *คำแนะนำ: วิธีการลงทะเบียนและรับสัญญาณ – ดูอย่างระมัดระวัง*",
@@ -784,10 +784,10 @@ export const languageTexts = {
       buttonCheck: "✅ Periksa Bergabung"
     },
     registration: {
-      success: "Saudara, 👋 *{userName}!*\n\n✅ Anda memilih *Bahasa Indonesia*!\n\n🌐 *Langkah 1 – Daftar*\n\n‼️ AKUN HARUS BARU\n\n1️⃣ Jika setelah mengklik tombol *\"DAFTAR\"* Anda masuk ke akun lama, Anda perlu keluar darinya dan klik tombol lagi.\n\n2️⃣ Tentukan kode promo selama pendaftaran: `FSS23`\n\n💴 Untuk mendapatkan akses sinyal, setorkan akun Anda (melakukan deposit) setidaknya *{currencySymbol}{currencyAmount}* atau *$10* dalam mata uang apa pun\n\n✅ Setelah PENDAFTARAN, klik tombol *\"DAPATKAN SINYAL\"*.",
-      buttonRegister: "📝 DAFTAR",
-      buttonChange: "🔄 UBAH BAHASA",
-      buttonSignal: "📊 DAPATKAN SINYAL"
+      success: "Saudara, 👋 *{userName}!*\n\n✅ Anda memilih *Bahasa Indonesia*!\n\n🌐 *Langkah 1 – Daftar*\n\n‼️ AKUN HARUS BARU\n\n1️⃣ Jika setelah mengklik tombol *\"DAFTAR\"* Anda masuk ke akun lama, Anda perlu keluar darinya dan klik tombol lagi.\n\n2️⃣ *Tentukan kode promo* selama pendaftaran: `FSS23`\n\n💴 Untuk mendapatkan akses sinyal, setorkan akun Anda (melakukan deposit) setidaknya *{currencySymbol}{currencyAmount}* atau *$10* dalam mata uang apa pun\n\n✅ Setelah PENDAFTARAN, klik tombol *\"DAPATKAN SINYAL\"*.",
+      buttonRegister: "🎰 DAFTAR",
+      buttonChange: "🌐 UBAH BAHASA",
+      buttonSignal: "📡 DAPATKAN SINYAL"
     },
     instruction: {
       caption: "📲 *INSTRUKSI: Cara Mendaftar dan Mendapatkan Sinyal – Tonton dengan Cermat*",
@@ -816,10 +816,10 @@ export const languageTexts = {
       buttonCheck: "✅ සම්බන්ධතාව පරීක්ෂා කරන්න"
     },
     registration: {
-      success: "ප්‍රියතම, 👋 *{userName}!*\n\n✅ ඔබ *සිංහල* තෝරාගත්තා!\n\n🌐 *පියවර 1 – ලියාපදිංචි වන්න*\n\n‼️ ගිණුම නව එකක් විය යුතුයි\n\n1️⃣ *\"ලියාපදිංචි වන්න\"* බොත්තම ක්ලික් කිරීමෙන් පසු ඔබ පැරණි ගිණුමට පැමිණෙන්නේ නම්, ඔබ එයින් ඉවත් වී නැවත බොත්තම ක්ලික් කළ යුතුය.\n\n2️⃣ ලියාපදිංචි වීමේදී ප්‍රෝමෝකෝඩ් එකක් සඳහන් කරන්න: `FSS23`\n\n💴 සංඥා වලට ප්‍රවේශය ලබා ගැනීමට, ඔබේ ගිණුම තුළ අවම වශයෙන් *{currencySymbol}{currencyAmount}* හෝ ඕනෑම මුදල් වලින් *$10* තැන්පත් කරන්න (තැන්පත් කිරීමක් කරන්න)\n\n✅ ලියාපදිංචි වීමෙන් පසු, *\"සංඥා ලබාගන්න\"* බොත්තම ක්ලික් කරන්න.",
-      buttonRegister: "📝 ලියාපදිංචි වන්න",
-      buttonChange: "🔄 භාෂාව වෙනස් කරන්න",
-      buttonSignal: "📊 සංඥා ලබාගන්න"
+      success: "ප්‍රියතම, 👋 *{userName}!*\n\n✅ ඔබ *සිංහල* තෝරාගත්තා!\n\n🌐 *පියවර 1 – ලියාපදිංචි වන්න*\n\n‼️ ගිණුම නව එකක් විය යුතුයි\n\n1️⃣ *\"ලියාපදිංචි වන්න\"* බොත්තම ක්ලික් කිරීමෙන් පසු ඔබ පැරණි ගිණුමට පැමිණෙන්නේ නම්, ඔබ එයින් ඉවත් වී නැවත බොත්තම ක්ලික් කළ යුතුය.\n\n2️⃣ *ලියාපදිංචි වීමේදී ප්‍රෝමෝකෝඩ් එකක් සඳහන් කරන්න:* `FSS23`\n\n💴 සංඥා වලට ප්‍රවේශය ලබා ගැනීමට, ඔබේ ගිණුම තුළ අවම වශයෙන් *{currencySymbol}{currencyAmount}* හෝ ඕනෑම මුදල් වලින් *$10* තැන්පත් කරන්න (තැන්පත් කිරීමක් කරන්න)\n\n✅ ලියාපදිංචි වීමෙන් පසු, *\"සංඥා ලබාගන්න\"* බොත්තම ක්ලික් කරන්න.",
+      buttonRegister: "🎰 ලියාපදිංචි වන්න",
+      buttonChange: "🌐 භාෂාව වෙනස් කරන්න",
+      buttonSignal: "📡 සංඥා ලබාගන්න"
     },
     instruction: {
       caption: "📲 *උපදෙස්: ලියාපදිංචි වීම සහ සංඥා ලබාගැනීමේ ක්‍රමය – ප්‍රවේශමෙන් නරඹන්න*",
@@ -848,10 +848,10 @@ export const languageTexts = {
       buttonCheck: "✅ सामेल हुनुहोस् जाँच गर्नुहोस्"
     },
     registration: {
-      success: "प्रिय, 👋 *{userName}!*\n\n✅ तपाईंले *नेपाली* चयन गर्नुभयो!\n\n🌐 *चरण 1 – दर्ता गर्नुहोस्*\n\n‼️ खाता नयाँ हुनुपर्छ\n\n1️⃣ यदि *\"दर्ता गर्नुहोस्\"* बटनमा क्लिक गरेपछि तपाईं पुरानो खातामा पुग्नुभयो भने, तपाईंले त्यसबाट लग आउट गर्नुपर्छ र बटनमा फेरि क्लिक गर्नुपर्छ।\n\n2️⃣ दर्ता गर्दा प्रोमोकोड निर्दिष्ट गर्नुहोस्: `FSS23`\n\n💴 संकेतहरूमा पहुँच प्राप्त गर्न, कम्तिमा *{currencySymbol}{currencyAmount}* वा कुनै पनि मुद्रामा *$10* तपाईंको खातामा जम्मा गर्नुहोस् (जम्मा गर्नुहोस्)\n\n✅ दर्ता पछि, *\"संकेत प्राप्त गर्नुहोस्\"* बटनमा क्लिक गर्नुहोस्।",
-      buttonRegister: "📝 दर्ता गर्नुहोस्",
-      buttonChange: "🔄 भाषा परिवर्तन गर्नुहोस्",
-      buttonSignal: "📊 संकेत प्राप्त गर्नुहोस्"
+      success: "प्रिय, 👋 *{userName}!*\n\n✅ तपाईंले *नेपाली* चयन गर्नुभयो!\n\n🌐 *चरण 1 – दर्ता गर्नुहोस्*\n\n‼️ खाता नयाँ हुनुपर्छ\n\n1️⃣ यदि *\"दर्ता गर्नुहोस्\"* बटनमा क्लिक गरेपछि तपाईं पुरानो खातामा पुग्नुभयो भने, तपाईंले त्यसबाट लग आउट गर्नुपर्छ र बटनमा फेरि क्लिक गर्नुपर्छ।\n\n2️⃣ *दर्ता गर्दा प्रोमोकोड निर्दिष्ट गर्नुहोस्:* `FSS23`\n\n💴 संकेतहरूमा पहुँच प्राप्त गर्न, कम्तिमा *{currencySymbol}{currencyAmount}* वा कुनै पनि मुद्रामा *$10* तपाईंको खातामा जम्मा गर्नुहोस् (जम्मा गर्नुहोस्)\n\n✅ दर्ता पछि, *\"संकेत प्राप्त गर्नुहोस्\"* बटनमा क्लिक गर्नुहोस्।",
+      buttonRegister: "🎰 दर्ता गर्नुहोस्",
+      buttonChange: "🌐 भाषा परिवर्तन गर्नुहोस्",
+      buttonSignal: "📡 संकेत प्राप्त गर्नुहोस्"
     },
     instruction: {
       caption: "📲 *निर्देशनहरू: कसरी दर्ता गर्ने र संकेत प्राप्त गर्ने – ध्यानपूर्वक हेर्नुहोस्*",
@@ -880,10 +880,10 @@ export const languageTexts = {
       buttonCheck: "✅ یوځای کیدل وګورئ"
     },
     registration: {
-      success: "عزیزه، 👋 *{userName}!*\n\n✅ تاسو *پښتو* غوره کړې!\n\n🌐 *ګام 1 – ثبت کول*\n\n‼️ حساب باید نوی وي\n\n1️⃣ که د *\"ثبت کول\"* تڼۍ کلیک کولو وروسته تاسو زوړ حساب ته ورسیږئ، نو تاسو باید له هغه څخه وتل او بیا تڼۍ کلیک کړئ.\n\n2️⃣ د ثبت کولو په وخت کې یو پروموکوډ مشخص کړئ: `FSS23`\n\n💴 د سګنالونو ته لاسرسی ترلاسه کولو لپاره، خپل حساب د لږ تر لږه *{currencySymbol}{currencyAmount}* یا په کومه اسعار کې *$10* سره ډیپوز کړئ (ډیپوز کړئ)\n\n✅ د ثبت کولو وروسته، د *\"سګنال ترلاسه کول\"* تڼۍ کلیک کړئ.",
-      buttonRegister: "📝 ثبت کول",
-      buttonChange: "🔄 ژبه بدلول",
-      buttonSignal: "📊 سګنال ترلاسه کول"
+      success: "عزیزه، 👋 *{userName}!*\n\n✅ تاسو *پښتو* غوره کړې!\n\n🌐 *ګام 1 – ثبت کول*\n\n‼️ حساب باید نوی وي\n\n1️⃣ که د *\"ثبت کول\"* تڼۍ کلیک کولو وروسته تاسو زوړ حساب ته ورسیږئ، نو تاسو باید له هغه څخه وتل او بیا تڼۍ کلیک کړئ.\n\n2️⃣ *د ثبت کولو په وخت کې یو پروموکوډ مشخص کړئ:* `FSS23`\n\n💴 د سګنالونو ته لاسرسی ترلاسه کولو لپاره، خپل حساب د لږ تر لږه *{currencySymbol}{currencyAmount}* یا په کومه اسعار کې *$10* سره ډیپوز کړئ (ډیپوز کړئ)\n\n✅ د ثبت کولو وروسته، د *\"سګنال ترلاسه کول\"* تڼۍ کلیک کړئ.",
+      buttonRegister: "🎰 ثبت کول",
+      buttonChange: "🌐 ژبه بدلول",
+      buttonSignal: "📡 سګنال ترلاسه کول"
     },
     instruction: {
       caption: "📲 *لارښوونې: څنګه ثبت کړئ او سګنال ترلاسه کړئ – په احتیاط سره وګورئ*",
@@ -912,10 +912,10 @@ export const languageTexts = {
       buttonCheck: "✅ Qo'shilishni tekshiring"
     },
     registration: {
-      success: "Hurmatli, 👋 *{userName}!*\n\n✅ Siz *Oʻzbekcha* tilini tanladingiz!\n\n🌐 *1-qadam – Roʻyxatdan oʻtish*\n\n‼️ HISOB RAQAM YANGI BOʻLISHI KERAK\n\n1️⃣ Agar *\"ROʻYXATDAN OʻTISH\"* tugmasini bosganingizdan keyin eski hisob raqamiga tushib qolsangiz, undan chiqib ketishingiz va tugmani qayta bosishingiz kerak.\n\n2️⃣ Roʻyxatdan oʻtish davomida promokodni belgilang: `FSS23`\n\n💴 Signallarga kirish uchun, hisobingizga kamida *{currencySymbol}{currencyAmount}* yoki har qanday valyutada *$10* depozit qoʻying (depozit qiling)\n\n✅ ROʻYXATDAN OʻTGANINGIZDAN soʻng, *\"SIGNAL OLISH\"* tugmasini bosing.",
-      buttonRegister: "📝 ROʻYXATDAN OʻTISH",
-      buttonChange: "🔄 TILNI OʻZGARTIRISH",
-      buttonSignal: "📊 SIGNAL OLISH"
+      success: "Hurmatli, 👋 *{userName}!*\n\n✅ Siz *Oʻzbekcha* tilini tanladingiz!\n\n🌐 *1-qadam – Roʻyxatdan oʻtish*\n\n‼️ HISOB RAQAM YANGI BOʻLISHI KERAK\n\n1️⃣ Agar *\"ROʻYXATDAN OʻTISH\"* tugmasini bosganingizdan keyin eski hisob raqamiga tushib qolsangiz, undan chiqib ketishingiz va tugmani qayta bosishingiz kerak.\n\n2️⃣ *Roʻyxatdan oʻtish davomida promokodni* belgilang: `FSS23`\n\n💴 Signallarga kirish uchun, hisobingizga kamida *{currencySymbol}{currencyAmount}* yoki har qanday valyutada *$10* depozit qoʻying (depozit qiling)\n\n✅ ROʻYXATDAN OʻTGANINGIZDAN soʻng, *\"SIGNAL OLISH\"* tugmasini bosing.",
+      buttonRegister: "🎰 ROʻYXATDAN OʻTISH",
+      buttonChange: "🌐 TILNI OʻZGARTIRISH",
+      buttonSignal: "📡 SIGNAL OLISH"
     },
     instruction: {
       caption: "📲 *KOʻRSATMA: Qanday roʻyxatdan oʻtish va signal olish – Diqqat bilan tomosha qiling*",
@@ -944,10 +944,10 @@ export const languageTexts = {
       buttonCheck: "✅ Қосылуды тексеру"
     },
     registration: {
-      success: "Құрметті, 👋 *{userName}!*\n\n✅ Сіз *Қазақша* тілін таңдадыңыз!\n\n🌐 *1-қадам – Тіркелу*\n\n‼️ ЕСЕПТІК ЖАЗБА ЖАҢА БОЛУЫ КЕРЕК\n\n1️⃣ *\"ТІРКЕЛУ\"* түймесін басқаннан кейін ескі есептік жазбаға түсіп қалсаңыз, одан шығып, түймені қайта басуыңыз керек.\n\n2️⃣ Тіркелу кезінде промокодты көрсетіңіз: `FSS23`\n\n💴 Сигналдарға қол жеткізу үшін, есептік жазбаңызға кемінде *{currencySymbol}{currencyAmount}* немесе кез келген валютада *$10* салыңыз (депозит жасаңыз)\n\n✅ ТІРКЕЛГЕННЕН кейін, *\"СИГНАЛ АЛУ\"* түймесін басыңыз.",
-      buttonRegister: "📝 ТІРКЕЛУ",
-      buttonChange: "🔄 ТІЛДІ ӨЗГЕРТУ",
-      buttonSignal: "📊 СИГНАЛ АЛУ"
+      success: "Құрметті, 👋 *{userName}!*\n\n✅ Сіз *Қазақша* тілін таңдадыңыз!\n\n🌐 *1-қадам – Тіркелу*\n\n‼️ ЕСЕПТІК ЖАЗБА ЖАҢА БОЛУЫ КЕРЕК\n\n1️⃣ *\"ТІРКЕЛУ\"* түймесін басқаннан кейін ескі есептік жазбаға түсіп қалсаңыз, одан шығып, түймені қайта басуыңыз керек.\n\n2️⃣ *Тіркелу кезінде промокодты* көрсетіңіз: `FSS23`\n\n💴 Сигналдарға қол жеткізу үшін, есептік жазбаңызға кемінде *{currencySymbol}{currencyAmount}* немесе кез келген валютада *$10* салыңыз (депозит жасаңыз)\n\n✅ ТІРКЕЛГЕННЕН кейін, *\"СИГНАЛ АЛУ\"* түймесін басыңыз.",
+      buttonRegister: "🎰 ТІРКЕЛУ",
+      buttonChange: "🌐 ТІЛДІ ӨЗГЕРТУ",
+      buttonSignal: "📡 СИГНАЛ АЛУ"
     },
     instruction: {
       caption: "📲 *НҰСҚАУЛЫҚ: Қалай тіркелу және сигнал алу – Мұқият қараңыз*",
@@ -976,10 +976,10 @@ export const languageTexts = {
       buttonCheck: "✅ Ҳамроҳиро санҷед"
     },
     registration: {
-      success: "Азиз, 👋 *{userName}!*\n\n✅ Шумо *Тоҷикӣ* забониро интихоб кардед!\n\n🌐 *Қадами 1 – Бақайдгирӣ*\n\n‼️ ҲИСОБИ ШАХСӢ БОЯД НАВ БОШАД\n\n1️⃣ Агар пас аз пахш кардани тугмаи *\"БАҚАЙДГИРӢ\"* ба ҳисоби кӯҳна гузаред, бояд аз он берун шавед ва тугмаро боз пахш кунед.\n\n2️⃣ Дар вақти бақайдгирӣ рамзи промо муайян кунед: `FSS23`\n\n💴 Барои дастрасӣ ба сигналҳо, ба ҳисоби шахсии худ ҳадди ақал *{currencySymbol}{currencyAmount}* ё *$10* бо ҳар гуна асъор ворид кунед (воридот кунед)\n\n✅ Пас аз БАҚАЙДГИРӢ, тугмаи *\"ГИРИФТАНИ СИГНАЛ\"*-ро пахш кунед.",
-      buttonRegister: "📝 БАҚАЙДГИРӢ",
-      buttonChange: "🔄 ИВАЗ КАРДАНИ ЗАБОН",
-      buttonSignal: "📊 ГИРИФТАНИ СИГНАЛ"
+      success: "Азиз, 👋 *{userName}!*\n\n✅ Шумо *Тоҷикӣ* забониро интихоб кардед!\n\n🌐 *Қадами 1 – Бақайдгирӣ*\n\n‼️ ҲИСОБИ ШАХСӢ БОЯД НАВ БОШАД\n\n1️⃣ Агар пас аз пахш кардани тугмаи *\"БАҚАЙДГИРӢ\"* ба ҳисоби кӯҳна гузаред, бояд аз он берун шавед ва тугмаро боз пахш кунед.\n\n2️⃣ *Дар вақти бақайдгирӣ рамзи промо муайян кунед*: `FSS23`\n\n💴 Барои дастрасӣ ба сигналҳо, ба ҳисоби шахсии худ ҳадди ақал *{currencySymbol}{currencyAmount}* ё *$10* бо ҳар гуна асъор ворид кунед (воридот кунед)\n\n✅ Пас аз БАҚАЙДГИРӢ, тугмаи *\"ГИРИФТАНИ СИГНАЛ\"*-ро пахш кунед.",
+      buttonRegister: "🎰 БАҚАЙДГИРӢ",
+      buttonChange: "🌐 ИВАЗ КАРДАНИ ЗАБОН",
+      buttonSignal: "📡 ГИРИФТАНИ СИГНАЛ"
     },
     instruction: {
       caption: "📲 *ДАСТУРОМ: Чӣ тавр бақайдгирӣ кардан ва сигнал гирифтан – Бодиққат тамошо кунед*",
@@ -1008,10 +1008,10 @@ export const languageTexts = {
       buttonCheck: "✅ Έλεγχος εγγραφής"
     },
     registration: {
-      success: "Αγαπητέ, 👋 *{userName}!*\n\n✅ Επιλέξατε *Ελληνικά*!\n\n🌐 *Βήμα 1 – Εγγραφή*\n\n‼️ Ο ΛΟΓΑΡΙΑΣΜΟΣ ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΝΕΟΣ\n\n1️⃣ Εάν μετά το πάτημα του κουμπιού *\"ΕΓΓΡΑΦΗ\"* μεταβείτε στον παλιό λογαριασμό, πρέπει να αποσυνδεθείτε και να πατήσετε ξανά το κουμπί.\n\n2️⃣ Καθορίστε έναν κωδικό προώθησης κατά την εγγραφή: `FSS23`\n\n💴 Για να αποκτήσετε πρόσβαση σε σήματα, καταθέστε στον λογαριασμό σας (κάντε κατάθεση) τουλάχιστον *{currencySymbol}{currencyAmount}* ή *$10* σε οποιοδήποτε νόμισμα\n\n✅ Μετά την ΕΓΓΡΑΦΗ, κάντε κλικ στο κουμπί *\"ΛΗΨΗ ΣΗΜΑΤΟΣ\"*.",
-      buttonRegister: "📝 ΕΓΓΡΑΦΗ",
-      buttonChange: "🔄 ΑΛΛΑΓΗ ΓΛΩΣΣΑΣ",
-      buttonSignal: "📊 ΛΗΨΗ ΣΗΜΑΤΟΣ"
+      success: "Αγαπητέ, 👋 *{userName}!*\n\n✅ Επιλέξατε *Ελληνικά*!\n\n🌐 *Βήμα 1 – Εγγραφή*\n\n‼️ Ο ΛΟΓΑΡΙΑΣΜΟΣ ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΝΕΟΣ\n\n1️⃣ Εάν μετά το πάτημα του κουμπιού *\"ΕΓΓΡΑΦΗ\"* μεταβείτε στον παλιό λογαριασμό, πρέπει να αποσυνδεθείτε και να πατήσετε ξανά το κουμπί.\n\n2️⃣ *Καθορίστε έναν κωδικό προώθησης* κατά την εγγραφή: `FSS23`\n\n💴 Για να αποκτήσετε πρόσβαση σε σήματα, καταθέστε στον λογαριασμό σας (κάντε κατάθεση) τουλάχιστον *{currencySymbol}{currencyAmount}* ή *$10* σε οποιοδήποτε νόμισμα\n\n✅ Μετά την ΕΓΓΡΑΦΗ, κάντε κλικ στο κουμπί *\"ΛΗΨΗ ΣΗΜΑΤΟΣ\"*.",
+      buttonRegister: "🎰 ΕΓΓΡΑΦΗ",
+      buttonChange: "🌐 ΑΛΛΑΓΗ ΓΛΩΣΣΑΣ",
+      buttonSignal: "📡 ΛΗΨΗ ΣΗΜΑΤΟΣ"
     },
     instruction: {
       caption: "📲 *ΟΔΗΓΙΕΣ: Πώς να εγγραφείτε και να λαμβάνετε σήματα – Παρακολουθήστε προσεκτικά*",
@@ -1040,10 +1040,10 @@ export const languageTexts = {
       buttonCheck: "✅ Sprawdź dołączenie"
     },
     registration: {
-      success: "Szanowny, 👋 *{userName}!*\n\n✅ Wybrałeś *Polski*!\n\n🌐 *Krok 1 – Rejestracja*\n\n‼️ KONTO MUSI BYĆ NOWE\n\n1️⃣ Jeśli po kliknięciu przycisku *\"ZAREJESTRUJ SIĘ\"* trafisz na stare konto, musisz się z niego wylogować i ponownie kliknąć przycisk.\n\n2️⃣ Określ kod promocyjny podczas rejestracji: `FSS23`\n\n💴 Aby uzyskać dostęp do sygnałów, wpłać na swoje konto (dokonaj depozytu) co najmniej *{currencySymbol}{currencyAmount}* lub *$10* w dowolnej walucie\n\n✅ Po REJESTRACJI kliknij przycisk *\"OTRZYMAJ SYGNAŁ\"*.",
-      buttonRegister: "📝 ZAREJESTRUJ SIĘ",
-      buttonChange: "🔄 ZMIEŃ JĘZYK",
-      buttonSignal: "📊 OTRZYMAJ SYGNAŁ"
+      success: "Szanowny, 👋 *{userName}!*\n\n✅ Wybrałeś *Polski*!\n\n🌐 *Krok 1 – Rejestracja*\n\n‼️ KONTO MUSI BYĆ NOWE\n\n1️⃣ Jeśli po kliknięciu przycisku *\"ZAREJESTRUJ SIĘ\"* trafisz na stare konto, musisz się z niego wylogować i ponownie kliknąć przycisk.\n\n2️⃣ *Określ kod promocyjny podczas rejestracji:* `FSS23`\n\n💴 Aby uzyskać dostęp do sygnałów, wpłać na swoje konto (dokonaj depozytu) co najmniej *{currencySymbol}{currencyAmount}* lub *$10* w dowolnej walucie\n\n✅ Po REJESTRACJI kliknij przycisk *\"OTRZYMAJ SYGNAŁ\"*.",
+      buttonRegister: "🎰 ZAREJESTRUJ SIĘ",
+      buttonChange: "🌐 ZMIEŃ JĘZYK",
+      buttonSignal: "📡 OTRZYMAJ SYGNAŁ"
     },
     instruction: {
       caption: "📲 *INSTRUKCJE: Jak się zarejestrować i otrzymywać sygnały – Oglądaj uważnie*",
@@ -1072,10 +1072,10 @@ export const languageTexts = {
       buttonCheck: "✅ Lidmaatschap controleren"
     },
     registration: {
-      success: "Beste, 👋 *{userName}!*\n\n✅ U heeft *Nederlands* geselecteerd!\n\n🌐 *Stap 1 – Registreren*\n\n‼️ HET ACCOUNT MOET NIEUW ZIJN\n\n1️⃣ Als u na het klikken op de *\"REGISTREREN\"*-knop bij het oude account terechtkomt, moet u zich afmelden en de knop opnieuw klikken.\n\n2️⃣ Geef een promocode op tijdens de registratie: `FSS23`\n\n💴 Om toegang te krijgen tot signalen, stort op uw account (maak een storting) minimaal *{currencySymbol}{currencyAmount}* of *$10* in elke valuta\n\n✅ Na REGISTRATIE, klik op de *\"SIGNALEN ONTVANGEN\"*-knop.",
-      buttonRegister: "📝 REGISTREREN",
+      success: "Beste, 👋 *{userName}!*\n\n✅ U heeft *Nederlands* geselecteerd!\n\n🌐 *Stap 1 – Registreren*\n\n‼️ HET ACCOUNT MOET NIEUW ZIJN\n\n1️⃣ Als u na het klikken op de *\"REGISTREREN\"*-knop bij het oude account terechtkomt, moet u zich afmelden en de knop opnieuw klikken.\n\n2️⃣ *Geef een promocode op tijdens de registratie*: `FSS23`\n\n💴 Om toegang te krijgen tot signalen, stort op uw account (maak een storting) minimaal *{currencySymbol}{currencyAmount}* of *$10* in elke valuta\n\n✅ Na REGISTRATIE, klik op de *\"SIGNALEN ONTVANGEN\"*-knop.",
+      buttonRegister: "🎰 REGISTREREN",
       buttonChange: "🔄 TAAL WIJZIGEN",
-      buttonSignal: "📊 SIGNALEN ONTVANGEN"
+      buttonSignal: "📡 SIGNALEN ONTVANGEN"
     },
     instruction: {
       caption: "📲 *INSTRUCTIES: Hoe u zich registreert en signalen ontvangt – Bekijk aandachtig*",
@@ -1104,10 +1104,10 @@ export const languageTexts = {
       buttonCheck: "✅ Verifică alăturarea"
     },
     registration: {
-      success: "Dragă, 👋 *{userName}!*\n\n✅ Ați selectat *Română*!\n\n🌐 *Pasul 1 – Înregistrare*\n\n‼️ CONTUL TREBUIE SĂ FIE NOU\n\n1️⃣ Dacă după ce faceți clic pe butonul *\"ÎNREGISTRARE\"* ajungeți la contul vechi, trebuie să vă deconectați și să faceți clic din nou pe buton.\n\n2️⃣ Specificați un cod promoțional în timpul înregistrării: `FSS23`\n\n💴 Pentru a obține acces la semnale, depuneți în contul dvs. (faceți un depozit) cel puțin *{currencySymbol}{currencyAmount}* sau *$10* în orice monedă\n\n✅ După ÎNREGISTRARE, faceți clic pe butonul *\"OBȚINE SEMNAL\"*.",
-      buttonRegister: "📝 ÎNREGISTRARE",
-      buttonChange: "🔄 SCHIMBĂ LIMBA",
-      buttonSignal: "📊 OBȚINE SEMNAL"
+      success: "Dragă, 👋 *{userName}!*\n\n✅ Ați selectat *Română*!\n\n🌐 *Pasul 1 – Înregistrare*\n\n‼️ CONTUL TREBUIE SĂ FIE NOU\n\n1️⃣ Dacă după ce faceți clic pe butonul *\"ÎNREGISTRARE\"* ajungeți la contul vechi, trebuie să vă deconectați și să faceți clic din nou pe buton.\n\n2️⃣ *Specificați un cod promoțional* în timpul înregistrării: `FSS23`\n\n💴 Pentru a obține acces la semnale, depuneți în contul dvs. (faceți un depozit) cel puțin *{currencySymbol}{currencyAmount}* sau *$10* în orice monedă\n\n✅ După ÎNREGISTRARE, faceți clic pe butonul *\"OBȚINE SEMNAL\"*.",
+      buttonRegister: "🎰 ÎNREGISTRARE",
+      buttonChange: "🌐 SCHIMBĂ LIMBA",
+      buttonSignal: "📡 OBȚINE SEMNAL"
     },
     instruction: {
       caption: "📲 *INSTRUCȚIUNI: Cum să vă înregistrați și să primiți semnale – Urmăriți cu atenție*",
@@ -1136,10 +1136,10 @@ export const languageTexts = {
       buttonCheck: "✅ Проверете присъединяването"
     },
     registration: {
-      success: "Уважаеми, 👋 *{userName}!*\n\n✅ Вие избрахте *Български*!\n\n🌐 *Стъпка 1 – Регистрация*\n\n‼️ АКАУНТЪТ ТРЯБВА ДА Е НОВ\n\n1️⃣ Ако след щракване върху бутона *\"РЕГИСТРАЦИЯ\"* отидете на стария акаунт, трябва да излезете от него и да щракнете отново върху бутона.\n\n2️⃣ Посочете промокод по време на регистрацията: `FSS23`\n\n💴 За да получите достъп до сигнали, депозирайте в акаунта си (направете депозит) поне *{currencySymbol}{currencyAmount}* или *$10* във всяка валута\n\n✅ След РЕГИСТРАЦИЯ, щракнете върху бутона *\"ПОЛУЧИ СИГНАЛ\"*.",
-      buttonRegister: "📝 РЕГИСТРАЦИЯ",
-      buttonChange: "🔄 ПРОМЯНА НА ЕЗИКА",
-      buttonSignal: "📊 ПОЛУЧИ СИГНАЛ"
+      success: "Уважаеми, 👋 *{userName}!*\n\n✅ Вие избрахте *Български*!\n\n🌐 *Стъпка 1 – Регистрация*\n\n‼️ АКАУНТЪТ ТРЯБВА ДА Е НОВ\n\n1️⃣ Ако след щракване върху бутона *\"РЕГИСТРАЦИЯ\"* отидете на стария акаунт, трябва да излезете от него и да щракнете отново върху бутона.\n\n2️⃣ *Посочете промокод по време на регистрацията*: `FSS23`\n\n💴 За да получите достъп до сигнали, депозирайте в акаунта си (направете депозит) поне *{currencySymbol}{currencyAmount}* или *$10* във всяка валута\n\n✅ След РЕГИСТРАЦИЯ, щракнете върху бутона *\"ПОЛУЧИ СИГНАЛ\"*.",
+      buttonRegister: "🎰 РЕГИСТРАЦИЯ",
+      buttonChange: "🌐 ПРОМЯНА НА ЕЗИКА",
+      buttonSignal: "📡 ПОЛУЧИ СИГНАЛ"
     },
     instruction: {
       caption: "📲 *ИНСТРУКЦИИ: Как да се регистрирате и да получавате сигнали – Гледайте внимателно*",
@@ -1168,10 +1168,10 @@ export const languageTexts = {
       buttonCheck: "✅ Zkontrolujte připojení"
     },
     registration: {
-      success: "Vážený, 👋 *{userName}!*\n\n✅ Vybrali jste *Čeština*!\n\n🌐 *Krok 1 – Registrace*\n\n‼️ ÚČET MUSÍ BÝT NOVÝ\n\n1️⃣ Pokud po kliknutí na tlačítko *\"REGISTROVAT\"* přejdete na starý účet, musíte se z něj odhlásit a znovu kliknout na tlačítko.\n\n2️⃣ Během registrace zadejte propagační kód: `FSS23`\n\n💴 Chcete-li získat přístup k signálům, vložte na svůj účet (proveďte vklad) alespoň *{currencySymbol}{currencyAmount}* nebo *$10* v jakékoliv měně\n\n✅ Po REGISTRACI klikněte na tlačítko *\"ZÍSKAT SIGNÁL\"*.",
-      buttonRegister: "📝 REGISTROVAT",
-      buttonChange: "🔄 ZMĚNIT JAZYK",
-      buttonSignal: "📊 ZÍSKAT SIGNÁL"
+      success: "Vážený, 👋 *{userName}!*\n\n✅ Vybrali jste *Čeština*!\n\n🌐 *Krok 1 – Registrace*\n\n‼️ ÚČET MUSÍ BÝT NOVÝ\n\n1️⃣ Pokud po kliknutí na tlačítko *\"REGISTROVAT\"* přejdete na starý účet, musíte se z něj odhlásit a znovu kliknout na tlačítko.\n\n2️⃣ *Během registrace zadejte propagační kód:* `FSS23`\n\n💴 Chcete-li získat přístup k signálům, vložte na svůj účet (proveďte vklad) alespoň *{currencySymbol}{currencyAmount}* nebo *$10* v jakékoliv měně\n\n✅ Po REGISTRACI klikněte na tlačítko *\"ZÍSKAT SIGNÁL\"*.",
+      buttonRegister: "🎰 REGISTROVAT",
+      buttonChange: "🌐 ZMĚNIT JAZYK",
+      buttonSignal: "📡 ZÍSKAT SIGNÁL"
     },
     instruction: {
       caption: "📲 *INSTRUKCE: Jak se zaregistrovat a získat signály – Sledujte pozorně*",
@@ -1201,9 +1201,9 @@ export const languageTexts = {
     },
     registration: {
       success: "Vážený, 👋 *{userName}!*\n\n✅ Vybrali ste *Slovenčina*!\n\n🌐 *Krok 1 – Registrácia*\n\n‼️ ÚČET MUSÍ BYŤ NOVÝ\n\n1️⃣ Ak po kliknutí na tlačidlo *\"REGISTROVAŤ\"* prejdete na starý účet, musíte sa z neho odhlásiť a znova kliknúť na tlačidlo.\n\n2️⃣ Počas registrácie zadajte propagačný kód: `FSS23`\n\n💴 Ak chcete získať prístup k signálom, vložte na svoj účet (uskutočnite vklad) aspoň *{currencySymbol}{currencyAmount}* alebo *$10* v akejkoľvek mene\n\n✅ Po REGISTRÁCII kliknite na tlačidlo *\"ZÍSKAŤ SIGNÁL\"*.",
-      buttonRegister: "📝 REGISTROVAŤ",
-      buttonChange: "🔄 ZMENIŤ JAZYK",
-      buttonSignal: "📊 ZÍSKAŤ SIGNÁL"
+      buttonRegister: "🎰 REGISTROVAŤ",
+      buttonChange: "🌐 ZMENIŤ JAZYK",
+      buttonSignal: "📡 ZÍSKAŤ SIGNÁL"
     },
     instruction: {
       caption: "📲 *INŠTRUKCIE: Ako sa zaregistrovať a získať signály – Pozorne sledujte*",
