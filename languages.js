@@ -1200,7 +1200,7 @@ export const languageTexts = {
       buttonCheck: "✅ Skontrolovať pripojenie"
     },
     registration: {
-      success: "Vážený, 👋 *{userName}!*\n\n✅ Vybrali ste *Slovenčina*!\n\n🌐 *Krok 1 – Registrácia*\n\n‼️ ÚČET MUSÍ BYŤ NOVÝ\n\n1️⃣ Ak po kliknutí na tlačidlo *\"REGISTROVAŤ\"* prejdete na starý účet, musíte sa z neho odhlásiť a znova kliknúť na tlačidlo.\n\n2️⃣ Počas registrácie zadajte propagačný kód: `FSS23`\n\n💴 Ak chcete získať prístup k signálom, vložte na svoj účet (uskutočnite vklad) aspoň *{currencySymbol}{currencyAmount}* alebo *$10* v akejkoľvek mene\n\n✅ Po REGISTRÁCII kliknite na tlačidlo *\"ZÍSKAŤ SIGNÁL\"*.",
+      success: "Vážený, 👋 *{userName}!*\n\n✅ Vybrali ste *Slovenčina*!\n\n🌐 *Krok 1 – Registrácia*\n\n‼️ ÚČET MUSÍ BYŤ NOVÝ\n\n1️⃣ Ak po kliknutí na tlačidlo *\"REGISTROVAŤ\"* prejdete na starý účet, musíte sa z neho odhlásiť a znova kliknúť na tlačidlo.\n\n2️⃣ *Počas registrácie zadajte propagačný kód*: `FSS23`\n\n💴 Ak chcete získať prístup k signálom, vložte na svoj účet (uskutočnite vklad) aspoň *{currencySymbol}{currencyAmount}* alebo *$10* v akejkoľvek mene\n\n✅ Po REGISTRÁCII kliknite na tlačidlo *\"ZÍSKAŤ SIGNÁL\"*.",
       buttonRegister: "🎰 REGISTROVAŤ",
       buttonChange: "🌐 ZMENIŤ JAZYK",
       buttonSignal: "📡 ZÍSKAŤ SIGNÁL"
@@ -1232,10 +1232,10 @@ export const languageTexts = {
       buttonCheck: "✅ Csatlakozás ellenőrzése"
     },
     registration: {
-      success: "Kedves, 👋 *{userName}!*\n\n✅ Ön a *Magyar* nyelvet választotta!\n\n🌐 *1. lépés – Regisztráció*\n\n‼️ A FIÓK ÚJNAK KELL LENNIE\n\n1️⃣ Ha a *\"REGISZTRÁCIÓ\"* gombra kattintva a régi fiókhoz kerül, ki kell jelentkeznie belőle, és újra kell kattintania a gombra.\n\n2️⃣ Adjon meg egy promóciós kódot a regisztráció során: `FSS23`\n\n💴 A jelekhez való hozzáféréshez fizessen be fiókjába (helyezzen letét) legalább *{currencySymbol}{currencyAmount}* vagy *$10* bármilyen pénznemben\n\n✅ REGISZTRÁCIÓ után kattintson a *\"JEL ÉRKEZIK\"* gombra.",
-      buttonRegister: "📝 REGISZTRÁCIÓ",
+      success: "Kedves, 👋 *{userName}!*\n\n✅ Ön a *Magyar* nyelvet választotta!\n\n🌐 *1. lépés – Regisztráció*\n\n‼️ A FIÓK ÚJNAK KELL LENNIE\n\n1️⃣ Ha a *\"REGISZTRÁCIÓ\"* gombra kattintva a régi fiókhoz kerül, ki kell jelentkeznie belőle, és újra kell kattintania a gombra.\n\n2️⃣ *Adjon meg egy promóciós kódot a regisztráció során*: `FSS23`\n\n💴 A jelekhez való hozzáféréshez fizessen be fiókjába (helyezzen letét) legalább *{currencySymbol}{currencyAmount}* vagy *$10* bármilyen pénznemben\n\n✅ REGISZTRÁCIÓ után kattintson a *\"JEL ÉRKEZIK\"* gombra.",
+      buttonRegister: "🎰 REGISZTRÁCIÓ",
       buttonChange: "🔄 NYELV CSERÉJE",
-      buttonSignal: "📊 JEL ÉRKEZIK"
+      buttonSignal: "📡 JEL ÉRKEZIK"
     },
     instruction: {
       caption: "📲 *UTASÍTÁSOK: Hogyan regisztráljon és kapjon jeleket – Nézze meg figyelmesen*",
@@ -1264,10 +1264,10 @@ export const languageTexts = {
       buttonCheck: "✅ Проверите придруживање"
     },
     registration: {
-      success: "Поштовани, 👋 *{userName}!*\n\n✅ Изабрали сте *Српски*!\n\n🌐 *Корак 1 – Регистрација*\n\n‼️ НАЛОГ МОРА БИТИ НОВ\n\n1️⃣ Ако након кликања на дугме *\"РЕГИСТРАЦИЈА\"* дођете до старог налога, морате се одјавити са њега и поново кликнути на дугме.\n\n2️⃣ Наведите промо код током регистрације: `FSS23`\n\n💴 Да бисте добили приступ сигналима, уплатите на ваш налог (направите депозит) најмање *{currencySymbol}{currencyAmount}* или *$10* у било којој валути\n\n✅ Након РЕГИСТРАЦИЈЕ, кликните на дугме *\"ДОБИЈЕНИ СИГНАЛ\"*.",
-      buttonRegister: "📝 РЕГИСТРАЦИЈА",
-      buttonChange: "🔄 ПРОМЕНИ ЈЕЗИКА",
-      buttonSignal: "📊 ДОБИЈЕНИ СИГНАЛ"
+      success: "Поштовани, 👋 *{userName}!*\n\n✅ Изабрали сте *Српски*!\n\n🌐 *Корак 1 – Регистрација*\n\n‼️ НАЛОГ МОРА БИТИ НОВ\n\n1️⃣ Ако након кликања на дугме *\"РЕГИСТРАЦИЈА\"* дођете до старог налога, морате се одјавити са њега и поново кликнути на дугме.\n\n2️⃣ *Наведите промо код током регистрације:* `FSS23`\n\n💴 Да бисте добили приступ сигналима, уплатите на ваш налог (направите депозит) најмање *{currencySymbol}{currencyAmount}* или *$10* у било којој валути\n\n✅ Након РЕГИСТРАЦИЈЕ, кликните на дугме *\"ДОБИЈЕНИ СИГНАЛ\"*.",
+      buttonRegister: "🎰 РЕГИСТРАЦИЈА",
+      buttonChange: "🌐 ПРОМЕНИ ЈЕЗИКА",
+      buttonSignal: "📡 ДОБИЈЕНИ СИГНАЛ"
     },
     instruction: {
       caption: "📲 *УПУТСТВА: Како се регистровати и добијати сигнале – Пажљиво гледајте*",
