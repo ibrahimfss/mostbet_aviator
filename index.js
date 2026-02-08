@@ -193,6 +193,25 @@ if (!BOT_TOKEN || !ADMIN_ID) throw new Error("BOT_TOKEN or ADMIN_ID missing");
 
 const bot = new Telegraf(BOT_TOKEN);
 
+bot.on("photo", async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  const photo = ctx.message.photo.pop();
+  console.log("📷 PHOTO FILE_ID:", photo.file_id);
+  await ctx.reply("Photo Saved ✔️ Check Vercel Logs");
+});
+
+bot.on("video", async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  console.log("🎥 VIDEO FILE_ID:", ctx.message.video.file_id);
+  await ctx.reply("Video Saved ✔️ Check Vercel Logs");
+});
+
+bot.on("animation", async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return;
+  console.log("🎬 GIF FILE_ID:", ctx.message.animation.file_id);
+  await ctx.reply("GIF Saved ✔️ Check Vercel Logs");
+});
+
 // ==================== IMAGES & MEDIA ====================
 const IMAGES = {
   LANGUAGE_SELECTION: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
