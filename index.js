@@ -507,7 +507,7 @@ await updateUserData(userId, {
   await ctx.editMessageMedia(
     {
       type: 'photo',
-      media: IMAGES.LANGUAGE_SELECTION,
+      media: IMAGES.CHANNEL,
       caption: joinCaption,
       parse_mode: 'Markdown'
     },
@@ -592,7 +592,7 @@ const registrationText = langData.registration.success
     await ctx.editMessageMedia(
       {
         type: 'photo',
-        media: IMAGES.CHANNEL,
+        media: IMAGES.REGISTRATION,
         caption: registrationText,
         parse_mode: 'Markdown'
       },
@@ -744,7 +744,7 @@ bot.action('live_support', async (ctx) => {
   await ctx.editMessageMedia(
     {
       type: 'photo',
-      media: supportImage,
+      media: IMAGES.SUPPORT,
       caption: langData.liveSupport.open,
       parse_mode: 'Markdown'
     },
