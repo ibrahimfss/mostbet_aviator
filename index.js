@@ -214,10 +214,11 @@ bot.on("animation", async (ctx) => {
 
 // ==================== IMAGES & MEDIA ====================
 const IMAGES = {
-  LANGUAGE_SELECTION: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  LANGUAGE_SELECTION: 'AgACAgUAAxkBAAIDcWmIGXhKR66erXGEioh3LjoeXyE4AAI0DWsbzuJBVNH5CkKMUdH7AQADAgADdwADOgQ',
   SUPPORT: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
-  REGISTRATION: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  REGISTRATION: 'AgACAgUAAxkBAAIDc2mIGgM678sH9t_4B5m72Cu_qpg9AAKHDWsbzuJBVFW8yCyzkG4QAQADAgADeQADOgQ',
   ADMIN_PANEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  CHANNEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   USER_LIST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   BROADCAST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png'
 };
