@@ -220,7 +220,7 @@ const IMAGES = {
   ADMIN_PANEL: 'AgACAgUAAxkBAAIDf2mIKdBiM5XBxeq-yw52a7W_gLNmAAKoDWsbzuJBVO8Mg71hjoUgAQADAgADdwADOgQ',
   CHANNEL: 'AgACAgUAAxkBAAIDdWmIHb3E7hHBGakwvKWco65kqv9TAAKLDWsbzuJBVM0UjovZMf3DAQADAgADdwADOgQ',
   USER_LIST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
-  BROADCAST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png'
+  BROADCAST: 'AgACAgUAAxkBAAIDg2mIMPLmvRPz18aWYo-lOv1Iw6oJAAK1DWsbzuJBVC3ljgABoWjTawEAAwIAA3cAAzoE'
 };
 
 const VIDEOS = {
