@@ -218,7 +218,7 @@ const IMAGES = {
   SUPPORT: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   REGISTRATION: 'AgACAgUAAxkBAAIDc2mIGgM678sH9t_4B5m72Cu_qpg9AAKHDWsbzuJBVFW8yCyzkG4QAQADAgADeQADOgQ',
   ADMIN_PANEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
-  CHANNEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  CHANNEL: 'AgACAgUAAxkBAAIDdWmIHb3E7hHBGakwvKWco65kqv9TAAKLDWsbzuJBVM0UjovZMf3DAQADAgADdwADOgQ',
   USER_LIST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   BROADCAST: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png'
 };
@@ -592,7 +592,7 @@ const registrationText = langData.registration.success
     await ctx.editMessageMedia(
       {
         type: 'photo',
-        media: IMAGES.REGISTRATION,
+        media: IMAGES.CHANNEL,
         caption: registrationText,
         parse_mode: 'Markdown'
       },
