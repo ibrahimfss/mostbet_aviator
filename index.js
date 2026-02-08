@@ -215,7 +215,7 @@ bot.on("animation", async (ctx) => {
 // ==================== IMAGES & MEDIA ====================
 const IMAGES = {
   LANGUAGE_SELECTION: 'AgACAgUAAxkBAAIDcWmIGXhKR66erXGEioh3LjoeXyE4AAI0DWsbzuJBVNH5CkKMUdH7AQADAgADdwADOgQ',
-  SUPPORT: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
+  SUPPORT: 'AgACAgUAAxkBAAIDfWmIJpPXL4ydm5Vvg9BbpVqG-9EfAAKdDWsbzuJBVAdABITXFa2PAQADAgADdwADOgQ',
   REGISTRATION: 'AgACAgUAAxkBAAIDc2mIGgM678sH9t_4B5m72Cu_qpg9AAKHDWsbzuJBVFW8yCyzkG4QAQADAgADeQADOgQ',
   ADMIN_PANEL: 'https://ik.imagekit.io/kdyvr75if/Picsart_25-12-26_14-31-15-558.png',
   CHANNEL: 'AgACAgUAAxkBAAIDdWmIHb3E7hHBGakwvKWco65kqv9TAAKLDWsbzuJBVM0UjovZMf3DAQADAgADdwADOgQ',
